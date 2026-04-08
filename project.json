@@ -1,0 +1,22 @@
+{
+  "overview": "Maverick Digitals is a premium multi-page agency website for a digital marketing firm. Features an immersive dark theme with neon gradients, advanced 3D interactions, glassmorphic design, and full backend storage for contact forms and blog content.",
+  "features": [
+    "Premium dark-themed homepage with animated hero, 3D-tilt glassmorphic service cards, coverflow case studies carousel, orbit testimonials, animated process timeline, and FAQ accordion",
+    "Six supporting pages: Services, Industries, Case Studies, About (Muskan Rathod founder profile), Blog with search and filtering, and Contact",
+    "Sticky glassmorphic navbar with persistent CTA button, fully responsive",
+    "Scroll-based storytelling, parallax, micro-interactions, cursor glow effects, and cinematic transitions",
+    "Backend storage for contact form submissions and blog content"
+  ],
+  "category": "business",
+  "tags": [
+    "agency",
+    "marketing",
+    "dark-theme",
+    "3d-effects",
+    "glassmorphism",
+    "portfolio",
+    "blog",
+    "contact-form"
+  ],
+  "last_updated": "2026-04-08T11:37:10.153Z"
+}

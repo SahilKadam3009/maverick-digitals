@@ -1,0 +1,36 @@
+type Timestamp = int;
+type ServiceType = text;
+type ContactSubmission = 
+ record {
+   email: text;
+   id: nat;
+   message: text;
+   name: text;
+   serviceType: ServiceType;
+   submittedAt: Timestamp;
+ };
+type BlogArticle = 
+ record {
+   author: text;
+   body: text;
+   category: text;
+   excerpt: text;
+   featuredImageUrl: text;
+   id: ArticleId;
+   publishedAt: Timestamp;
+   tags: vec text;
+   title: text;
+ };
+type ArticleId = nat;
+service : {
+  addBlogArticle: (title: text, excerpt: text, body: text, category: 
+   text, tags: vec text, publishedAt: Timestamp, author: text,
+   featuredImageUrl: text) -> (ArticleId);
+  getBlogArticleById: (id: ArticleId) -> (opt BlogArticle) query;
+  getBlogArticles: () -> (vec BlogArticle) query;
+  getContacts: () -> (vec ContactSubmission) query;
+  searchBlogArticles: (searchQuery: text, category: opt text, tag:
+   opt text) -> (vec BlogArticle) query;
+  submitContact: (name: text, email: text, serviceType: ServiceType, message:
+   text) -> (nat);
+}

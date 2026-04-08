@@ -1,0 +1,43 @@
+// Version: 1.0.0
+type ArticleId__678690314 = Nat;
+type BlogArticle__1060352343 =
+  {
+    author : Text;
+    body : Text;
+    category : Text;
+    excerpt : Text;
+    featuredImageUrl : Text;
+    id : ArticleId__678690314;
+    publishedAt : Timestamp__301639476;
+    tags : [Text];
+    title : Text
+  };
+type ContactSubmission__93684224 =
+  {
+    email : Text;
+    id : Nat;
+    message : Text;
+    name : Text;
+    serviceType : ServiceType__553655893;
+    submittedAt : Timestamp__301639476
+  };
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type ServiceType__553655893 = Text;
+type Timestamp__301639476 = Int;
+actor {
+  stable articles :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?BlogArticle__1060352343]];
+      var elementIndex : Nat__490723111
+    };
+  stable nextArticleId : [var Nat];
+  stable nextContactId : [var Nat];
+  stable submissions :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?ContactSubmission__93684224]];
+      var elementIndex : Nat__490723111
+    }
+};
