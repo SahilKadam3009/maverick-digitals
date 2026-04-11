@@ -5,39 +5,33 @@ import { useRef, useState } from "react";
 const faqs = [
   {
     id: "faq1",
-    question: "What types of businesses do you work with?",
+    question: "What services does Maverick Digitals offer?",
     answer:
-      "We work with growth-stage startups, D2C brands, SaaS companies, and established enterprises across industries including tech, e-commerce, real estate, health & wellness, and education. Our frameworks adapt to your market — whether you're pre-revenue or scaling past $10M.",
+      "Maverick Digitals offers Social Media Marketing, Performance Marketing (Google & Meta Ads), Brand Strategy & Identity, Content Creation, and SEO. As a full-service digital marketing agency in Mumbai, we provide end-to-end digital solutions for businesses of all sizes.",
   },
   {
     id: "faq2",
-    question: "How long does it take to see results?",
+    question: "Why should I choose a Mumbai-based digital marketing agency?",
     answer:
-      "Paid media campaigns typically show meaningful performance signals within 30-60 days. SEO and content strategies compound over 3-6 months. Brand strategy impacts are felt across 6-12 months. We set clear KPIs upfront so you always know what to expect and when.",
+      "A Mumbai-based digital marketing agency like Maverick Digitals understands the local market dynamics, consumer behavior, and competitive landscape unique to Mumbai and Maharashtra. We combine local expertise with global best practices to deliver campaigns that truly resonate with your target audience.",
   },
   {
     id: "faq3",
-    question: "What does a typical engagement look like?",
+    question: "How much does digital marketing cost in Mumbai?",
     answer:
-      "We start with a deep-dive discovery session, then build a custom strategy deck. From there, we move into execution with monthly retainers or project-based engagements. You get a dedicated team lead, weekly reports, and access to a live performance dashboard.",
+      "Digital marketing costs in Mumbai vary based on scope and services. At Maverick Digitals, our packages start from ₹25,000/month for focused campaigns and scale based on your goals. We offer transparent pricing with no hidden fees and a results-first approach.",
   },
   {
     id: "faq4",
-    question: "Do you work with minimum ad budgets?",
+    question: "How long does it take to see results from digital marketing?",
     answer:
-      "For paid media, we recommend a minimum ad spend of ₹1.5L/month to run meaningful tests and scale effectively. Below that threshold, the data is too thin to optimize. We'll always give you an honest recommendation based on your goals and budget reality.",
+      "Results timelines vary by channel. Paid ads (Google, Meta) can show results within 2–4 weeks. SEO typically takes 3–6 months to gain traction. Social media engagement grows within 1–2 months with consistent content. Maverick Digitals sets clear milestones so you always know what to expect.",
   },
   {
     id: "faq5",
-    question: "How is Maverick Digitals different from other agencies?",
+    question: "Is Maverick Digitals a good digital marketing agency in Mumbai?",
     answer:
-      "Most agencies focus on deliverables. We focus on business outcomes. Every strategy we build is tied to a revenue or growth metric. We don't outsource your work, we don't pad reports, and we give you full transparency — including when things need to change.",
-  },
-  {
-    id: "faq6",
-    question: "Can we start with a single service before committing fully?",
-    answer:
-      "Absolutely. Many clients begin with a single channel (SEO, paid, or content) and expand once they see the quality of our work. We offer 3-month pilot engagements specifically designed for clients who want to test before scaling.",
+      "Yes. Maverick Digitals is one of Mumbai's top-rated digital marketing companies with a proven track record of scaling 50+ brands, generating $12M+ in revenue, and maintaining a 97% client retention rate. Our data-driven strategies, creative campaigns, and radical transparency make us the preferred choice for Mumbai businesses.",
   },
 ];
 

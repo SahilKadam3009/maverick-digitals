@@ -29,9 +29,6 @@ const services = [
 
 export function Footer() {
   const year = new Date().getFullYear();
-  const hostname =
-    typeof window !== "undefined" ? window.location.hostname : "";
-  const caffeineUrl = `https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(hostname)}`;
 
   return (
     <footer className="relative bg-card border-t border-white/10 overflow-hidden">
@@ -59,8 +56,10 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              A data-driven digital marketing agency crafting brand identities
-              and growth strategies that dominate markets.
+              Maverick Digitals is a Mumbai-based digital marketing company
+              specializing in Social Media Marketing, Performance Marketing,
+              Branding, Content Creation, and Paid Ads. We help ambitious brands
+              grow faster.
             </p>
             <div className="flex items-center gap-3">
               {[
@@ -160,18 +159,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            © {year}. Built with love using{" "}
-            <a
-              href={caffeineUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:text-primary/80 transition-smooth"
-            >
-              caffeine.ai
-            </a>
-          </p>
-          <p className="text-xs text-muted-foreground">
-            All rights reserved · Maverick Digitals
+            © {year} Maverick Digitals. All rights reserved.
           </p>
         </div>
       </div>

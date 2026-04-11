@@ -169,7 +169,7 @@ export function HeroSection() {
           className="inline-flex items-center gap-2 glassmorphic px-5 py-2 mb-10 text-xs font-semibold text-primary tracking-wide"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          Digital Marketing Agency · Mumbai, India
+          Mumbai's #1 Digital Marketing Agency
           <span
             className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"
             style={{ animationDelay: "0.5s" }}
@@ -183,13 +183,13 @@ export function HeroSection() {
           className="font-display text-center text-balance"
         >
           <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.92] text-foreground mb-2">
-            Transform Your
+            Grow Your Brand with
           </span>
           <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.92] gradient-text-purple mb-2">
-            Digital Presence
+            Mumbai's Most Trusted
           </span>
           <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.92] text-foreground/70">
-            — Maverick.
+            Digital Marketing Agency
           </span>
         </h1>
 
@@ -198,8 +198,10 @@ export function HeroSection() {
           style={subStyle}
           className="mt-8 text-muted-foreground max-w-xl text-lg leading-relaxed"
         >
-          A digital agency harnessing data-driven strategies and cinematic
-          creativity to build brands that dominate their markets.
+          Maverick Digitals is a Mumbai-based digital marketing company
+          specializing in Social Media Marketing, Performance Marketing,
+          Branding, Content Creation, and Paid Ads. We help businesses scale
+          fast and dominate their market.
         </p>
 
         <div

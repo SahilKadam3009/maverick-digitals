@@ -5,9 +5,9 @@ const points = [
   {
     id: "data",
     icon: BarChart2,
-    title: "Data-First Thinking",
+    title: "Data-First Strategy",
     description:
-      "Every decision is backed by analytics, A/B testing, and proprietary benchmarks — not gut feeling. We optimize what matters.",
+      "Every campaign is built on real data and audience insights. No guesswork — only intelligent strategies that improve over time.",
     accent: "primary",
     stat: "3.2x",
     statLabel: "Avg. ROI improvement",
@@ -17,7 +17,7 @@ const points = [
     icon: Lightbulb,
     title: "Creative Precision",
     description:
-      "Strategy without creative is noise. We merge brand storytelling with performance intent to build campaigns that captivate and convert.",
+      "We blend bold creativity with strategic thinking to craft content, ads, and branding that cut through the noise and drive action.",
     accent: "secondary",
     stat: "190%",
     statLabel: "Avg. organic traffic lift",
@@ -27,7 +27,7 @@ const points = [
     icon: Eye,
     title: "Radical Transparency",
     description:
-      "No vanity metrics, no smoke and mirrors. You get live dashboards, weekly reports, and a team that talks to you like a partner.",
+      "You always know what's happening with your campaigns. Real-time reporting, honest communication, and zero hidden fees.",
     accent: "accent",
     stat: "97%",
     statLabel: "Client retention rate",
@@ -35,9 +35,9 @@ const points = [
   {
     id: "proven",
     icon: ShieldCheck,
-    title: "Proven Playbooks",
+    title: "Proven Results",
     description:
-      "50+ brand transformations across industries. We don't experiment on your dime — we bring battle-tested frameworks and adapt them.",
+      "50+ brands scaled. $12M+ revenue generated. 97% client retention. Our track record speaks louder than any pitch deck.",
     accent: "primary",
     stat: "50+",
     statLabel: "Brands transformed",
@@ -139,11 +139,13 @@ export function WhyChooseUs() {
             Why Maverick
           </p>
           <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground mb-5">
-            The Agency That{" "}
-            <span className="gradient-text-cyan">Thinks Different</span>
+            Why Mumbai Businesses Choose{" "}
+            <span className="gradient-text-cyan">Maverick Digitals</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto text-base leading-relaxed">
-            Most agencies report. We transform. Here's what sets us apart.
+            We're not your average digital marketing agency in Mumbai. We
+            combine data intelligence, creative excellence, and radical
+            transparency to deliver results that matter.
           </p>
         </div>
 

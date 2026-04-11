@@ -17,25 +17,25 @@ const services = [
     icon: Globe,
     title: "SEO & Organic Growth",
     description:
-      "Dominate search rankings with technical precision, authority-building content, and relentless optimization that compounds over time.",
+      "Rank higher on Google with data-driven SEO strategies built for Mumbai businesses. From on-page optimization to link building, we drive sustainable organic traffic.",
     accent: "primary",
     size: "large",
   },
   {
     id: "paid",
     icon: BarChart3,
-    title: "Paid Media",
+    title: "Paid Media & Performance Ads",
     description:
-      "Hyper-targeted ad campaigns across Meta, Google & beyond — engineered for maximum ROAS and minimum waste.",
+      "Maximize your ROI with precision-targeted paid ad campaigns on Google, Meta, and more. Our performance marketing experts in Mumbai deliver measurable results.",
     accent: "secondary",
     size: "small",
   },
   {
     id: "brand",
     icon: Palette,
-    title: "Brand Strategy",
+    title: "Brand Strategy & Identity",
     description:
-      "Position your brand to own a distinct space in the market. Messaging frameworks that resonate, differentiate, and convert.",
+      "Build a brand that commands attention. Our Mumbai-based branding team crafts compelling identities that differentiate your business and build lasting customer loyalty.",
     accent: "accent",
     size: "small",
   },
@@ -44,16 +44,16 @@ const services = [
     icon: FileText,
     title: "Content Marketing",
     description:
-      "Editorial-grade content that builds genuine authority — blog, video scripts, decks, and thought leadership that drives organic growth.",
+      "From blogs to reels, we create content that ranks on Google and resonates with your audience. Strategic content marketing that drives traffic and builds trust.",
     accent: "primary",
     size: "small",
   },
   {
     id: "social",
     icon: TrendingUp,
-    title: "Social Media",
+    title: "Social Media Marketing",
     description:
-      "Platform-native content strategies that build communities, spark virality, and turn followers into buyers.",
+      "Grow your presence on Instagram, LinkedIn, and beyond. Maverick Digitals is a top social media agency in Mumbai delivering engagement that converts.",
     accent: "secondary",
     size: "small",
   },
@@ -62,7 +62,7 @@ const services = [
     icon: Rocket,
     title: "Growth Marketing",
     description:
-      "Full-funnel acquisition and retention systems — from first touch to loyal customer — built for scale.",
+      "Full-funnel growth strategies combining SEO, paid ads, content, and CRO. We don't just market — we engineer growth for Mumbai businesses and beyond.",
     accent: "accent",
     size: "large",
   },
@@ -194,9 +194,11 @@ export function ServicesSection() {
               What We Do
             </p>
             <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground">
-              Services Built for
+              Digital Marketing Services in Mumbai
               <br />
-              <span className="gradient-text-purple">Market Dominance</span>
+              <span className="gradient-text-purple">
+                That Deliver Real Results
+              </span>
             </h2>
           </div>
           <Link
