@@ -1,3 +1,4 @@
+import { MaverickLogo } from "@/components/MaverickLogo";
 import { Button } from "@/components/ui/button";
 import { useRevealOnScroll } from "@/hooks/useIntersectionObserver";
 import { Link } from "@tanstack/react-router";
@@ -162,48 +163,88 @@ export function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center max-w-5xl">
-        {/* Floating badge */}
+        {/* Brand identity mark */}
         <div
           ref={badgeRef as React.RefObject<HTMLDivElement>}
           style={badgeStyle}
-          className="inline-flex items-center gap-2 glassmorphic px-5 py-2 mb-10 text-xs font-semibold text-primary tracking-wide"
+          className="flex flex-col items-center gap-4 mb-10"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          Mumbai's #1 Digital Marketing Agency
-          <span
-            className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"
-            style={{ animationDelay: "0.5s" }}
-          />
+          {/* Large logo mark with animated glow */}
+          <div
+            className="relative"
+            style={{
+              filter:
+                "drop-shadow(0 0 18px oklch(0.68 0.24 308 / 0.55)) drop-shadow(0 0 36px oklch(0.72 0.19 200 / 0.25))",
+              animation: "float 4s ease-in-out infinite",
+            }}
+          >
+            <MaverickLogo size={64} />
+          </div>
+
+          {/* Thin rule + label line */}
+          <div className="flex items-center gap-4">
+            <span className="block w-12 h-px bg-primary/40" />
+            <span className="text-[10px] font-semibold tracking-[0.3em] uppercase text-primary/80">
+              Mumbai-based&nbsp;Digital&nbsp;Marketing&nbsp;Agency
+            </span>
+            <span className="block w-12 h-px bg-primary/40" />
+          </div>
         </div>
 
-        {/* Headline */}
+        {/* Editorial headline */}
         <h1
           ref={headRef as React.RefObject<HTMLDivElement>}
           style={headStyle}
-          className="font-display text-center text-balance"
+          className="font-display text-center"
         >
-          <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.92] text-foreground mb-2">
-            Grow Your Brand with
+          {/* Oversized display line 1 */}
+          <span className="block text-[clamp(3rem,9vw,6.5rem)] font-black leading-[0.88] tracking-[-0.03em] text-foreground">
+            We Scale
           </span>
-          <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.92] gradient-text-purple mb-2">
-            Mumbai's Most Trusted
+          {/* Display line 2 */}
+          <span className="block text-[clamp(3rem,9vw,6.5rem)] font-black leading-[0.88] tracking-[-0.03em] text-foreground">
+            Brands&nbsp;That
           </span>
-          <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.92] text-foreground/70">
-            Digital Marketing Agency
+          {/* Gradient accent line */}
+          <span className="block text-[clamp(3rem,9vw,6.5rem)] font-black leading-[0.88] tracking-[-0.03em] gradient-text-purple">
+            Demand&nbsp;Attention
           </span>
         </h1>
 
-        <p
+        {/* Accent subheadline — smaller, elegant */}
+        <div
           ref={subRef as React.RefObject<HTMLDivElement>}
           style={subStyle}
-          className="mt-8 text-muted-foreground max-w-xl text-lg leading-relaxed"
+          className="mt-9 flex flex-col items-center gap-3"
         >
-          Maverick Digitals is a Mumbai-based digital marketing company
-          specializing in Social Media Marketing, Performance Marketing,
-          Branding, Content Creation, and Paid Ads. We help businesses scale
-          fast and dominate their market.
-        </p>
+          <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed">
+            Maverick Digitals is a Mumbai-based digital marketing company
+            specializing in SEO, Performance Marketing, Social Media, Branding,
+            and Content Creation — helping ambitious brands grow fast and
+            dominate their market.
+          </p>
+          {/* Proof stats strip */}
+          <div className="flex items-center gap-6 mt-4 text-xs font-semibold tracking-[0.15em] uppercase text-muted-foreground/70">
+            <span className="flex items-center gap-1.5">
+              <span className="text-primary font-bold text-sm">10M+</span> Views
+            </span>
+            <span className="w-px h-4 bg-border/40" />
+            <span className="flex items-center gap-1.5">
+              <span className="text-primary font-bold text-sm">35+</span> Brands
+            </span>
+            <span className="w-px h-4 bg-border/40" />
+            <span className="flex items-center gap-1.5">
+              <span className="text-primary font-bold text-sm">200%</span> ROI
+            </span>
+            <span className="w-px h-4 bg-border/40" />
+            <span className="flex items-center gap-1.5">
+              <span className="text-primary font-bold text-sm">150K+</span>{" "}
+              Followers
+            </span>
+          </div>
+        </div>
 
+        {/* CTA buttons */}
         <div
           ref={ctaRef as React.RefObject<HTMLDivElement>}
           style={ctaStyle}

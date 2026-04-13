@@ -1,7 +1,8 @@
+import { MaverickLogo } from "@/components/MaverickLogo";
 import { Button } from "@/components/ui/button";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Menu, X, Zap } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navLinks = [
@@ -54,8 +55,11 @@ export function Navbar() {
             className="flex items-center gap-2.5 group"
             data-ocid="nav-logo"
           >
-            <div className="w-8 h-8 rounded-lg gradient-neon-purple flex items-center justify-center glow-neon group-hover:scale-110 transition-smooth">
-              <Zap size={16} className="text-background" fill="currentColor" />
+            <div className="relative group-hover:scale-110 transition-smooth">
+              <MaverickLogo
+                size={30}
+                className="drop-shadow-[0_0_8px_oklch(0.68_0.24_308/0.6)]"
+              />
             </div>
             <span className="font-display font-bold text-lg tracking-tight">
               <span className="text-foreground">Maverick</span>
