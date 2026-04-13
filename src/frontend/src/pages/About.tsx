@@ -3,28 +3,382 @@ import { useRevealOnScroll } from "@/hooks/useIntersectionObserver";
 import { Link } from "@tanstack/react-router";
 import {
   ArrowRight,
-  BookOpen,
+  Award,
+  Code2,
   Instagram,
   Linkedin,
-  Sparkles,
-  Star,
-  TrendingUp,
   Twitter,
 } from "lucide-react";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+// --- Galaxy Canvas Background ---
+function GalaxyCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    canvas.width = canvas.parentElement?.offsetWidth ?? window.innerWidth;
+    canvas.height = canvas.parentElement?.offsetHeight ?? 900;
+
+    const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+    if (!ctx) return;
+
+    let animId: number;
+    let width = canvas.width;
+    let height = canvas.height;
+
+    interface Star {
+      x: number;
+      y: number;
+      r: number;
+      baseOpacity: number;
+      opacity: number;
+      phase: number;
+      twinkleSpeed: number;
+    }
+    const stars: Star[] = Array.from({ length: 320 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 2.2 + 0.4,
+      baseOpacity: Math.random() * 0.9 + 0.3,
+      opacity: 0,
+      phase: Math.random() * Math.PI * 2,
+      twinkleSpeed: Math.random() * 0.04 + 0.01,
+    }));
+
+    interface Nebula {
+      x: number;
+      y: number;
+      r: number;
+      color: string;
+      opacity: number;
+      dx: number;
+      dy: number;
+      phase: number;
+    }
+    const nebulaColors = [
+      "168,85,247",
+      "6,182,212",
+      "99,102,241",
+      "192,132,252",
+      "34,211,238",
+      "139,92,246",
+      "56,189,248",
+      "167,139,250",
+    ];
+    const nebulas: Nebula[] = Array.from({ length: 12 }, (_, i) => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: 130 + Math.random() * 220,
+      color: nebulaColors[i % nebulaColors.length],
+      opacity: 0.3 + Math.random() * 0.2,
+      dx: (Math.random() - 0.5) * 0.18,
+      dy: (Math.random() - 0.5) * 0.14,
+      phase: Math.random() * Math.PI * 2,
+    }));
+
+    interface Meteor {
+      x: number;
+      y: number;
+      len: number;
+      speed: number;
+      angle: number;
+      opacity: number;
+      active: boolean;
+      life: number;
+      maxLife: number;
+    }
+    const meteors: Meteor[] = Array.from({ length: 6 }, () => ({
+      x: 0,
+      y: 0,
+      len: 0,
+      speed: 0,
+      angle: 0,
+      opacity: 0,
+      active: false,
+      life: 0,
+      maxLife: 1,
+    }));
+    let lastMeteorTime = 0;
+
+    function spawnMeteor(m: Meteor) {
+      m.x = Math.random() * width * 1.2 - width * 0.1;
+      m.y = Math.random() * height * 0.5;
+      m.len = 100 + Math.random() * 160;
+      m.speed = 8 + Math.random() * 10;
+      m.angle = Math.PI / 5 + Math.random() * (Math.PI / 8);
+      m.opacity = 0.9 + Math.random() * 0.1;
+      m.maxLife = m.len / m.speed;
+      m.life = 0;
+      m.active = true;
+    }
+
+    let t = 0;
+
+    function draw() {
+      t += 0.016;
+      ctx.clearRect(0, 0, width, height);
+
+      // Deep space radial gradient background
+      const bgGrad = ctx.createRadialGradient(
+        width * 0.5,
+        height * 0.4,
+        0,
+        width * 0.5,
+        height * 0.4,
+        Math.max(width, height) * 0.95,
+      );
+      bgGrad.addColorStop(0, "rgba(22,10,50,1)");
+      bgGrad.addColorStop(0.35, "rgba(14,7,34,1)");
+      bgGrad.addColorStop(0.7, "rgba(8,4,20,1)");
+      bgGrad.addColorStop(1, "rgba(4,2,12,1)");
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, width, height);
+
+      // Static nebula blobs
+      const blob1 = ctx.createRadialGradient(
+        width * 0.2,
+        height * 0.25,
+        0,
+        width * 0.2,
+        height * 0.25,
+        width * 0.55,
+      );
+      blob1.addColorStop(0, "rgba(168,85,247,0.32)");
+      blob1.addColorStop(0.5, "rgba(168,85,247,0.12)");
+      blob1.addColorStop(1, "rgba(168,85,247,0)");
+      ctx.fillStyle = blob1;
+      ctx.fillRect(0, 0, width, height);
+
+      const blob2 = ctx.createRadialGradient(
+        width * 0.8,
+        height * 0.75,
+        0,
+        width * 0.8,
+        height * 0.75,
+        width * 0.45,
+      );
+      blob2.addColorStop(0, "rgba(6,182,212,0.28)");
+      blob2.addColorStop(0.5, "rgba(6,182,212,0.10)");
+      blob2.addColorStop(1, "rgba(6,182,212,0)");
+      ctx.fillStyle = blob2;
+      ctx.fillRect(0, 0, width, height);
+
+      const blob3 = ctx.createRadialGradient(
+        width * 0.5,
+        height * 0.5,
+        0,
+        width * 0.5,
+        height * 0.5,
+        width * 0.38,
+      );
+      blob3.addColorStop(0, "rgba(99,102,241,0.22)");
+      blob3.addColorStop(1, "rgba(99,102,241,0)");
+      ctx.fillStyle = blob3;
+      ctx.fillRect(0, 0, width, height);
+
+      // Dynamic floating nebulas
+      for (const n of nebulas) {
+        n.x += n.dx;
+        n.y += n.dy;
+        n.phase += 0.004;
+        if (n.x < -n.r) n.x = width + n.r;
+        if (n.x > width + n.r) n.x = -n.r;
+        if (n.y < -n.r) n.y = height + n.r;
+        if (n.y > height + n.r) n.y = -n.r;
+        const pulsedR = n.r * (1 + 0.12 * Math.sin(n.phase));
+        const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, pulsedR);
+        const pulse = n.opacity * (0.82 + 0.18 * Math.sin(n.phase * 2));
+        grad.addColorStop(0, `rgba(${n.color},${pulse})`);
+        grad.addColorStop(0.38, `rgba(${n.color},${pulse * 0.38})`);
+        grad.addColorStop(1, `rgba(${n.color},0)`);
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, pulsedR, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Stars with glow halos — strong visible twinkle
+      for (const s of stars) {
+        s.phase += s.twinkleSpeed;
+        s.opacity = s.baseOpacity * (0.3 + 0.7 * Math.sin(s.phase));
+        if (s.opacity < 0.05) continue;
+        const pulse = s.r * (1 + 0.35 * Math.sin(s.phase * 1.5));
+        const glow = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, pulse * 5);
+        glow.addColorStop(0, `rgba(220,200,255,${s.opacity * 0.45})`);
+        glow.addColorStop(1, "rgba(220,200,255,0)");
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, pulse * 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, pulse, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(245,235,255,${s.opacity})`;
+        ctx.fill();
+      }
+
+      // Meteors — spawn every 1.5-4 seconds
+      const now = t;
+      if (now - lastMeteorTime > 1.5 + Math.random() * 2.5) {
+        const idle = meteors.find((m) => !m.active);
+        if (idle) {
+          spawnMeteor(idle);
+          lastMeteorTime = now;
+        }
+      }
+      for (const m of meteors) {
+        if (!m.active) continue;
+        m.life += 1;
+        const progress = m.life / m.maxLife;
+        const tailX = m.x + Math.cos(m.angle) * m.len;
+        const tailY = m.y + Math.sin(m.angle) * m.len;
+        const fade =
+          progress < 0.2 ? progress / 0.2 : 1 - (progress - 0.2) / 0.8;
+        const grad = ctx.createLinearGradient(m.x, m.y, tailX, tailY);
+        grad.addColorStop(0, `rgba(255,255,255,${m.opacity * fade})`);
+        grad.addColorStop(0.3, `rgba(200,180,255,${m.opacity * fade * 0.65})`);
+        grad.addColorStop(1, "rgba(168,85,247,0)");
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.moveTo(m.x, m.y);
+        ctx.lineTo(tailX, tailY);
+        ctx.stroke();
+        m.x += Math.cos(m.angle) * m.speed;
+        m.y += Math.sin(m.angle) * m.speed;
+        if (m.life >= m.maxLife || m.x > width + 50 || m.y > height + 50)
+          m.active = false;
+      }
+
+      animId = requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.parentElement?.offsetWidth ?? window.innerWidth;
+      height = canvas.parentElement?.offsetHeight ?? 900;
+      canvas.width = width;
+      canvas.height = height;
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 0,
+        display: "block",
+      }}
+    />
+  );
+}
 
 // --- Data ---
-const skills = [
-  { label: "Brand Strategy", level: 95, icon: Sparkles, color: "primary" },
+interface TeamMember {
+  name: string;
+  initials: string;
+  title: string;
+  bio: string;
+  skills: string[];
+  photo: string;
+  badgeIcon: React.ElementType;
+  badgeColor: string;
+  accentColor: string;
+  socials: {
+    icon: React.ElementType;
+    href: string;
+    label: string;
+    color: string;
+  }[];
+}
+
+const teamMembers: TeamMember[] = [
   {
-    label: "Growth Marketing",
-    level: 92,
-    icon: TrendingUp,
-    color: "secondary",
+    name: "Muskan Rathod",
+    initials: "MR",
+    title: "Founder",
+    bio: "Brand strategist & growth marketer, expert in storytelling, personal branding, and scaling businesses with digital-first positioning.",
+    skills: [
+      "Brand Strategy",
+      "Growth Marketing",
+      "Storytelling",
+      "Personal Branding",
+    ],
+    photo: "/assets/muskan-rathod.png",
+    badgeIcon: Award,
+    badgeColor: "from-primary to-accent",
+    accentColor: "border-primary/30",
+    socials: [
+      {
+        icon: Linkedin,
+        href: "https://linkedin.com",
+        label: "LinkedIn",
+        color: "hover:text-blue-400",
+      },
+      {
+        icon: Twitter,
+        href: "https://twitter.com",
+        label: "Twitter",
+        color: "hover:text-sky-400",
+      },
+      {
+        icon: Instagram,
+        href: "https://instagram.com",
+        label: "Instagram",
+        color: "hover:text-pink-400",
+      },
+    ],
   },
-  { label: "Storytelling", level: 98, icon: BookOpen, color: "accent" },
-  { label: "Personal Branding", level: 90, icon: Star, color: "primary" },
+  {
+    name: "Dhaval Shah",
+    initials: "DS",
+    title: "Co-Founder",
+    bio: "Tech innovator with 5+ years in scalable web and app development, specializing in building conversion-optimized digital platforms.",
+    skills: [
+      "Web Development",
+      "App Development",
+      "MERN Stack",
+      "Platform Optimization",
+    ],
+    photo: "/assets/dhaval-shah.png",
+    badgeIcon: Code2,
+    badgeColor: "from-accent to-secondary",
+    accentColor: "border-accent/30",
+    socials: [
+      {
+        icon: Linkedin,
+        href: "https://linkedin.com",
+        label: "LinkedIn",
+        color: "hover:text-blue-400",
+      },
+      {
+        icon: Twitter,
+        href: "https://twitter.com",
+        label: "Twitter",
+        color: "hover:text-sky-400",
+      },
+      {
+        icon: Instagram,
+        href: "https://instagram.com",
+        label: "Instagram",
+        color: "hover:text-pink-400",
+      },
+    ],
+  },
 ];
 
 const timeline = [
@@ -68,183 +422,422 @@ const stats = [
   { value: "$10M+", label: "Revenue Driven" },
 ];
 
-const socials = [
-  {
-    icon: Linkedin,
-    href: "https://linkedin.com",
-    label: "LinkedIn",
-    color: "hover:text-blue-400",
-  },
-  {
-    icon: Twitter,
-    href: "https://twitter.com",
-    label: "Twitter",
-    color: "hover:text-sky-400",
-  },
-  {
-    icon: Instagram,
-    href: "https://instagram.com",
-    label: "Instagram",
-    color: "hover:text-pink-400",
-  },
-];
-
-// --- Orbit Skill Component ---
-const ORBIT_RADIUS_OUTER = 130;
-const ORBIT_RADIUS_INNER = 72;
-
-function OrbitRing({
-  radius,
-  duration,
-  children,
-  reverse = false,
-}: {
-  radius: number;
-  duration: number;
-  children: React.ReactNode;
-  reverse?: boolean;
-}) {
+// --- Floating micro-particles around card ---
+function CardParticles({ isMuskan }: { isMuskan: boolean }) {
+  const color = isMuskan ? "rgba(168,85,247," : "rgba(34,211,238,";
+  const particles = [
+    { top: "15%", left: "-8%", size: 5, delay: 0, duration: 3.2 },
+    { top: "60%", left: "-6%", size: 3.5, delay: 0.8, duration: 4.1 },
+    {
+      top: "30%",
+      right: "-7%",
+      left: undefined,
+      size: 4,
+      delay: 0.4,
+      duration: 3.7,
+    },
+    {
+      top: "75%",
+      right: "-9%",
+      left: undefined,
+      size: 3,
+      delay: 1.2,
+      duration: 4.5,
+    },
+  ];
   return (
-    <motion.div
-      className="absolute inset-0 pointer-events-none"
-      style={{ margin: "auto", top: 0, left: 0, right: 0, bottom: 0 }}
-      animate={{ rotate: reverse ? -360 : 360 }}
-      transition={{
-        repeat: Number.POSITIVE_INFINITY,
-        duration,
-        ease: "linear",
-      }}
-    >
-      <div
-        className="absolute rounded-full border border-primary/10"
-        style={{
-          width: radius * 2,
-          height: radius * 2,
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-        }}
-      />
-      {children}
-    </motion.div>
+    <>
+      {particles.map((p) => (
+        <motion.div
+          key={p.delay}
+          className="absolute rounded-full pointer-events-none"
+          style={{
+            width: p.size,
+            height: p.size,
+            top: p.top,
+            left: p.left,
+            right: p.right,
+            background: `${color}0.7)`,
+            boxShadow: `0 0 ${p.size * 3}px ${color}0.6)`,
+            zIndex: 20,
+          }}
+          animate={{ y: [-6, 6, -6], opacity: [0.5, 1, 0.5] }}
+          transition={{
+            repeat: Number.POSITIVE_INFINITY,
+            duration: p.duration,
+            delay: p.delay,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </>
   );
 }
 
-function OrbitPill({
-  skill,
-  angle,
-  radius,
-  reverse = false,
+// --- Circular Photo with Pulsing Aura Rings ---
+function CircularPhoto({
+  src,
+  alt,
+  initials,
+  isMuskan,
 }: {
-  skill: (typeof skills)[0];
-  angle: number;
-  radius: number;
-  reverse?: boolean;
+  src: string;
+  alt: string;
+  initials: string;
+  isMuskan: boolean;
 }) {
-  const Icon = skill.icon;
-  const rad = (angle * Math.PI) / 180;
-  const x = Math.cos(rad) * radius;
-  const y = Math.sin(rad) * radius;
+  const [imgError, setImgError] = useState(false);
+
+  const ringColor = isMuskan ? "168,85,247" : "34,211,238";
+  const borderColor = isMuskan ? "#a855f7" : "#06b6d4";
+  const shadowGlow = isMuskan
+    ? "0 0 0 3px #a855f7, 0 0 25px rgba(168,85,247,0.7), 0 0 55px rgba(124,58,237,0.4)"
+    : "0 0 0 3px #06b6d4, 0 0 25px rgba(6,182,212,0.7), 0 0 55px rgba(8,145,178,0.4)";
 
   return (
-    <motion.div
-      className="absolute pointer-events-auto"
-      style={{
-        left: `calc(50% + ${x}px)`,
-        top: `calc(50% + ${y}px)`,
-        transform: "translate(-50%, -50%)",
-      }}
-      animate={{ rotate: reverse ? 360 : -360 }}
-      transition={{
-        repeat: Number.POSITIVE_INFINITY,
-        duration: 18,
-        ease: "linear",
-      }}
-      whileHover={{ scale: 1.15 }}
+    <div
+      className="relative flex items-center justify-center"
+      style={{ width: 240, height: 240 }}
     >
-      <div className="glassmorphic border-primary/30 px-3 py-1.5 flex items-center gap-1.5 shadow-lg hover:border-primary/60 transition-smooth cursor-default whitespace-nowrap">
-        <Icon size={12} className="text-primary" />
-        <span className="text-xs font-semibold text-foreground">
-          {skill.label}
-        </span>
-        <span className="text-xs font-bold text-primary ml-1">
-          {skill.level}%
-        </span>
-      </div>
-    </motion.div>
-  );
-}
-
-function OrbitShowcase() {
-  return (
-    <div className="relative w-[340px] h-[340px] flex items-center justify-center mx-auto">
-      {/* Center card */}
-      <div className="relative z-10 w-36 h-36 glassmorphic border-primary/40 flex flex-col items-center justify-center glow-neon rounded-2xl">
-        <div className="gradient-neon-purple w-12 h-12 rounded-xl flex items-center justify-center mb-2 shadow-lg">
-          <span className="text-background font-display font-bold text-lg">
-            MR
-          </span>
-        </div>
-        <span className="text-foreground font-display font-semibold text-sm">
-          Muskan
-        </span>
-        <span className="text-primary text-xs font-medium">Founder</span>
-      </div>
-
-      {/* Outer orbit ring with 4 skills */}
-      <OrbitRing radius={ORBIT_RADIUS_OUTER} duration={20}>
-        {skills.map((skill, i) => (
-          <OrbitPill
-            key={skill.label}
-            skill={skill}
-            angle={i * 90}
-            radius={ORBIT_RADIUS_OUTER}
-          />
-        ))}
-      </OrbitRing>
-
-      {/* Inner decorative orbit ring */}
+      {/* Outer aura ring 2 — slowest, largest */}
       <motion.div
-        className="absolute rounded-full border border-accent/8 pointer-events-none"
+        className="absolute rounded-full pointer-events-none"
         style={{
-          width: ORBIT_RADIUS_INNER * 2,
-          height: ORBIT_RADIUS_INNER * 2,
+          width: 240,
+          height: 240,
+          border: `1.5px solid rgba(${ringColor},0.18)`,
+          borderRadius: "50%",
         }}
-        animate={{ rotate: -360 }}
+        animate={{
+          scale: [1, 1.18, 1],
+          opacity: [0.12, 0.32, 0.12],
+        }}
         transition={{
           repeat: Number.POSITIVE_INFINITY,
-          duration: 14,
-          ease: "linear",
+          duration: 4.8,
+          ease: "easeInOut",
+          delay: 0.6,
+        }}
+      />
+      {/* Outer aura ring 1 — medium */}
+      <motion.div
+        className="absolute rounded-full pointer-events-none"
+        style={{
+          width: 228,
+          height: 228,
+          border: `1.5px solid rgba(${ringColor},0.28)`,
+          borderRadius: "50%",
+        }}
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.22, 0.55, 0.22],
+        }}
+        transition={{
+          repeat: Number.POSITIVE_INFINITY,
+          duration: 3.4,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* The circular photo frame */}
+      <div
+        style={{
+          width: 220,
+          height: 220,
+          borderRadius: "50%",
+          overflow: "hidden",
+          border: `3px solid ${borderColor}`,
+          boxShadow: shadowGlow,
+          flexShrink: 0,
+          position: "relative",
+          zIndex: 2,
         }}
       >
-        {[0, 120, 240].map((angle) => {
-          const rad = (angle * Math.PI) / 180;
-          const x = Math.cos(rad) * ORBIT_RADIUS_INNER;
-          const y = Math.sin(rad) * ORBIT_RADIUS_INNER;
-          return (
-            <motion.div
-              key={angle}
-              className="absolute w-2 h-2 rounded-full bg-accent/60 shadow-[0_0_6px_2px_oklch(var(--accent)/0.5)]"
-              style={{
-                left: `calc(50% + ${x}px)`,
-                top: `calc(50% + ${y}px)`,
-                transform: "translate(-50%, -50%)",
-              }}
-              animate={{ rotate: 360 }}
-              transition={{
-                repeat: Number.POSITIVE_INFINITY,
-                duration: 14,
-                ease: "linear",
-              }}
-            />
-          );
-        })}
-      </motion.div>
-
-      {/* Ambient glow */}
-      <div className="absolute w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute w-24 h-24 bg-accent/10 rounded-full blur-2xl pointer-events-none" />
+        {!imgError ? (
+          <img
+            src={src}
+            alt={alt}
+            onError={() => setImgError(true)}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "top center",
+              display: "block",
+            }}
+          />
+        ) : (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              background: isMuskan
+                ? "linear-gradient(135deg, #7c3aed, #a855f7)"
+                : "linear-gradient(135deg, #0891b2, #06b6d4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "3.5rem",
+              fontWeight: 700,
+              color: "#fff",
+            }}
+          >
+            {initials}
+          </div>
+        )}
+      </div>
     </div>
+  );
+}
+
+// --- Premium Founder Card with Circular Photo ---
+function FounderCard({ member, index }: { member: TeamMember; index: number }) {
+  const BadgeIcon = member.badgeIcon;
+  const isMuskan = index === 0;
+
+  const glowPrimary = isMuskan ? "rgba(168,85,247," : "rgba(34,211,238,";
+  const glowSoft = isMuskan ? "rgba(168,85,247,0.18)" : "rgba(34,211,238,0.18)";
+  const glowStrong = isMuskan
+    ? "rgba(168,85,247,0.55)"
+    : "rgba(34,211,238,0.55)";
+  const gradientText = isMuskan
+    ? "linear-gradient(135deg, #c084fc, #ffffff)"
+    : "linear-gradient(135deg, #22d3ee, #ffffff)";
+  const cornerColor = isMuskan
+    ? "rgba(168,85,247,0.8)"
+    : "rgba(34,211,238,0.8)";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      whileHover={{ y: -6, scale: 1.02 }}
+      viewport={{ once: true }}
+      transition={{
+        delay: index * 0.18,
+        duration: 0.75,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className="relative flex flex-col overflow-hidden"
+      style={{
+        background: "rgba(255,255,255,0.032)",
+        backdropFilter: "blur(24px)",
+        borderRadius: "1.5rem",
+        border: `1px solid ${glowSoft}`,
+        boxShadow: `0 0 32px ${glowPrimary}0.22), 0 0 64px ${glowPrimary}0.10), 0 20px 60px rgba(0,0,0,0.6)`,
+        transition: "box-shadow 0.4s ease, border-color 0.4s ease",
+      }}
+      data-ocid={`founder-card-${member.initials.toLowerCase()}`}
+    >
+      {/* Floating micro-particles */}
+      <CardParticles isMuskan={isMuskan} />
+
+      {/* Shimmer sweep on mount */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.06) 50%, transparent 70%)",
+          zIndex: 5,
+          borderRadius: "1.5rem",
+        }}
+        initial={{ x: "-100%" }}
+        animate={{ x: "200%" }}
+        transition={{
+          delay: index * 0.2 + 0.5,
+          duration: 1.2,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Corner accent lines — top-left */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: 40,
+          height: 2,
+          background: `linear-gradient(to right, ${cornerColor}, transparent)`,
+          borderRadius: "0 0 2px 0",
+          zIndex: 10,
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: 2,
+          height: 40,
+          background: `linear-gradient(to bottom, ${cornerColor}, transparent)`,
+          borderRadius: "0 0 2px 0",
+          zIndex: 10,
+        }}
+      />
+      {/* Corner accent lines — bottom-right */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          right: 0,
+          width: 40,
+          height: 2,
+          background: `linear-gradient(to left, ${cornerColor}, transparent)`,
+          zIndex: 10,
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          right: 0,
+          width: 2,
+          height: 40,
+          background: `linear-gradient(to top, ${cornerColor}, transparent)`,
+          zIndex: 10,
+        }}
+      />
+
+      {/* Inner glass border */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 1,
+          borderRadius: "calc(1.5rem - 1px)",
+          border: "1px solid rgba(255,255,255,0.07)",
+          pointerEvents: "none",
+          zIndex: 2,
+        }}
+      />
+
+      {/* Hover gradient overlay */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: isMuskan
+            ? "radial-gradient(ellipse at 50% 0%, rgba(168,85,247,0.08) 0%, transparent 65%)"
+            : "radial-gradient(ellipse at 50% 0%, rgba(34,211,238,0.07) 0%, transparent 65%)",
+          borderRadius: "1.5rem",
+          zIndex: 1,
+        }}
+      />
+
+      <div className="relative z-10 flex flex-col items-center">
+        {/* ── CIRCULAR PHOTO SECTION ── */}
+        <div
+          className="relative w-full flex flex-col items-center"
+          style={{
+            background: isMuskan
+              ? "linear-gradient(180deg, rgba(168,85,247,0.10) 0%, rgba(99,102,241,0.04) 100%)"
+              : "linear-gradient(180deg, rgba(34,211,238,0.08) 0%, rgba(6,182,212,0.03) 100%)",
+            borderRadius: "1.5rem 1.5rem 0 0",
+            paddingTop: "2.5rem",
+            paddingBottom: "1.5rem",
+          }}
+        >
+          {/* Circular photo with aura rings */}
+          <CircularPhoto
+            src={member.photo}
+            alt={`${member.name} — ${member.title}, Maverick Digitals`}
+            initials={member.initials}
+            isMuskan={isMuskan}
+          />
+
+          {/* Badge icon — overlapping bottom of circle */}
+          <div
+            className={`relative mt-[-20px] w-11 h-11 rounded-full bg-gradient-to-br ${member.badgeColor} flex items-center justify-center shadow-lg`}
+            style={{
+              border: "3px solid rgba(8,4,20,0.9)",
+              boxShadow: `0 0 16px ${glowStrong}`,
+              zIndex: 5,
+            }}
+          >
+            <BadgeIcon size={18} className="text-background" />
+          </div>
+        </div>
+
+        {/* ── TEXT CONTENT ── */}
+        <div className="px-7 pb-8 pt-5 w-full">
+          {/* Name with gradient */}
+          <div className="text-center mb-4">
+            <h2
+              className="font-display font-bold text-2xl mb-2 tracking-tight"
+              style={{
+                background: gradientText,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              {member.name}
+            </h2>
+            <span
+              className="inline-block text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full"
+              style={{
+                background: isMuskan
+                  ? "rgba(168,85,247,0.14)"
+                  : "rgba(34,211,238,0.12)",
+                border: `1px solid ${isMuskan ? "rgba(168,85,247,0.45)" : "rgba(34,211,238,0.40)"}`,
+                color: isMuskan ? "rgba(192,132,252,1)" : "rgba(34,211,238,1)",
+              }}
+            >
+              {member.title}
+            </span>
+          </div>
+
+          {/* Bio */}
+          <p className="text-muted-foreground leading-relaxed mb-5 text-[14.5px] text-center">
+            {member.bio}
+          </p>
+
+          {/* Skill tags */}
+          <div className="flex flex-wrap gap-2 mb-5 justify-center">
+            {member.skills.map((skill) => (
+              <motion.span
+                key={skill}
+                whileHover={{ scale: 1.07, borderColor: glowStrong }}
+                className="text-xs font-medium px-3 py-1 rounded-full cursor-default transition-all duration-200"
+                style={{
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  color: "rgba(255,255,255,0.7)",
+                }}
+              >
+                {skill}
+              </motion.span>
+            ))}
+          </div>
+
+          {/* Social links */}
+          <div
+            className="flex items-center justify-center gap-3 pt-5 border-t"
+            style={{ borderColor: "rgba(255,255,255,0.07)" }}
+          >
+            {member.socials.map(({ icon: Icon, href, label, color }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className={`w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground ${color} hover:scale-110 transition-all duration-200`}
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.09)",
+                }}
+                data-ocid={`${member.initials.toLowerCase()}-social-${label.toLowerCase()}`}
+              >
+                <Icon size={15} />
+              </a>
+            ))}
+            <span className="text-muted-foreground text-xs ml-2 opacity-60">
+              Follow the journey
+            </span>
+          </div>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
@@ -253,11 +846,7 @@ function TimelineItem({
   item,
   index,
   isLast,
-}: {
-  item: (typeof timeline)[0];
-  index: number;
-  isLast: boolean;
-}) {
+}: { item: (typeof timeline)[0]; index: number; isLast: boolean }) {
   const { ref, style } = useRevealOnScroll(index * 100);
   return (
     <div
@@ -265,17 +854,14 @@ function TimelineItem({
       style={style}
       className="relative flex gap-6"
     >
-      {/* Line */}
       {!isLast && (
         <div className="absolute left-[19px] top-10 bottom-0 w-px bg-gradient-to-b from-primary/40 to-transparent" />
       )}
-      {/* Dot */}
       <div className="relative flex-shrink-0 mt-1">
         <div className="w-10 h-10 rounded-full glassmorphic border-primary/40 flex items-center justify-center glow-neon">
           <div className="w-2 h-2 rounded-full gradient-neon-purple" />
         </div>
       </div>
-      {/* Content */}
       <div className="pb-10 flex-1">
         <div className="flex items-center gap-3 mb-1">
           <span className="font-display font-bold text-primary text-sm">
@@ -325,8 +911,6 @@ export function About() {
   });
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-
-  const { ref: titleRef, style: titleStyle } = useRevealOnScroll(0);
   const { ref: missionRef, style: missionStyle } = useRevealOnScroll(0);
   const { ref: ctaRef, style: ctaStyle } = useRevealOnScroll(0);
 
@@ -338,7 +922,6 @@ export function About() {
         className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
         data-ocid="about-hero"
       >
-        {/* Ambient layers */}
         <div className="absolute inset-0 grid-glow-bg opacity-30 pointer-events-none" />
         <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/6 rounded-full blur-[180px] pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[140px] pointer-events-none" />
@@ -356,7 +939,6 @@ export function About() {
           >
             The Maverick Story
           </motion.p>
-
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -369,7 +951,6 @@ export function About() {
             <br />
             Brand
           </motion.h1>
-
           <motion.p
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -380,7 +961,6 @@ export function About() {
             behind Maverick Digitals and the strategist who dares to think
             differently.
           </motion.p>
-
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
@@ -389,7 +969,6 @@ export function About() {
           />
         </motion.div>
 
-        {/* Scroll cue */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -411,106 +990,81 @@ export function About() {
         </motion.div>
       </section>
 
-      {/* ── FOUNDER + ORBIT SKILLS ── */}
+      {/* ── FOUNDERS / TEAM ── */}
       <section
         className="relative py-28 overflow-hidden"
+        style={{ minHeight: "800px", background: "#060210" }}
         data-ocid="about-founder"
       >
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[160px] pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            {/* Founder profile */}
+        {/* Galaxy canvas — fills 100% of section */}
+        <div
+          className="absolute inset-0"
+          style={{ zIndex: 0 }}
+          aria-hidden="true"
+        >
+          <GalaxyCanvas />
+        </div>
+
+        {/* Very subtle radial vignette — doesn't hide canvas */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 50%, rgba(6,2,16,0.25) 100%)",
+            zIndex: 1,
+          }}
+        />
+
+        {/* Section radial purple glow center */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 50% 40% at 50% 55%, rgba(168,85,247,0.06) 0%, transparent 70%)",
+            zIndex: 1,
+          }}
+        />
+
+        <div className="relative max-w-7xl mx-auto px-6" style={{ zIndex: 10 }}>
+          {/* Section header */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <p className="text-primary text-xs font-semibold uppercase tracking-[0.3em] mb-4">
+              The Visionaries
+            </p>
+            <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground leading-tight mb-4">
+              Meet the{" "}
+              <span className="gradient-text-purple">Minds Behind</span>
+              <br />
+              the Maverick
+            </h2>
+            <p className="text-muted-foreground text-base max-w-xl mx-auto">
+              Two visionaries. One mission — to build brands that don't just
+              compete, they define the category.
+            </p>
+          </motion.div>
+
+          {/* 2-column founder grid */}
+          <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-4xl mx-auto items-stretch">
+            {teamMembers.map((member, i) => (
+              <FounderCard key={member.name} member={member} index={i} />
+            ))}
+
+            {/* Thin glowing separator — desktop only */}
             <div
-              ref={titleRef as React.RefObject<HTMLDivElement>}
-              style={titleStyle}
-            >
-              <div className="relative glassmorphic border-primary/20 p-8 overflow-hidden hover:border-primary/40 transition-smooth group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 rounded-lg opacity-0 group-hover:opacity-100 transition-smooth pointer-events-none" />
-
-                {/* Neon frame edge glow */}
-                <div className="absolute inset-0 rounded-lg border border-transparent group-hover:border-primary/20 transition-smooth pointer-events-none" />
-                <div className="absolute top-0 left-0 w-24 h-px bg-gradient-to-r from-primary/70 to-transparent" />
-                <div className="absolute top-0 left-0 w-px h-24 bg-gradient-to-b from-primary/70 to-transparent" />
-                <div className="absolute bottom-0 right-0 w-24 h-px bg-gradient-to-l from-accent/70 to-transparent" />
-                <div className="absolute bottom-0 right-0 w-px h-24 bg-gradient-to-t from-accent/70 to-transparent" />
-
-                <div className="relative z-10">
-                  {/* Portrait placeholder */}
-                  <div className="relative w-28 h-28 mb-6">
-                    <div className="w-full h-full rounded-2xl gradient-neon-purple flex items-center justify-center glow-neon text-background font-display font-bold text-3xl shadow-elevated">
-                      MR
-                    </div>
-                    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-primary/30 to-accent/30 blur-sm -z-10" />
-                    {/* Animated status dot */}
-                    <motion.div
-                      className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-400 border-2 border-background"
-                      animate={{ scale: [1, 1.3, 1], opacity: [1, 0.6, 1] }}
-                      transition={{
-                        repeat: Number.POSITIVE_INFINITY,
-                        duration: 2,
-                      }}
-                    />
-                  </div>
-
-                  <h2 className="font-display font-bold text-3xl text-foreground mb-1">
-                    Muskan Rathod
-                  </h2>
-                  <p className="text-primary font-semibold text-sm uppercase tracking-wider mb-5">
-                    Founder & Brand Strategist
-                  </p>
-
-                  <p className="text-muted-foreground leading-relaxed mb-4 text-[15px]">
-                    A brand strategist and growth marketer with a relentless
-                    drive to build brands that matter. Muskan founded Maverick
-                    Digitals after witnessing too many great businesses fade
-                    into obscurity — not from lack of quality, but from lack of
-                    story.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed text-[15px]">
-                    With a background across 50+ brands and multiple industries,
-                    she brings a rare fusion of creative vision and analytical
-                    rigor — turning brand narratives into market-moving results.
-                  </p>
-
-                  {/* Social links */}
-                  <div className="flex items-center gap-4 mt-6 pt-6 border-t border-border/50">
-                    {socials.map(({ icon: Icon, href, label, color }) => (
-                      <a
-                        key={label}
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={label}
-                        className={`w-9 h-9 glassmorphic border-white/10 flex items-center justify-center text-muted-foreground ${color} hover:border-primary/40 hover:scale-110 transition-smooth`}
-                        data-ocid={`social-${label.toLowerCase()}`}
-                      >
-                        <Icon size={15} />
-                      </a>
-                    ))}
-                    <span className="text-muted-foreground text-sm ml-2">
-                      Follow the journey
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Orbit skills showcase */}
-            <div className="flex flex-col items-center gap-6">
-              <div className="text-center mb-4">
-                <p className="text-primary text-xs font-semibold uppercase tracking-[0.2em] mb-2">
-                  Core Expertise
-                </p>
-                <h3 className="font-display font-bold text-2xl text-foreground">
-                  Skills in Orbit
-                </h3>
-              </div>
-              <OrbitShowcase />
-              <p className="text-muted-foreground text-sm text-center max-w-xs">
-                Each discipline in constant motion — always circling the core
-                mission of building brands that dominate.
-              </p>
-            </div>
+              className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px"
+              style={{
+                height: "70%",
+                background:
+                  "linear-gradient(to bottom, transparent, rgba(168,85,247,0.35) 30%, rgba(34,211,238,0.35) 70%, transparent)",
+                zIndex: 20,
+              }}
+            />
           </div>
         </div>
       </section>
@@ -537,7 +1091,6 @@ export function About() {
               <span className="gradient-text-cyan">changed the game</span>
             </h2>
           </motion.div>
-
           <div className="space-y-6 text-[16px] text-muted-foreground leading-[1.85]">
             {storyParagraphs.map((para, i) => (
               <motion.p
@@ -627,7 +1180,6 @@ export function About() {
                 </p>
               </motion.div>
             </div>
-
             <div className="relative">
               {timeline.map((item, i) => (
                 <TimelineItem
@@ -646,7 +1198,6 @@ export function About() {
       <section className="relative py-28 overflow-hidden" data-ocid="about-cta">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/8 rounded-full blur-[120px] pointer-events-none" />
-
         <div
           ref={ctaRef as React.RefObject<HTMLDivElement>}
           style={ctaStyle}
@@ -664,7 +1215,6 @@ export function About() {
             Your brand has a story that deserves to be told at scale. Let's make
             it impossible to ignore.
           </p>
-
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link to="/contact">
               <Button
