@@ -13,56 +13,90 @@ import { useRef, useState } from "react";
 
 const services = [
   {
-    id: "seo",
+    id: "personal-branding",
     icon: Globe,
-    title: "SEO & Organic Growth",
+    title: "Personal Branding",
     description:
-      "Rank higher on Google with data-driven SEO strategies built for Mumbai businesses. From on-page optimization to link building, we drive sustainable organic traffic.",
+      "Strategy, ghostwriting, content systems for founders & creators",
+    subItems: [
+      "Personal Brand Strategy",
+      "Ghostwriting & Content",
+      "Founder Positioning",
+      "Content Systems",
+    ],
     accent: "primary",
     size: "large",
   },
   {
-    id: "paid",
-    icon: BarChart3,
-    title: "Paid Media & Performance Ads",
-    description:
-      "Maximize your ROI with precision-targeted paid ad campaigns on Google, Meta, and more. Our performance marketing experts in Mumbai deliver measurable results.",
+    id: "social-media",
+    icon: TrendingUp,
+    title: "Social Media Management",
+    description: "Done-for-you content, growth, and analytics across platforms",
+    subItems: [
+      "Analytics & Reporting",
+      "Growth Strategy",
+      "Community Management",
+      "Content Planning & Creation",
+    ],
     accent: "secondary",
     size: "small",
   },
   {
-    id: "brand",
-    icon: Palette,
-    title: "Brand Strategy & Identity",
-    description:
-      "Build a brand that commands attention. Our Mumbai-based branding team crafts compelling identities that differentiate your business and build lasting customer loyalty.",
+    id: "web-dev",
+    icon: Rocket,
+    title: "Website & App Development",
+    description: "High-performance sites, e-commerce, and custom web apps",
+    subItems: [
+      "Performance Optimization",
+      "Mobile App Development",
+      "E-commerce Solutions",
+      "Custom Web Development",
+    ],
     accent: "accent",
     size: "small",
   },
   {
-    id: "content",
-    icon: FileText,
-    title: "Content Marketing",
+    id: "seo-sem",
+    icon: BarChart3,
+    title: "SEO & SEM",
     description:
-      "From blogs to reels, we create content that ranks on Google and resonates with your audience. Strategic content marketing that drives traffic and builds trust.",
+      "Keyword strategy, optimization, Google Ads, and inbound lead engines",
+    subItems: [
+      "Local SEO Optimization",
+      "Google Ads Management",
+      "Keyword Research & Strategy",
+      "Technical SEO Audit",
+    ],
     accent: "primary",
     size: "small",
   },
   {
-    id: "social",
-    icon: TrendingUp,
-    title: "Social Media Marketing",
+    id: "performance",
+    icon: FileText,
+    title: "Performance Marketing",
     description:
-      "Grow your presence on Instagram, LinkedIn, and beyond. Maverick Digitals is a top social media agency in Mumbai delivering engagement that converts.",
+      "ROI-first Meta & Google campaigns with funnel-driven execution",
+    subItems: [
+      "ROI Tracking & Analysis",
+      "Conversion Optimization",
+      "Google Ads Campaigns",
+      "Meta Ads Management",
+    ],
     accent: "secondary",
     size: "small",
   },
   {
-    id: "growth",
-    icon: Rocket,
-    title: "Growth Marketing",
+    id: "branding",
+    icon: Palette,
+    title: "Branding & Strategy",
     description:
-      "Full-funnel growth strategies combining SEO, paid ads, content, and CRO. We don't just market — we engineer growth for Mumbai businesses and beyond.",
+      "Identity, messaging, GTM launches, and positioning frameworks",
+    subItems: [
+      "Brand Guidelines",
+      "Go-to-Market Strategy",
+      "Messaging Framework",
+      "Brand Identity Design",
+    ],
     accent: "accent",
     size: "large",
   },
@@ -160,6 +194,22 @@ function ServiceCard({
             {service.description}
           </p>
 
+          {service.subItems && service.subItems.length > 0 && (
+            <ul className="mt-4 space-y-1.5">
+              {service.subItems.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-center gap-2 text-xs text-muted-foreground"
+                >
+                  <span
+                    className={`w-1 h-1 rounded-full flex-shrink-0 bg-current ${accent.text}`}
+                  />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
+
           <div
             className={`mt-5 inline-flex items-center gap-2 text-xs font-semibold ${accent.text} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
           >
@@ -194,12 +244,16 @@ export function ServicesSection() {
               What We Do
             </p>
             <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground">
-              Digital Marketing Services in Mumbai
+              Our Core Services
               <br />
               <span className="gradient-text-purple">
                 That Deliver Real Results
               </span>
             </h2>
+            <p className="text-muted-foreground text-sm mt-3 max-w-xl">
+              End-to-end digital marketing solutions designed to scale your
+              business profitably and sustainably
+            </p>
           </div>
           <Link
             to="/services"

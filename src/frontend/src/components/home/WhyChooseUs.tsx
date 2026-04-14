@@ -6,42 +6,42 @@ const points = [
   {
     id: "data",
     icon: BarChart2,
-    title: "Data-First Strategy",
+    title: "Performance-Driven",
     description:
-      "Every campaign is built on real data and audience insights. No guesswork — only intelligent strategies that improve over time.",
+      "Data-driven results, not vanity metrics. Every campaign is built around measurable business outcomes and real ROI.",
     accent: "primary",
-    stat: "3.2x",
-    statLabel: "Avg. ROI improvement",
+    stat: "200%+",
+    statLabel: "Average ROI",
   },
   {
     id: "creative",
     icon: Lightbulb,
-    title: "Creative Precision",
+    title: "Data-Informed Creativity",
     description:
-      "We blend bold creativity with strategic thinking to craft content, ads, and branding that cut through the noise and drive action.",
+      "We blend creativity, psychology, and data to craft campaigns that convert — not just content that looks good.",
     accent: "secondary",
-    stat: "190%",
-    statLabel: "Avg. organic traffic lift",
+    stat: "15M+",
+    statLabel: "Organic Views",
   },
   {
     id: "transparent",
     icon: Eye,
-    title: "Radical Transparency",
+    title: "End-to-End Capability",
     description:
-      "You always know what's happening with your campaigns. Real-time reporting, honest communication, and zero hidden fees.",
+      "From strategy to execution, we handle everything in-house with our lean, high-output team.",
     accent: "accent",
-    stat: "97%",
-    statLabel: "Client retention rate",
+    stat: "40+",
+    statLabel: "Brands Scaled",
   },
   {
     id: "proven",
     icon: ShieldCheck,
-    title: "Proven Results",
+    title: "Founder-Led Approach",
     description:
-      "50+ brands scaled. $12M+ revenue generated. 97% client retention. Our track record speaks louder than any pitch deck.",
+      "Founder-led with direct involvement. Co-founders Muskan Rathod and Dhaval Shah are personally invested in every client's success.",
     accent: "primary",
-    stat: "50+",
-    statLabel: "Brands transformed",
+    stat: "2X+",
+    statLabel: "Minimum Revenue Growth",
   },
 ];
 
@@ -79,7 +79,7 @@ const accentColor = {
 const ORBIT_ITEMS = [
   {
     id: "o1",
-    label: "SEO",
+    label: "SEO & SEM",
     gradientFrom: "oklch(0.45 0.28 308)",
     gradientTo: "oklch(0.35 0.22 280)",
     glow: "oklch(0.68 0.24 308)",
@@ -88,7 +88,7 @@ const ORBIT_ITEMS = [
   },
   {
     id: "o2",
-    label: "Ads",
+    label: "Performance",
     gradientFrom: "oklch(0.42 0.25 200)",
     gradientTo: "oklch(0.32 0.2 220)",
     glow: "oklch(0.72 0.19 200)",
@@ -97,7 +97,7 @@ const ORBIT_ITEMS = [
   },
   {
     id: "o3",
-    label: "Brand",
+    label: "Brand Strategy",
     gradientFrom: "oklch(0.40 0.26 260)",
     gradientTo: "oklch(0.30 0.22 240)",
     glow: "oklch(0.65 0.22 260)",
@@ -106,7 +106,7 @@ const ORBIT_ITEMS = [
   },
   {
     id: "o4",
-    label: "Social",
+    label: "Social Media",
     gradientFrom: "oklch(0.44 0.27 308)",
     gradientTo: "oklch(0.34 0.24 290)",
     glow: "oklch(0.68 0.24 308)",
@@ -115,7 +115,7 @@ const ORBIT_ITEMS = [
   },
   {
     id: "o5",
-    label: "Content",
+    label: "Web Dev",
     gradientFrom: "oklch(0.38 0.24 195)",
     gradientTo: "oklch(0.28 0.2 210)",
     glow: "oklch(0.72 0.19 200)",
@@ -124,7 +124,7 @@ const ORBIT_ITEMS = [
   },
   {
     id: "o6",
-    label: "Growth",
+    label: "Personal Brand",
     gradientFrom: "oklch(0.42 0.26 265)",
     gradientTo: "oklch(0.32 0.22 250)",
     glow: "oklch(0.65 0.22 260)",
@@ -602,13 +602,12 @@ export function WhyChooseUs() {
             Why Maverick
           </p>
           <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground mb-5">
-            Why Mumbai Businesses Choose{" "}
-            <span className="gradient-text-cyan">Maverick Digitals</span>
+            Why Choose{" "}
+            <span className="gradient-text-cyan">Maverick Digitals?</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto text-base leading-relaxed">
-            We're not your average digital marketing agency in Mumbai. We
-            combine data intelligence, creative excellence, and radical
-            transparency to deliver results that matter.
+            A Mumbai-based digital marketing agency with a proven track record
+            of scaling ambitious brands.
           </p>
         </div>
 
@@ -661,9 +660,9 @@ export function WhyChooseUs() {
             {/* Below orbit stats strip */}
             <div className="hidden sm:flex items-center gap-6 mt-4">
               {[
-                { value: "10M+", label: "Views Generated" },
-                { value: "35+", label: "Brands Scaled" },
-                { value: "200%", label: "Avg. ROI" },
+                { value: "15M+", label: "Organic Views" },
+                { value: "40+", label: "Brands Scaled" },
+                { value: "200%+", label: "Avg. ROI" },
               ].map((s) => (
                 <div key={s.label} className="text-center">
                   <p className="font-display font-black text-lg gradient-text-purple leading-none">

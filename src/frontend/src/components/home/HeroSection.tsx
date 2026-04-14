@@ -164,28 +164,36 @@ export function HeroSection() {
           className="mt-9 flex flex-col items-center gap-3"
         >
           <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed">
-            Maverick Digitals is a Mumbai-based digital marketing company
-            specializing in SEO, Performance Marketing, Social Media, Branding,
-            and Content Creation — helping ambitious brands grow fast and
-            dominate their market.
+            We help ambitious brands scale through high-conversion strategy,
+            storytelling, and execution. Blending creativity, psychology, and
+            data to drive measurable business outcomes.
+          </p>
+          <p className="text-muted-foreground/60 max-w-2xl text-sm leading-relaxed">
+            Maverick Digitals is a Mumbai-based full-stack digital marketing
+            agency co-founded by Muskan Rathod and Dhaval Shah. We blend
+            creativity, psychology, and data to deliver measurable business
+            outcomes for ambitious brands.
           </p>
           {/* Proof stats strip */}
           <div className="flex items-center gap-6 mt-4 text-xs font-semibold tracking-[0.15em] uppercase text-muted-foreground/70">
             <span className="flex items-center gap-1.5">
-              <span className="text-primary font-bold text-sm">10M+</span> Views
+              <span className="text-primary font-bold text-sm">15M+</span>{" "}
+              Organic Views
             </span>
             <span className="w-px h-4 bg-border/40" />
             <span className="flex items-center gap-1.5">
-              <span className="text-primary font-bold text-sm">35+</span> Brands
+              <span className="text-primary font-bold text-sm">40+</span> Brands
+              Scaled
             </span>
             <span className="w-px h-4 bg-border/40" />
             <span className="flex items-center gap-1.5">
-              <span className="text-primary font-bold text-sm">200%</span> ROI
+              <span className="text-primary font-bold text-sm">200%+</span>{" "}
+              Average ROI
             </span>
             <span className="w-px h-4 bg-border/40" />
             <span className="flex items-center gap-1.5">
-              <span className="text-primary font-bold text-sm">150K+</span>{" "}
-              Followers
+              <span className="text-primary font-bold text-sm">2X+</span>{" "}
+              Revenue Growth
             </span>
           </div>
         </div>

@@ -5,33 +5,46 @@ import { useRef, useState } from "react";
 const faqs = [
   {
     id: "faq1",
-    question: "What services does Maverick Digitals offer?",
+    question: "What does Maverick Digitals do?",
     answer:
-      "Maverick Digitals offers Social Media Marketing, Performance Marketing (Google & Meta Ads), Brand Strategy & Identity, Content Creation, and SEO. As a full-service digital marketing agency in Mumbai, we provide end-to-end digital solutions for businesses of all sizes.",
+      "Maverick Digitals is a Mumbai-based full-stack digital marketing agency helping ambitious brands scale through SEO, AEO, GEO, performance marketing, social media management, brand strategy, and website development. We've scaled 40+ brands with 15M+ organic views and 200%+ ROI.",
   },
   {
     id: "faq2",
-    question: "Why should I choose a Mumbai-based digital marketing agency?",
+    question: "Is Maverick Digitals a Mumbai-based digital marketing agency?",
     answer:
-      "A Mumbai-based digital marketing agency like Maverick Digitals understands the local market dynamics, consumer behavior, and competitive landscape unique to Mumbai and Maharashtra. We combine local expertise with global best practices to deliver campaigns that truly resonate with your target audience.",
+      "Yes. Maverick Digitals is headquartered in Mumbai, Maharashtra, India. We serve clients across India, UAE, USA, UK, and Australia — making us a globally capable Mumbai-based digital marketing company with proven results in diverse markets.",
   },
   {
     id: "faq3",
-    question: "How much does digital marketing cost in Mumbai?",
+    question:
+      "What is AEO and does Maverick Digitals offer Answer Engine Optimization?",
     answer:
-      "Digital marketing costs in Mumbai vary based on scope and services. At Maverick Digitals, our packages start from ₹25,000/month for focused campaigns and scale based on your goals. We offer transparent pricing with no hidden fees and a results-first approach.",
+      "AEO (Answer Engine Optimization) is the practice of optimizing content to appear in featured snippets, voice search results, and AI answer boxes. Yes, Maverick Digitals offers AEO as part of our search visibility services to help your brand appear when people ask questions online.",
   },
   {
     id: "faq4",
-    question: "How long does it take to see results from digital marketing?",
+    question: "What is GEO and how does Generative Engine Optimization work?",
     answer:
-      "Results timelines vary by channel. Paid ads (Google, Meta) can show results within 2–4 weeks. SEO typically takes 3–6 months to gain traction. Social media engagement grows within 1–2 months with consistent content. Maverick Digitals sets clear milestones so you always know what to expect.",
+      "GEO (Generative Engine Optimization) ensures your brand is cited by AI tools like ChatGPT, Gemini, and Perplexity. Maverick Digitals implements GEO strategies using structured content, entity markup, and authority building so AI platforms recommend your business when users ask about relevant topics.",
   },
   {
     id: "faq5",
-    question: "Is Maverick Digitals a good digital marketing agency in Mumbai?",
+    question: "How much does digital marketing cost with Maverick Digitals?",
     answer:
-      "Yes. Maverick Digitals is one of Mumbai's top-rated digital marketing companies with a proven track record of scaling 50+ brands, generating $12M+ in revenue, and maintaining a 97% client retention rate. Our data-driven strategies, creative campaigns, and radical transparency make us the preferred choice for Mumbai businesses.",
+      "Pricing varies based on your business goals, services required, and campaign scale. We offer flexible packages for D2C brands, startups, coaches, and enterprises. Contact us at maverickdigitals18@gmail.com or fill out our contact form for a custom growth proposal.",
+  },
+  {
+    id: "faq6",
+    question: "Which industries does Maverick Digitals serve?",
+    answer:
+      "We serve D2C Brands, Healthcare & Clinics, Travel & Hospitality, Coaches & Consultants, B2B Startups, and Wedding Planners. Our team has delivered results across India, UAE, USA, UK, and Australia with proven success across diverse markets and industries.",
+  },
+  {
+    id: "faq7",
+    question: "Who founded Maverick Digitals?",
+    answer:
+      "Maverick Digitals was co-founded by Muskan Rathod (Founder & Brand Strategist) and Dhaval Shah (Co-Founder & Tech Innovator) in Mumbai, India. Together they bring expertise in brand strategy, performance marketing, and technical innovation to help brands achieve measurable growth.",
   },
 ];
 
@@ -132,8 +145,8 @@ export function FaqSection() {
             <span className="gradient-text-cyan">Questions</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto text-sm leading-relaxed">
-            Still have questions? Reach out and we'll respond within one
-            business day.
+            Everything you need to know about working with Mumbai's leading
+            digital marketing agency.
           </p>
         </div>
 

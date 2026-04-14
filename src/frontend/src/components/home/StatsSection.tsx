@@ -1,10 +1,10 @@
 import { useRevealOnScroll } from "@/hooks/useIntersectionObserver";
 
 const stats = [
-  { value: "50+", label: "Brands Transformed", color: "text-primary" },
-  { value: "$12M+", label: "Revenue Generated", color: "text-secondary" },
-  { value: "280%", label: "Average ROAS", color: "text-accent" },
-  { value: "97%", label: "Client Retention", color: "text-primary" },
+  { value: "40+", label: "Brands Scaled", color: "text-primary" },
+  { value: "15M+", label: "Organic Views", color: "text-secondary" },
+  { value: "200%+", label: "Average ROI", color: "text-accent" },
+  { value: "2X+", label: "Average Revenue Growth", color: "text-primary" },
 ];
 
 export function StatsSection() {

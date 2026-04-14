@@ -19,12 +19,12 @@ const quickLinks = [
 ];
 
 const services = [
-  "Strategic Branding",
-  "Performance Marketing",
-  "UI/UX & Web Design",
-  "Content Creation",
+  "Personal Branding",
   "Social Media Management",
-  "SEO & Analytics",
+  "Website & App Development",
+  "SEO & SEM",
+  "Performance Marketing",
+  "Branding & Strategy",
 ];
 
 export function Footer() {
@@ -55,11 +55,14 @@ export function Footer() {
                 <span className="text-primary"> Digitals</span>
               </span>
             </Link>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Maverick Digitals is a Mumbai-based digital marketing company
-              specializing in Social Media Marketing, Performance Marketing,
-              Branding, Content Creation, and Paid Ads. We help ambitious brands
-              grow faster.
+            <p className="text-muted-foreground text-sm leading-relaxed mb-3">
+              Maverick Digitals is a Mumbai-based full-stack digital marketing
+              agency helping ambitious brands scale through high-conversion
+              strategy, storytelling, and execution. Co-founded by Muskan Rathod
+              and Dhaval Shah.
+            </p>
+            <p className="text-muted-foreground/70 text-xs leading-relaxed mb-6">
+              Serving clients across India, UAE, USA, UK, and Australia.
             </p>
             <div className="flex items-center gap-3">
               {[
@@ -140,9 +143,9 @@ export function Footer() {
             </h4>
             <ul className="space-y-4">
               {[
-                { icon: Mail, text: "hello@maverickdigitals.com" },
-                { icon: Phone, text: "+1 (555) 234-5678" },
-                { icon: MapPin, text: "Mumbai, India" },
+                { icon: Mail, text: "maverickdigitals18@gmail.com" },
+                { icon: Phone, text: "+91 98765 43210" },
+                { icon: MapPin, text: "Mumbai, Maharashtra, India" },
               ].map(({ icon: Icon, text }) => (
                 <li
                   key={text}
