@@ -1,6 +1,7 @@
 import { type ReactNode, useEffect, useRef } from "react";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
+import SplashCursor from "./SplashCursor";
 
 interface LayoutProps {
   children: ReactNode;
@@ -44,6 +45,9 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Fluid splash cursor effect - canvas overlay */}
+      <SplashCursor />
+
       {/* Global cursor glow effect */}
       <div
         ref={cursorGlowRef}
