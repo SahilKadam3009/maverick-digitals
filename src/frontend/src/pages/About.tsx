@@ -469,9 +469,9 @@ function StatBadge({
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       style={style}
-      className="flex flex-col items-center glassmorphic border-primary/20 px-8 py-6 hover:border-primary/40 transition-smooth"
+      className="flex flex-col items-center glassmorphic border-primary/20 px-4 sm:px-8 py-5 sm:py-6 hover:border-primary/40 transition-smooth"
     >
-      <span className="font-display font-bold text-4xl gradient-text-purple mb-1">
+      <span className="font-display font-bold text-2xl sm:text-4xl gradient-text-purple mb-1">
         {stat.value}
       </span>
       <span className="text-muted-foreground text-sm text-center">
@@ -508,7 +508,7 @@ export function About() {
 
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
-          className="relative z-10 text-center px-6 max-w-4xl mx-auto"
+          className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto"
         >
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -522,7 +522,7 @@ export function About() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-bold text-5xl md:text-7xl lg:text-8xl text-foreground leading-[0.95] tracking-tight mb-8"
+            className="font-display font-bold text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-foreground leading-[0.95] tracking-tight mb-8"
           >
             The Mind
             <br />
@@ -611,7 +611,10 @@ export function About() {
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-6" style={{ zIndex: 10 }}>
+        <div
+          className="relative max-w-7xl mx-auto px-4 sm:px-6"
+          style={{ zIndex: 10 }}
+        >
           {/* Section header */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -637,7 +640,7 @@ export function About() {
           </motion.div>
 
           {/* ProfileCard grid */}
-          <div className="flex flex-col md:flex-row gap-12 justify-center items-center md:items-start w-full">
+          <div className="flex flex-col md:flex-row gap-8 sm:gap-12 justify-center items-center md:items-start w-full">
             {/* Muskan Rathod - Founder */}
             <motion.div
               initial={{ opacity: 0, y: 50, scale: 0.96 }}
@@ -779,7 +782,7 @@ export function About() {
         data-ocid="about-story"
       >
         <div className="absolute inset-0 grid-glow-bg opacity-20 pointer-events-none" />
-        <div className="max-w-3xl mx-auto px-6 relative z-10">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -789,7 +792,7 @@ export function About() {
             <p className="text-primary text-xs font-semibold uppercase tracking-[0.2em] mb-4 text-center">
               The Journey
             </p>
-            <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground text-center mb-10 leading-tight">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-foreground text-center mb-10 leading-tight">
               How a rebel marketer
               <br />
               <span className="gradient-text-cyan">changed the game</span>
@@ -820,12 +823,12 @@ export function About() {
         <div
           ref={missionRef as React.RefObject<HTMLDivElement>}
           style={missionStyle}
-          className="max-w-5xl mx-auto px-6 text-center"
+          className="max-w-5xl mx-auto px-4 sm:px-6 text-center"
         >
           <p className="text-primary text-xs font-semibold uppercase tracking-[0.3em] mb-6">
             Our Mission
           </p>
-          <blockquote className="font-display font-bold text-3xl md:text-5xl lg:text-6xl leading-tight">
+          <blockquote className="font-display font-bold text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-tight">
             <span className="text-foreground">
               We don't just market brands.
             </span>
@@ -846,8 +849,8 @@ export function About() {
         className="py-16 border-y border-border/40"
         data-ocid="about-stats"
       >
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
             {stats.map((stat, i) => (
               <StatBadge key={stat.label} stat={stat} index={i} />
             ))}
@@ -861,7 +864,7 @@ export function About() {
         data-ocid="about-timeline"
       >
         <div className="absolute right-0 top-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[140px] pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <div>
               <motion.div
@@ -906,7 +909,7 @@ export function About() {
         <div
           ref={ctaRef as React.RefObject<HTMLDivElement>}
           style={ctaStyle}
-          className="relative z-10 max-w-3xl mx-auto px-6 text-center"
+          className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center"
         >
           <p className="text-primary text-xs font-semibold uppercase tracking-[0.3em] mb-4">
             Ready to Start?

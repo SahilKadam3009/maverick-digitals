@@ -109,7 +109,7 @@ function ParticleField() {
     resize();
     window.addEventListener("resize", resize);
 
-    const count = 55;
+    const count = window.innerWidth < 768 ? 25 : 55;
     for (let i = 0; i < count; i++) {
       particles.push({
         x: Math.random() * canvas.width,
@@ -245,7 +245,7 @@ export function Contact() {
     }`;
 
   return (
-    <div className="relative pt-24 pb-24 min-h-screen overflow-hidden">
+    <div className="relative pt-20 sm:pt-24 pb-24 min-h-screen overflow-hidden">
       {/* Animated particle field */}
       <ParticleField />
 
@@ -255,7 +255,7 @@ export function Contact() {
       <div className="absolute bottom-1/3 right-1/5 w-72 h-72 bg-secondary/8 rounded-full blur-[110px] pointer-events-none" />
       <div className="absolute top-2/3 left-1/2 w-48 h-48 bg-accent/6 rounded-full blur-[90px] pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         {/* ── Header ─────────────────────────────────────────────────────── */}
         <div
           ref={titleRef as React.RefObject<HTMLDivElement>}
@@ -280,7 +280,7 @@ export function Contact() {
         <div
           ref={statsRef as React.RefObject<HTMLDivElement>}
           style={statsStyle}
-          className="grid grid-cols-3 gap-4 mb-14 max-w-2xl mx-auto"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-14 max-w-2xl mx-auto"
           data-ocid="contact-stats"
         >
           {STATS.map(({ value, label, icon: Icon }) => (

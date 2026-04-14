@@ -333,12 +333,12 @@ export function Services() {
   const { ref: ctaRef, style: ctaStyle } = useRevealOnScroll(0);
 
   return (
-    <div className="relative pt-24 pb-20 overflow-hidden">
+    <div className="relative pt-20 sm:pt-24 pb-20 overflow-hidden">
       {/* Global background */}
       <div className="absolute inset-0 grid-glow-bg opacity-40 pointer-events-none" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-primary/8 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         {/* ── Hero ───────────────────────────────────────────────── */}
         <div
           ref={titleRef as React.RefObject<HTMLDivElement>}
@@ -350,7 +350,7 @@ export function Services() {
             <span className="w-6 h-px bg-primary inline-block" />
             What We Do
           </p>
-          <h1 className="font-display font-bold text-5xl md:text-7xl text-foreground leading-[1.05] mb-6">
+          <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-7xl text-foreground leading-[1.05] mb-6">
             Our <span className="gradient-text-purple">Services</span>
             <br />
             <span className="text-muted-foreground text-4xl md:text-5xl font-medium">
@@ -398,11 +398,11 @@ export function Services() {
           </div>
 
           {/* Steps */}
-          <div className="relative glassmorphic-dark border border-white/8 rounded-2xl p-10 md:p-14">
+          <div className="relative glassmorphic-dark border border-white/8 rounded-2xl p-6 sm:p-10 md:p-14">
             {/* Background glow */}
             <div className="absolute inset-0 bg-gradient-to-b from-secondary/5 to-transparent rounded-2xl pointer-events-none" />
 
-            <div className="relative grid grid-cols-2 lg:grid-cols-4 gap-10">
+            <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
               {methodology.map((step, i) => (
                 <MethodStep key={step.label} step={step} index={i} />
               ))}
@@ -451,11 +451,11 @@ export function Services() {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-48 bg-primary/15 blur-[80px]" />
           <div className="absolute inset-0 border border-white/10 rounded-2xl" />
 
-          <div className="relative px-10 py-16 md:py-20 text-center">
+          <div className="relative px-6 sm:px-10 py-12 sm:py-16 md:py-20 text-center">
             <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-4">
               Ready to Scale?
             </p>
-            <h2 className="font-display font-bold text-4xl md:text-6xl text-foreground mb-6 leading-tight">
+            <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-6xl text-foreground mb-6 leading-tight">
               Let's Build Something{" "}
               <span className="gradient-text-purple">Extraordinary</span>
             </h2>

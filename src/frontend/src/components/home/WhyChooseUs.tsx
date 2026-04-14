@@ -587,7 +587,7 @@ export function WhyChooseUs() {
   const { ref: orbitRef, style: orbitStyle } = useRevealOnScroll(200);
 
   return (
-    <section className="relative py-28 px-6 overflow-hidden bg-background">
+    <section className="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden bg-background">
       <div className="absolute inset-0 grid-glow-bg opacity-20" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/4 rounded-full blur-[160px]" />
 
@@ -678,7 +678,7 @@ export function WhyChooseUs() {
 
           {/* Right: Feature Cards */}
           <div className="flex-1 w-full">
-            <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               {/* Animated connector lines (desktop) */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-3/4 bg-gradient-to-b from-transparent via-primary/20 to-transparent hidden md:block" />
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-px w-3/4 bg-gradient-to-r from-transparent via-secondary/20 to-transparent hidden md:block" />

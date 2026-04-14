@@ -74,12 +74,12 @@ function FaqItem({
         <button
           type="button"
           onClick={onToggle}
-          className="w-full flex items-center justify-between px-7 py-5 text-left gap-4"
+          className="w-full flex items-center justify-between px-4 sm:px-7 py-5 text-left gap-4 min-h-[56px]"
           aria-expanded={isOpen}
           data-ocid={`faq-toggle-${faq.id}`}
         >
           <span
-            className={`font-display font-semibold text-base transition-colors duration-200 ${
+            className={`font-display font-semibold text-sm sm:text-base transition-colors duration-200 leading-snug ${
               isOpen
                 ? "text-foreground"
                 : "text-foreground/80 hover:text-foreground"
@@ -88,13 +88,13 @@ function FaqItem({
             {faq.question}
           </span>
           <div
-            className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+            className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
               isOpen
                 ? "gradient-neon-purple text-background glow-neon scale-110"
                 : "bg-muted/50 text-muted-foreground"
             }`}
           >
-            {isOpen ? <Minus size={14} /> : <Plus size={14} />}
+            {isOpen ? <Minus size={16} /> : <Plus size={16} />}
           </div>
         </button>
 
@@ -127,7 +127,7 @@ export function FaqSection() {
   };
 
   return (
-    <section className="relative py-28 px-6 overflow-hidden bg-background">
+    <section className="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden bg-background">
       <div className="absolute inset-0 grid-glow-bg opacity-20" />
       <div className="absolute top-0 right-1/4 w-64 h-64 bg-accent/6 rounded-full blur-[100px]" />
 

@@ -38,7 +38,7 @@ export function Footer() {
         <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-secondary/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 py-16">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
@@ -88,7 +88,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 rounded-lg glassmorphic flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 hover:glow-neon transition-smooth"
+                  className="w-10 h-10 rounded-lg glassmorphic flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 hover:glow-neon transition-smooth"
                 >
                   <Icon size={16} />
                 </a>

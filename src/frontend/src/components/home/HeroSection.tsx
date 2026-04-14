@@ -33,7 +33,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6 grid-glow-bg noise-overlay">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6 grid-glow-bg noise-overlay">
       {/* Animated gradient orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-primary/12 rounded-full blur-[140px] animate-float" />
@@ -175,23 +175,23 @@ export function HeroSection() {
             outcomes for ambitious brands.
           </p>
           {/* Proof stats strip */}
-          <div className="flex items-center gap-6 mt-4 text-xs font-semibold tracking-[0.15em] uppercase text-muted-foreground/70">
-            <span className="flex items-center gap-1.5">
+          <div className="grid grid-cols-2 sm:flex sm:items-center sm:gap-6 gap-3 mt-4 text-xs font-semibold tracking-[0.15em] uppercase text-muted-foreground/70 w-full sm:w-auto">
+            <span className="flex items-center gap-1.5 justify-center sm:justify-start">
               <span className="text-primary font-bold text-sm">15M+</span>{" "}
               Organic Views
             </span>
-            <span className="w-px h-4 bg-border/40" />
-            <span className="flex items-center gap-1.5">
+            <span className="hidden sm:block w-px h-4 bg-border/40" />
+            <span className="flex items-center gap-1.5 justify-center sm:justify-start">
               <span className="text-primary font-bold text-sm">40+</span> Brands
               Scaled
             </span>
-            <span className="w-px h-4 bg-border/40" />
-            <span className="flex items-center gap-1.5">
+            <span className="hidden sm:block w-px h-4 bg-border/40" />
+            <span className="flex items-center gap-1.5 justify-center sm:justify-start">
               <span className="text-primary font-bold text-sm">200%+</span>{" "}
               Average ROI
             </span>
-            <span className="w-px h-4 bg-border/40" />
-            <span className="flex items-center gap-1.5">
+            <span className="hidden sm:block w-px h-4 bg-border/40" />
+            <span className="flex items-center gap-1.5 justify-center sm:justify-start">
               <span className="text-primary font-bold text-sm">2X+</span>{" "}
               Revenue Growth
             </span>

@@ -252,7 +252,7 @@ function FeaturedCard({ study }: { study: CaseStudyData }) {
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       style={style}
-      className="relative overflow-hidden rounded-2xl border border-white/10 mb-14"
+      className="relative overflow-hidden rounded-2xl border border-white/10 mb-10 sm:mb-14"
     >
       {/* Background */}
       <div
@@ -261,7 +261,7 @@ function FeaturedCard({ study }: { study: CaseStudyData }) {
       <div className="absolute inset-0 grid-glow-bg opacity-20" />
       <div className="absolute inset-0 bg-card/60 backdrop-blur-sm" />
 
-      <div className="relative p-8 md:p-12 flex flex-col md:flex-row gap-8 items-start">
+      <div className="relative p-6 md:p-12 flex flex-col md:flex-row gap-6 sm:gap-8 items-start">
         <div className="flex-1 min-w-0">
           {/* Label */}
           <div className="flex items-center gap-3 mb-5">
@@ -313,7 +313,7 @@ function FeaturedCard({ study }: { study: CaseStudyData }) {
         </div>
 
         {/* KPI pills */}
-        <div className="flex flex-col gap-3 md:min-w-[220px]">
+        <div className="grid grid-cols-3 sm:grid-cols-1 gap-3 w-full sm:w-auto sm:min-w-[220px]">
           {study.metrics.map((m, i) => (
             <motion.div
               key={m.label}
@@ -505,7 +505,7 @@ function HeroSection() {
   const { ref, style } = useRevealOnScroll(0);
 
   return (
-    <section className="relative min-h-[56vh] flex items-center justify-center overflow-hidden pt-28 pb-16">
+    <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden pt-24 sm:pt-28 pb-12 sm:pb-16">
       {/* Background layers */}
       <div className="absolute inset-0 grid-glow-bg opacity-40" />
       <div className="absolute top-0 left-1/4 w-[500px] h-[400px] bg-primary/8 rounded-full blur-[120px] pointer-events-none" />
@@ -530,7 +530,7 @@ function HeroSection() {
       <div
         ref={ref as React.RefObject<HTMLDivElement>}
         style={style}
-        className="relative max-w-4xl mx-auto px-6 text-center"
+        className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center"
       >
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -548,7 +548,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="font-display font-black text-6xl md:text-7xl lg:text-8xl text-foreground leading-[0.9] tracking-tight mb-6"
+          className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-foreground leading-[0.9] tracking-tight mb-6"
         >
           Our Work{" "}
           <span className="block gradient-text-purple mt-1">Speaks.</span>
@@ -606,14 +606,14 @@ export function CaseStudies() {
     <div className="relative bg-background min-h-screen">
       <HeroSection />
 
-      <div className="relative max-w-7xl mx-auto px-6 pb-24">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pb-24">
         {/* Filter bar */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="flex flex-wrap gap-2 justify-center mb-14"
+          className="flex flex-wrap gap-2 justify-center mb-10 sm:mb-14"
           data-ocid="filter-bar"
         >
           {filters.map((f) => (
@@ -686,7 +686,7 @@ export function CaseStudies() {
         >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-accent/10 to-secondary/10" />
           <div className="absolute inset-0 grid-glow-bg opacity-20" />
-          <div className="relative px-8 md:px-16 py-12 md:py-16 text-center">
+          <div className="relative px-6 sm:px-8 md:px-16 py-10 sm:py-12 md:py-16 text-center">
             <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-4">
               Ready to be next?
             </p>

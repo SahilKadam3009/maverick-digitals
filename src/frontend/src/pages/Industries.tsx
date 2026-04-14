@@ -642,18 +642,18 @@ export function Industries() {
   const standardIndustries = industries.filter((i) => !i.isFeatured);
 
   return (
-    <div className="relative pt-24 pb-20">
+    <div className="relative pt-20 sm:pt-24 pb-20">
       {/* Background layers */}
       <div className="absolute inset-0 grid-glow-bg opacity-40" />
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/6 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute top-0 right-1/4 w-80 h-80 bg-secondary/6 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-40 left-10 w-64 h-64 bg-accent/5 rounded-full blur-[80px] pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         {/* ── HERO ── */}
         <div
           ref={heroRef}
-          className="grid lg:grid-cols-2 gap-16 items-center mb-24"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-16 items-center mb-16 sm:mb-24"
         >
           {/* Left: text */}
           <motion.div
@@ -707,7 +707,7 @@ export function Industries() {
 
           {/* Right: orbit visual */}
           <motion.div
-            className="relative h-[420px] flex items-center justify-center"
+            className="relative h-[280px] sm:h-[420px] flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.85 }}
             animate={heroInView ? { opacity: 1, scale: 1 } : {}}
             transition={{
@@ -721,7 +721,7 @@ export function Industries() {
         </div>
 
         {/* ── STATS BAR ── */}
-        <div className="mb-24">
+        <div className="mb-16 sm:mb-24">
           <StatsBar />
         </div>
 
@@ -746,7 +746,7 @@ export function Industries() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
             {featuredIndustries.map((industry, i) => (
               <FeaturedCard
                 key={industry.title}
@@ -774,7 +774,7 @@ export function Industries() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {standardIndustries.map((industry, i) => (
               <IndustryCard
                 key={industry.title}
@@ -787,7 +787,7 @@ export function Industries() {
 
         {/* ── CTA ── */}
         <motion.div
-          className="relative glassmorphic border-white/10 rounded-3xl overflow-hidden p-12 text-center"
+          className="relative glassmorphic border-white/10 rounded-3xl overflow-hidden p-6 sm:p-12 text-center"
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

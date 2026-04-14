@@ -1,3 +1,4 @@
+import { useIsMobile } from "@/hooks/use-mobile";
 import { type ReactNode, useEffect, useRef } from "react";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
@@ -9,8 +10,12 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const cursorGlowRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
+    // Disable cursor glow on touch/mobile devices
+    if (isMobile) return;
+
     const glow = cursorGlowRef.current;
     if (!glow) return;
 
@@ -41,24 +46,26 @@ export function Layout({ children }: LayoutProps) {
       window.removeEventListener("mousemove", onMouseMove);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
-      {/* Fluid splash cursor effect - canvas overlay */}
-      <SplashCursor />
+      {/* Fluid splash cursor effect — disabled on touch/mobile */}
+      {!isMobile && <SplashCursor />}
 
-      {/* Global cursor glow effect */}
-      <div
-        ref={cursorGlowRef}
-        className="pointer-events-none fixed top-0 left-0 w-[400px] h-[400px] rounded-full z-0"
-        style={{
-          background:
-            "radial-gradient(circle, oklch(0.68 0.24 308 / 0.04) 0%, transparent 70%)",
-          willChange: "transform",
-        }}
-        aria-hidden="true"
-      />
+      {/* Global cursor glow effect — desktop only */}
+      {!isMobile && (
+        <div
+          ref={cursorGlowRef}
+          className="pointer-events-none fixed top-0 left-0 w-[400px] h-[400px] rounded-full z-0"
+          style={{
+            background:
+              "radial-gradient(circle, oklch(0.68 0.24 308 / 0.04) 0%, transparent 70%)",
+            willChange: "transform",
+          }}
+          aria-hidden="true"
+        />
+      )}
 
       <Navbar />
 

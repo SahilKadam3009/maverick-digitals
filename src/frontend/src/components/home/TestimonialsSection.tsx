@@ -155,7 +155,7 @@ export function TestimonialsSection() {
 
   return (
     <section
-      className="relative py-24 px-6 overflow-hidden"
+      className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden"
       style={{ background: "oklch(0.09 0 0)" }}
     >
       {/* ── Background depth layers ─────────────────────────────────────── */}
@@ -213,10 +213,9 @@ export function TestimonialsSection() {
             ref={orbitRef}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="relative flex-shrink-0"
-            style={{ width: 480, height: 480 }}
+            className="relative flex-shrink-0 overflow-hidden w-full max-w-[480px] mx-auto"
+            style={{ aspectRatio: "1 / 1" }}
           >
-            {/* SVG ring decorations */}
             <svg
               className="absolute inset-0 w-full h-full pointer-events-none"
               viewBox="0 0 480 480"
@@ -325,8 +324,8 @@ export function TestimonialsSection() {
                   style={{
                     width: size,
                     height: size,
-                    left: x,
-                    top: y,
+                    left: `${(x / 480) * 100}%`,
+                    top: `${(y / 480) * 100}%`,
                     transform: "translate(-50%, -50%)",
                     background:
                       baseAngle % 60 === 0
@@ -353,8 +352,8 @@ export function TestimonialsSection() {
                   style={{
                     width: 2,
                     height: 2,
-                    left: x,
-                    top: y,
+                    left: `${(x / 480) * 100}%`,
+                    top: `${(y / 480) * 100}%`,
                     transform: "translate(-50%, -50%)",
                     background: "oklch(var(--primary)/0.4)",
                     boxShadow: "0 0 4px oklch(var(--primary)/0.6)",
@@ -375,8 +374,8 @@ export function TestimonialsSection() {
                   style={{
                     width: 1.5,
                     height: 1.5,
-                    left: x,
-                    top: y,
+                    left: `${(x / 480) * 100}%`,
+                    top: `${(y / 480) * 100}%`,
                     transform: "translate(-50%, -50%)",
                     background: "oklch(var(--accent)/0.5)",
                   }}
@@ -401,8 +400,8 @@ export function TestimonialsSection() {
                   data-ocid={`testimonial-avatar-${t.id}`}
                   className="absolute group"
                   style={{
-                    left: x,
-                    top: y,
+                    left: `${(x / 480) * 100}%`,
+                    top: `${(y / 480) * 100}%`,
                     transform: "translate(-50%, -50%)",
                     zIndex: isActive ? 20 : 10,
                     transition: "z-index 0s",
@@ -466,8 +465,8 @@ export function TestimonialsSection() {
             <div
               className="absolute flex flex-col items-center justify-center text-center z-30 pointer-events-none"
               style={{
-                left: 240,
-                top: 240,
+                left: "50%",
+                top: "50%",
                 transform: "translate(-50%, -50%)",
               }}
             >
@@ -502,7 +501,7 @@ export function TestimonialsSection() {
           <div className="flex-1 max-w-lg w-full">
             <div
               key={active.id}
-              className="glassmorphic border-primary/15 p-8 relative overflow-hidden"
+              className="glassmorphic border-primary/15 p-6 sm:p-8 relative overflow-hidden"
               style={{
                 animation:
                   "fadeSlideIn 0.45s cubic-bezier(0.4,0,0.2,1) forwards",

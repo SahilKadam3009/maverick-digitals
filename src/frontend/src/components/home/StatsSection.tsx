@@ -11,7 +11,7 @@ export function StatsSection() {
   const { ref, style } = useRevealOnScroll(0);
 
   return (
-    <section className="relative py-16 px-6 bg-card/50 border-y border-white/8">
+    <section className="relative py-12 sm:py-16 px-4 sm:px-6 bg-card/50 border-y border-white/8">
       <div
         ref={ref as React.RefObject<HTMLDivElement>}
         style={style}

@@ -18,7 +18,7 @@ export function CtaSection() {
   };
 
   return (
-    <section className="relative py-32 px-6 overflow-hidden">
+    <section className="relative py-20 sm:py-32 px-4 sm:px-6 overflow-hidden">
       {/* Rich animated background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/12 via-background to-secondary/10" />
       <div className="absolute inset-0 grid-glow-bg opacity-30" />

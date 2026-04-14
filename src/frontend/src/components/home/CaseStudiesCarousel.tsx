@@ -104,11 +104,11 @@ export function CaseStudiesCarousel() {
     const endX =
       "changedTouches" in e ? e.changedTouches[0].clientX : e.clientX;
     const dx = endX - dragStartX.current;
-    if (Math.abs(dx) > 50) dx > 0 ? prev() : next();
+    if (Math.abs(dx) > 40) dx > 0 ? prev() : next();
   };
 
   return (
-    <section className="relative py-28 px-6 overflow-hidden bg-muted/15">
+    <section className="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden bg-muted/15">
       <div className="absolute inset-0 grid-glow-bg opacity-20" />
       <div className="absolute top-1/2 left-0 w-64 h-64 bg-primary/8 rounded-full blur-[100px]" />
       <div className="absolute top-1/2 right-0 w-64 h-64 bg-secondary/8 rounded-full blur-[100px]" />
@@ -148,7 +148,7 @@ export function CaseStudiesCarousel() {
           onTouchStart={handleDragStart}
           onTouchEnd={handleDragEnd}
         >
-          <div className="flex items-center justify-center gap-4 md:gap-6 min-h-[440px]">
+          <div className="flex items-center justify-center gap-2 sm:gap-4 min-h-[420px] sm:min-h-[440px]">
             {caseStudies.map((cs, i) => {
               const isActive = i === activeIdx;
               const isPrev =
@@ -195,7 +195,7 @@ export function CaseStudiesCarousel() {
                   onClick={() => !isActive && setActiveIdx(i)}
                   disabled={isActive}
                   data-ocid={`case-study-card-${cs.id}`}
-                  className={`relative glassmorphic ${a.border} ${isActive ? a.glow : ""} p-8 md:p-10 transition-all duration-500 cursor-pointer select-none flex-shrink-0 w-full max-w-md md:max-w-lg text-left`}
+                  className={`relative glassmorphic ${a.border} ${isActive ? a.glow : ""} p-6 md:p-10 transition-all duration-500 cursor-pointer select-none flex-shrink-0 w-full max-w-[calc(100vw-2rem)] sm:max-w-md md:max-w-lg text-left`}
                   style={cardStyle}
                 >
                   {/* Background gradient */}
@@ -262,11 +262,11 @@ export function CaseStudiesCarousel() {
             <button
               type="button"
               onClick={prev}
-              className="w-10 h-10 rounded-full glassmorphic border-white/15 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/30 transition-smooth"
+              className="w-11 h-11 rounded-full glassmorphic border-white/15 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/30 transition-smooth"
               aria-label="Previous case study"
               data-ocid="case-carousel-prev"
             >
-              <ChevronLeft size={18} />
+              <ChevronLeft size={20} />
             </button>
 
             <div className="flex items-center gap-2">
@@ -289,11 +289,11 @@ export function CaseStudiesCarousel() {
             <button
               type="button"
               onClick={next}
-              className="w-10 h-10 rounded-full glassmorphic border-white/15 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/30 transition-smooth"
+              className="w-11 h-11 rounded-full glassmorphic border-white/15 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/30 transition-smooth"
               aria-label="Next case study"
               data-ocid="case-carousel-next"
             >
-              <ChevronRight size={18} />
+              <ChevronRight size={20} />
             </button>
           </div>
         </div>

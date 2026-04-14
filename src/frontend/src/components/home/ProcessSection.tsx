@@ -135,7 +135,7 @@ export function ProcessSection() {
   const { ref: titleRef, style: titleStyle } = useRevealOnScroll(0);
 
   return (
-    <section className="relative py-28 px-6 overflow-hidden bg-muted/15">
+    <section className="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden bg-muted/15">
       <div className="absolute inset-0 grid-glow-bg opacity-20" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-primary/5 rounded-full blur-[100px]" />
 

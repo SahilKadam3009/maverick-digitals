@@ -180,10 +180,10 @@ export function Blog() {
   const { ref: titleRef, style: titleStyle } = useRevealOnScroll(0);
 
   return (
-    <div className="relative pt-24 pb-20">
+    <div className="relative pt-20 sm:pt-24 pb-20">
       <div className="absolute inset-0 grid-glow-bg opacity-40" />
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div
           ref={titleRef as React.RefObject<HTMLDivElement>}
           style={titleStyle}
@@ -192,7 +192,7 @@ export function Blog() {
           <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-4">
             Insights
           </p>
-          <h1 className="font-display font-bold text-5xl md:text-6xl text-foreground leading-tight mb-6">
+          <h1 className="font-display font-bold text-3xl sm:text-5xl md:text-6xl text-foreground leading-tight mb-6">
             Marketing Intelligence{" "}
             <span className="gradient-text-purple">Hub</span>
           </h1>
@@ -203,8 +203,8 @@ export function Blog() {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-10">
-          <div className="relative flex-1 max-w-md">
+        <div className="flex flex-col gap-3 sm:gap-4 mb-8 sm:mb-10">
+          <div className="relative w-full">
             <Search
               size={15}
               className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground"
@@ -213,11 +213,12 @@ export function Blog() {
               placeholder="Search articles..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-card/50 border-white/15 focus:border-primary/40"
+              className="pl-10 w-full bg-card/50 border-white/15 focus:border-primary/40"
               data-ocid="blog-search"
             />
           </div>
           <div className="flex gap-2 flex-wrap">
+            {" "}
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}

@@ -226,7 +226,7 @@ export function ServicesSection() {
 
   return (
     <section
-      className="relative py-28 px-6 overflow-hidden bg-muted/10"
+      className="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden bg-muted/10"
       id="services-preview"
     >
       <div className="absolute inset-0 grid-glow-bg opacity-25" />
