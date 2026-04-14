@@ -122,7 +122,6 @@ function GalaxyCanvas() {
       t += 0.016;
       ctx.clearRect(0, 0, width, height);
 
-      // Deep space radial gradient background
       const bgGrad = ctx.createRadialGradient(
         width * 0.5,
         height * 0.4,
@@ -138,7 +137,6 @@ function GalaxyCanvas() {
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, width, height);
 
-      // Static nebula blobs
       const blob1 = ctx.createRadialGradient(
         width * 0.2,
         height * 0.25,
@@ -180,7 +178,6 @@ function GalaxyCanvas() {
       ctx.fillStyle = blob3;
       ctx.fillRect(0, 0, width, height);
 
-      // Dynamic floating nebulas
       for (const n of nebulas) {
         n.x += n.dx;
         n.y += n.dy;
@@ -201,7 +198,6 @@ function GalaxyCanvas() {
         ctx.fill();
       }
 
-      // Stars with glow halos — strong visible twinkle
       for (const s of stars) {
         s.phase += s.twinkleSpeed;
         s.opacity = s.baseOpacity * (0.3 + 0.7 * Math.sin(s.phase));
@@ -220,7 +216,6 @@ function GalaxyCanvas() {
         ctx.fill();
       }
 
-      // Meteors — spawn every 1.5-4 seconds
       const now = t;
       if (now - lastMeteorTime > 1.5 + Math.random() * 2.5) {
         const idle = meteors.find((m) => !m.active);
@@ -422,420 +417,471 @@ const stats = [
   { value: "$10M+", label: "Revenue Driven" },
 ];
 
-// --- Floating micro-particles around card ---
-function CardParticles({ isMuskan }: { isMuskan: boolean }) {
-  const color = isMuskan ? "rgba(168,85,247," : "rgba(34,211,238,";
-  const particles = [
-    { top: "15%", left: "-8%", size: 5, delay: 0, duration: 3.2 },
-    { top: "60%", left: "-6%", size: 3.5, delay: 0.8, duration: 4.1 },
-    {
-      top: "30%",
-      right: "-7%",
-      left: undefined,
-      size: 4,
-      delay: 0.4,
-      duration: 3.7,
-    },
-    {
-      top: "75%",
-      right: "-9%",
-      left: undefined,
-      size: 3,
-      delay: 1.2,
-      duration: 4.5,
-    },
-  ];
+// --- Chroma Grid Overlay ---
+function ChromaGrid({ isMuskan }: { isMuskan: boolean }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const parent = canvas.parentElement;
+    if (!parent) return;
+
+    const setSize = () => {
+      canvas.width = parent.offsetWidth || 400;
+      canvas.height = parent.offsetHeight || 600;
+    };
+    setSize();
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animId: number;
+    let phase = 0;
+
+    const stops = isMuskan
+      ? [
+          { h: 271, s: 0.77, l: 0.57 },
+          { h: 292, s: 0.91, l: 0.63 },
+          { h: 322, s: 0.93, l: 0.73 },
+        ]
+      : [
+          { h: 192, s: 0.91, l: 0.44 },
+          { h: 217, s: 0.91, l: 0.6 },
+          { h: 172, s: 0.82, l: 0.4 },
+        ];
+
+    function lerpColor(
+      a: { h: number; s: number; l: number },
+      b: { h: number; s: number; l: number },
+      t: number,
+    ) {
+      return {
+        h: a.h + (b.h - a.h) * t,
+        s: a.s + (b.s - a.s) * t,
+        l: a.l + (b.l - a.l) * t,
+      };
+    }
+
+    function getColor(t: number): string {
+      const seg = t * (stops.length - 1);
+      const i = Math.floor(seg);
+      const f = seg - i;
+      const from = stops[Math.min(i, stops.length - 1)];
+      const to = stops[Math.min(i + 1, stops.length - 1)];
+      const c = lerpColor(from, to, f);
+      return `hsla(${c.h.toFixed(0)},${(c.s * 100).toFixed(0)}%,${(c.l * 100).toFixed(0)}%,`;
+    }
+
+    const CELL = 26;
+    const LINE_WIDTH = 0.7;
+    const BASE_OPACITY = 0.13;
+
+    function draw() {
+      if (!ctx || !canvas) return;
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const pulseAmp = 0.035;
+      const pulsedOpacity = BASE_OPACITY + pulseAmp * Math.sin(phase * 0.7);
+      const hueShift = (phase * 0.12) % 1;
+
+      ctx.lineWidth = LINE_WIDTH;
+      ctx.globalCompositeOperation = "screen";
+
+      const cols = Math.ceil(w / CELL) + 1;
+      for (let xi = 0; xi < cols; xi++) {
+        const x = xi * CELL;
+        const t = (xi / cols + hueShift) % 1;
+        const colorBase = getColor(t);
+        const grad = ctx.createLinearGradient(x, 0, x, h);
+        grad.addColorStop(0, `${colorBase}0)`);
+        grad.addColorStop(0.15, `${colorBase}${pulsedOpacity.toFixed(3)})`);
+        grad.addColorStop(0.85, `${colorBase}${pulsedOpacity.toFixed(3)})`);
+        grad.addColorStop(1, `${colorBase}0)`);
+        ctx.strokeStyle = grad;
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+        ctx.stroke();
+      }
+
+      const rows = Math.ceil(h / CELL) + 1;
+      for (let yi = 0; yi < rows; yi++) {
+        const y = yi * CELL;
+        const t = (yi / rows + hueShift * 0.6) % 1;
+        const colorBase = getColor(t);
+        const grad = ctx.createLinearGradient(0, y, w, y);
+        grad.addColorStop(0, `${colorBase}0)`);
+        grad.addColorStop(
+          0.15,
+          `${colorBase}${(pulsedOpacity * 0.8).toFixed(3)})`,
+        );
+        grad.addColorStop(
+          0.85,
+          `${colorBase}${(pulsedOpacity * 0.8).toFixed(3)})`,
+        );
+        grad.addColorStop(1, `${colorBase}0)`);
+        ctx.strokeStyle = grad;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
+      }
+
+      ctx.globalCompositeOperation = "source-over";
+
+      const DOT_STEP = 3;
+      for (let xi = 0; xi < cols; xi += DOT_STEP) {
+        for (let yi = 0; yi < rows; yi += DOT_STEP) {
+          const x = xi * CELL;
+          const y = yi * CELL;
+          const t = ((xi + yi) / (cols + rows) + hueShift) % 1;
+          const colorBase = getColor(t);
+          const dotOpacity =
+            pulsedOpacity *
+            1.8 *
+            (0.7 + 0.3 * Math.sin(phase + xi * 0.3 + yi * 0.4));
+          const r = ctx.createRadialGradient(x, y, 0, x, y, 4);
+          r.addColorStop(0, `${colorBase}${dotOpacity.toFixed(3)})`);
+          r.addColorStop(1, `${colorBase}0)`);
+          ctx.fillStyle = r;
+          ctx.beginPath();
+          ctx.arc(x, y, 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      phase += 0.018;
+      animId = requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    const ro = new ResizeObserver(() => {
+      setSize();
+    });
+    ro.observe(parent);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      ro.disconnect();
+    };
+  }, [isMuskan]);
+
   return (
-    <>
-      {particles.map((p) => (
-        <motion.div
-          key={p.delay}
-          className="absolute rounded-full pointer-events-none"
-          style={{
-            width: p.size,
-            height: p.size,
-            top: p.top,
-            left: p.left,
-            right: p.right,
-            background: `${color}0.7)`,
-            boxShadow: `0 0 ${p.size * 3}px ${color}0.6)`,
-            zIndex: 20,
-          }}
-          animate={{ y: [-6, 6, -6], opacity: [0.5, 1, 0.5] }}
-          transition={{
-            repeat: Number.POSITIVE_INFINITY,
-            duration: p.duration,
-            delay: p.delay,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </>
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 3,
+        borderRadius: "1.5rem",
+        pointerEvents: "none",
+        display: "block",
+      }}
+    />
   );
 }
 
-// --- Circular Photo with Pulsing Aura Rings ---
-function CircularPhoto({
-  src,
-  alt,
-  initials,
-  isMuskan,
-}: {
-  src: string;
-  alt: string;
-  initials: string;
-  isMuskan: boolean;
-}) {
-  const [imgError, setImgError] = useState(false);
-
-  const ringColor = isMuskan ? "168,85,247" : "34,211,238";
-  const borderColor = isMuskan ? "#a855f7" : "#06b6d4";
-  const shadowGlow = isMuskan
-    ? "0 0 0 3px #a855f7, 0 0 25px rgba(168,85,247,0.7), 0 0 55px rgba(124,58,237,0.4)"
-    : "0 0 0 3px #06b6d4, 0 0 25px rgba(6,182,212,0.7), 0 0 55px rgba(8,145,178,0.4)";
-
-  return (
-    <div
-      className="relative flex items-center justify-center"
-      style={{ width: 240, height: 240 }}
-    >
-      {/* Outer aura ring 2 — slowest, largest */}
-      <motion.div
-        className="absolute rounded-full pointer-events-none"
-        style={{
-          width: 240,
-          height: 240,
-          border: `1.5px solid rgba(${ringColor},0.18)`,
-          borderRadius: "50%",
-        }}
-        animate={{
-          scale: [1, 1.18, 1],
-          opacity: [0.12, 0.32, 0.12],
-        }}
-        transition={{
-          repeat: Number.POSITIVE_INFINITY,
-          duration: 4.8,
-          ease: "easeInOut",
-          delay: 0.6,
-        }}
-      />
-      {/* Outer aura ring 1 — medium */}
-      <motion.div
-        className="absolute rounded-full pointer-events-none"
-        style={{
-          width: 228,
-          height: 228,
-          border: `1.5px solid rgba(${ringColor},0.28)`,
-          borderRadius: "50%",
-        }}
-        animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.22, 0.55, 0.22],
-        }}
-        transition={{
-          repeat: Number.POSITIVE_INFINITY,
-          duration: 3.4,
-          ease: "easeInOut",
-        }}
-      />
-
-      {/* The circular photo frame */}
-      <div
-        style={{
-          width: 220,
-          height: 220,
-          borderRadius: "50%",
-          overflow: "hidden",
-          border: `3px solid ${borderColor}`,
-          boxShadow: shadowGlow,
-          flexShrink: 0,
-          position: "relative",
-          zIndex: 2,
-        }}
-      >
-        {!imgError ? (
-          <img
-            src={src}
-            alt={alt}
-            onError={() => setImgError(true)}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "top center",
-              display: "block",
-            }}
-          />
-        ) : (
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              background: isMuskan
-                ? "linear-gradient(135deg, #7c3aed, #a855f7)"
-                : "linear-gradient(135deg, #0891b2, #06b6d4)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "3.5rem",
-              fontWeight: 700,
-              color: "#fff",
-            }}
-          >
-            {initials}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// --- Premium Founder Card with Circular Photo ---
+// --- Glassmorphic Founder Card (circular photo + ChromaGrid) ---
 function FounderCard({ member, index }: { member: TeamMember; index: number }) {
   const BadgeIcon = member.badgeIcon;
   const isMuskan = index === 0;
+  const [imgError, setImgError] = useState(false);
 
-  const glowPrimary = isMuskan ? "rgba(168,85,247," : "rgba(34,211,238,";
-  const glowSoft = isMuskan ? "rgba(168,85,247,0.18)" : "rgba(34,211,238,0.18)";
-  const glowStrong = isMuskan
-    ? "rgba(168,85,247,0.55)"
-    : "rgba(34,211,238,0.55)";
-  const gradientText = isMuskan
-    ? "linear-gradient(135deg, #c084fc, #ffffff)"
-    : "linear-gradient(135deg, #22d3ee, #ffffff)";
-  const cornerColor = isMuskan
-    ? "rgba(168,85,247,0.8)"
-    : "rgba(34,211,238,0.8)";
+  const accentRGB = isMuskan ? "168,85,247" : "34,211,238";
+  const ringColor = isMuskan ? "#a855f7" : "#06b6d4";
+  const ringColorDark = isMuskan ? "#7c3aed" : "#0891b2";
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 50, scale: 0.96 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      whileHover={{ y: -6, scale: 1.02 }}
       viewport={{ once: true }}
       transition={{
         delay: index * 0.18,
         duration: 0.75,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className="relative flex flex-col overflow-hidden"
-      style={{
-        background: "rgba(255,255,255,0.032)",
-        backdropFilter: "blur(24px)",
-        borderRadius: "1.5rem",
-        border: `1px solid ${glowSoft}`,
-        boxShadow: `0 0 32px ${glowPrimary}0.22), 0 0 64px ${glowPrimary}0.10), 0 20px 60px rgba(0,0,0,0.6)`,
-        transition: "box-shadow 0.4s ease, border-color 0.4s ease",
-      }}
+      className="relative"
       data-ocid={`founder-card-${member.initials.toLowerCase()}`}
     >
-      {/* Floating micro-particles */}
-      <CardParticles isMuskan={isMuskan} />
-
-      {/* Shimmer sweep on mount */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
+      <div
         style={{
-          background:
-            "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.06) 50%, transparent 70%)",
-          zIndex: 5,
           borderRadius: "1.5rem",
+          border: `1px solid rgba(${accentRGB},0.28)`,
+          boxShadow: `0 0 40px rgba(${accentRGB},0.18), 0 25px 60px rgba(0,0,0,0.6)`,
+          background: "rgba(10,5,25,0.80)",
+          backdropFilter: "blur(24px)",
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "2.5rem 2rem 2rem",
         }}
-        initial={{ x: "-100%" }}
-        animate={{ x: "200%" }}
-        transition={{
-          delay: index * 0.2 + 0.5,
-          duration: 1.2,
-          ease: "easeInOut",
-        }}
-      />
+      >
+        {/* ChromaGrid holographic overlay */}
+        <ChromaGrid isMuskan={isMuskan} />
 
-      {/* Corner accent lines — top-left */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: 40,
-          height: 2,
-          background: `linear-gradient(to right, ${cornerColor}, transparent)`,
-          borderRadius: "0 0 2px 0",
-          zIndex: 10,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: 2,
-          height: 40,
-          background: `linear-gradient(to bottom, ${cornerColor}, transparent)`,
-          borderRadius: "0 0 2px 0",
-          zIndex: 10,
-        }}
-      />
-      {/* Corner accent lines — bottom-right */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          width: 40,
-          height: 2,
-          background: `linear-gradient(to left, ${cornerColor}, transparent)`,
-          zIndex: 10,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          width: 2,
-          height: 40,
-          background: `linear-gradient(to top, ${cornerColor}, transparent)`,
-          zIndex: 10,
-        }}
-      />
-
-      {/* Inner glass border */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 1,
-          borderRadius: "calc(1.5rem - 1px)",
-          border: "1px solid rgba(255,255,255,0.07)",
-          pointerEvents: "none",
-          zIndex: 2,
-        }}
-      />
-
-      {/* Hover gradient overlay */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: isMuskan
-            ? "radial-gradient(ellipse at 50% 0%, rgba(168,85,247,0.08) 0%, transparent 65%)"
-            : "radial-gradient(ellipse at 50% 0%, rgba(34,211,238,0.07) 0%, transparent 65%)",
-          borderRadius: "1.5rem",
-          zIndex: 1,
-        }}
-      />
-
-      <div className="relative z-10 flex flex-col items-center">
-        {/* ── CIRCULAR PHOTO SECTION ── */}
-        <div
-          className="relative w-full flex flex-col items-center"
+        {/* Shimmer sweep on mount */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
           style={{
-            background: isMuskan
-              ? "linear-gradient(180deg, rgba(168,85,247,0.10) 0%, rgba(99,102,241,0.04) 100%)"
-              : "linear-gradient(180deg, rgba(34,211,238,0.08) 0%, rgba(6,182,212,0.03) 100%)",
-            borderRadius: "1.5rem 1.5rem 0 0",
-            paddingTop: "2.5rem",
-            paddingBottom: "1.5rem",
+            background:
+              "linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.07) 50%, transparent 80%)",
+            zIndex: 5,
+            borderRadius: "1.5rem",
           }}
+          initial={{ x: "-120%" }}
+          animate={{ x: "220%" }}
+          transition={{
+            delay: index * 0.2 + 0.5,
+            duration: 1.4,
+            ease: "easeInOut",
+          }}
+        />
+
+        {/* Inner glass border */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 1,
+            borderRadius: "calc(1.5rem - 1px)",
+            border: "1px solid rgba(255,255,255,0.05)",
+            pointerEvents: "none",
+            zIndex: 2,
+          }}
+        />
+
+        {/* ── Circular Photo with double aura rings ── */}
+        <div
+          className="relative flex items-center justify-center mb-6"
+          style={{ zIndex: 6 }}
         >
-          {/* Circular photo with aura rings */}
-          <CircularPhoto
-            src={member.photo}
-            alt={`${member.name} — ${member.title}, Maverick Digitals`}
-            initials={member.initials}
-            isMuskan={isMuskan}
+          {/* Outer pulsing aura ring 2 */}
+          <motion.div
+            className="absolute rounded-full"
+            animate={{ scale: [1, 1.12, 1], opacity: [0.18, 0.08, 0.18] }}
+            transition={{
+              repeat: Number.POSITIVE_INFINITY,
+              duration: 3.2,
+              ease: "easeInOut",
+            }}
+            style={{
+              width: 268,
+              height: 268,
+              border: `1.5px solid ${ringColor}`,
+              boxShadow: `0 0 24px rgba(${accentRGB},0.25)`,
+            }}
+          />
+          {/* Inner pulsing aura ring 1 */}
+          <motion.div
+            className="absolute rounded-full"
+            animate={{ scale: [1, 1.07, 1], opacity: [0.3, 0.12, 0.3] }}
+            transition={{
+              repeat: Number.POSITIVE_INFINITY,
+              duration: 2.4,
+              ease: "easeInOut",
+              delay: 0.4,
+            }}
+            style={{
+              width: 244,
+              height: 244,
+              border: `2px solid ${ringColor}`,
+              boxShadow: `0 0 18px rgba(${accentRGB},0.35), 0 0 40px rgba(${accentRGB},0.15)`,
+            }}
           />
 
-          {/* Badge icon — overlapping bottom of circle */}
+          {/* Photo circle */}
           <div
-            className={`relative mt-[-20px] w-11 h-11 rounded-full bg-gradient-to-br ${member.badgeColor} flex items-center justify-center shadow-lg`}
             style={{
-              border: "3px solid rgba(8,4,20,0.9)",
-              boxShadow: `0 0 16px ${glowStrong}`,
-              zIndex: 5,
+              width: 220,
+              height: 220,
+              borderRadius: "50%",
+              overflow: "hidden",
+              border: `3px solid ${ringColor}`,
+              boxShadow: `0 0 28px rgba(${accentRGB},0.55), 0 0 60px rgba(${accentRGB},0.2), inset 0 0 20px rgba(${accentRGB},0.08)`,
+              background: isMuskan
+                ? "linear-gradient(135deg, #7c3aed, #a855f7)"
+                : "linear-gradient(135deg, #0891b2, #06b6d4)",
+              flexShrink: 0,
+              position: "relative",
             }}
           >
-            <BadgeIcon size={18} className="text-background" />
-          </div>
-        </div>
-
-        {/* ── TEXT CONTENT ── */}
-        <div className="px-7 pb-8 pt-5 w-full">
-          {/* Name with gradient */}
-          <div className="text-center mb-4">
-            <h2
-              className="font-display font-bold text-2xl mb-2 tracking-tight"
-              style={{
-                background: gradientText,
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              {member.name}
-            </h2>
-            <span
-              className="inline-block text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full"
-              style={{
-                background: isMuskan
-                  ? "rgba(168,85,247,0.14)"
-                  : "rgba(34,211,238,0.12)",
-                border: `1px solid ${isMuskan ? "rgba(168,85,247,0.45)" : "rgba(34,211,238,0.40)"}`,
-                color: isMuskan ? "rgba(192,132,252,1)" : "rgba(34,211,238,1)",
-              }}
-            >
-              {member.title}
-            </span>
-          </div>
-
-          {/* Bio */}
-          <p className="text-muted-foreground leading-relaxed mb-5 text-[14.5px] text-center">
-            {member.bio}
-          </p>
-
-          {/* Skill tags */}
-          <div className="flex flex-wrap gap-2 mb-5 justify-center">
-            {member.skills.map((skill) => (
-              <motion.span
-                key={skill}
-                whileHover={{ scale: 1.07, borderColor: glowStrong }}
-                className="text-xs font-medium px-3 py-1 rounded-full cursor-default transition-all duration-200"
+            {!imgError ? (
+              <img
+                src={member.photo}
+                alt={`${member.name} — ${member.title}, Maverick Digitals`}
+                onError={() => setImgError(true)}
                 style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "rgba(255,255,255,0.7)",
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: "center top",
+                  display: "block",
+                  filter: "saturate(1.05) contrast(1.03)",
+                }}
+              />
+            ) : (
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "3.5rem",
+                  fontWeight: 700,
+                  color: "rgba(255,255,255,0.9)",
                 }}
               >
-                {skill}
-              </motion.span>
-            ))}
+                {member.initials}
+              </div>
+            )}
           </div>
 
-          {/* Social links */}
+          {/* Badge icon */}
           <div
-            className="flex items-center justify-center gap-3 pt-5 border-t"
-            style={{ borderColor: "rgba(255,255,255,0.07)" }}
+            className={`absolute bottom-1 right-1 w-10 h-10 rounded-full bg-gradient-to-br ${member.badgeColor} flex items-center justify-center`}
+            style={{
+              border: "2.5px solid rgba(8,4,20,0.9)",
+              boxShadow: `0 0 14px rgba(${accentRGB},0.7), 0 0 30px rgba(${accentRGB},0.3)`,
+              zIndex: 8,
+            }}
           >
-            {member.socials.map(({ icon: Icon, href, label, color }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className={`w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground ${color} hover:scale-110 transition-all duration-200`}
-                style={{
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.09)",
-                }}
-                data-ocid={`${member.initials.toLowerCase()}-social-${label.toLowerCase()}`}
-              >
-                <Icon size={15} />
-              </a>
-            ))}
-            <span className="text-muted-foreground text-xs ml-2 opacity-60">
-              Follow the journey
-            </span>
+            <BadgeIcon size={16} className="text-background" />
           </div>
         </div>
+
+        {/* ── Name & Title ── */}
+        <div className="text-center mb-4 relative z-10">
+          <h2
+            className="font-display font-bold text-2xl mb-2 tracking-tight"
+            style={{
+              background: isMuskan
+                ? "linear-gradient(135deg, #c084fc, #ffffff)"
+                : "linear-gradient(135deg, #22d3ee, #ffffff)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              filter: `drop-shadow(0 2px 10px rgba(${accentRGB},0.4))`,
+            }}
+          >
+            {member.name}
+          </h2>
+          <span
+            className="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+            style={{
+              background: isMuskan
+                ? "rgba(168,85,247,0.18)"
+                : "rgba(34,211,238,0.15)",
+              border: `1px solid ${isMuskan ? "rgba(168,85,247,0.55)" : "rgba(34,211,238,0.5)"}`,
+              color: isMuskan ? "rgba(216,180,254,1)" : "rgba(103,232,249,1)",
+            }}
+          >
+            {member.title}
+          </span>
+        </div>
+
+        {/* ── Bio ── */}
+        <p
+          className="text-muted-foreground text-center text-sm leading-relaxed mb-5 relative z-10 max-w-xs"
+          style={{ opacity: 0.82 }}
+        >
+          {member.bio}
+        </p>
+
+        {/* ── Skill tags ── */}
+        <div className="flex flex-wrap gap-1.5 mb-5 justify-center relative z-10">
+          {member.skills.map((skill) => (
+            <motion.span
+              key={skill}
+              whileHover={{ scale: 1.06 }}
+              className="text-xs font-medium px-3 py-1 rounded-full cursor-default transition-all duration-200"
+              style={{
+                background: `rgba(${accentRGB},0.07)`,
+                border: `1px solid rgba(${accentRGB},0.22)`,
+                color: isMuskan
+                  ? "rgba(216,180,254,0.9)"
+                  : "rgba(103,232,249,0.9)",
+              }}
+            >
+              {skill}
+            </motion.span>
+          ))}
+        </div>
+
+        {/* ── Divider ── */}
+        <div
+          className="w-full h-px mb-5 relative z-10"
+          style={{
+            background: `linear-gradient(to right, transparent, rgba(${accentRGB},0.3) 30%, rgba(${accentRGB},0.3) 70%, transparent)`,
+          }}
+        />
+
+        {/* ── Social links ── */}
+        <div className="flex items-center justify-center gap-3 relative z-10">
+          {member.socials.map(({ icon: Icon, href, label, color }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+              className={`w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground ${color} hover:scale-110 transition-all duration-200`}
+              style={{
+                background: `rgba(${accentRGB},0.06)`,
+                border: `1px solid rgba(${accentRGB},0.18)`,
+              }}
+              data-ocid={`${member.initials.toLowerCase()}-social-${label.toLowerCase()}`}
+            >
+              <Icon size={14} />
+            </a>
+          ))}
+          <span
+            className="text-xs ml-1 opacity-50"
+            style={{ color: ringColorDark }}
+          >
+            Follow the journey
+          </span>
+        </div>
+
+        {/* Radial top glow */}
+        <div
+          className="absolute top-0 left-0 right-0 pointer-events-none"
+          style={{
+            height: "45%",
+            background: isMuskan
+              ? "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(168,85,247,0.10) 0%, transparent 70%)"
+              : "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(34,211,238,0.08) 0%, transparent 70%)",
+            zIndex: 1,
+          }}
+        />
+
+        {/* Edge light — left */}
+        <div
+          className="absolute top-0 left-0 bottom-0 pointer-events-none"
+          style={{
+            width: "2px",
+            background: `linear-gradient(to bottom, transparent 5%, ${ringColor}70 35%, ${ringColorDark}45 70%, transparent 95%)`,
+            opacity: 0.45,
+            zIndex: 11,
+          }}
+        />
+        {/* Edge light — right */}
+        <div
+          className="absolute top-0 right-0 bottom-0 pointer-events-none"
+          style={{
+            width: "2px",
+            background: `linear-gradient(to bottom, transparent 5%, ${ringColor}70 35%, ${ringColorDark}45 70%, transparent 95%)`,
+            opacity: 0.45,
+            zIndex: 11,
+          }}
+        />
       </div>
     </motion.div>
   );
@@ -1005,7 +1051,7 @@ export function About() {
           <GalaxyCanvas />
         </div>
 
-        {/* Very subtle radial vignette — doesn't hide canvas */}
+        {/* Vignette overlay */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -1014,8 +1060,6 @@ export function About() {
             zIndex: 1,
           }}
         />
-
-        {/* Section radial purple glow center */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
