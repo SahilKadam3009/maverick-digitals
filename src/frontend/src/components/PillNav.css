@@ -1,3 +1,4 @@
+/* ─── Desktop: centered pill nav ─────────────────────────────────────────── */
 .pill-nav-container {
   position: absolute;
   top: 1em;
@@ -6,14 +7,19 @@
   z-index: 99;
 }
 
+/* ─── Mobile: relative so it fits inside the outer fixed nav bar ──────────── */
 @media (max-width: 768px) {
   .pill-nav-container {
-    width: 100%;
-    left: 0;
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: auto;
     transform: none;
   }
 }
 
+/* ─── Nav bar strip ──────────────────────────────────────────────────────── */
 .pill-nav {
   --nav-h: 42px;
   --logo: 36px;
@@ -27,13 +33,24 @@
 
 @media (max-width: 768px) {
   .pill-nav {
-    width: 100%;
-    justify-content: space-between;
-    padding: 0 1rem;
+    width: auto;
+    justify-content: flex-end;
+    padding: 0;
     background: transparent;
+    border: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    gap: 0;
+  }
+
+  /* Dark mode nav strip — no-op since outer wrapper handles it */
+  html.dark .pill-nav {
+    background: transparent;
+    border-bottom: none;
   }
 }
 
+/* ─── Desktop pill items container ──────────────────────────────────────── */
 .pill-nav-items {
   position: relative;
   display: flex;
@@ -43,6 +60,7 @@
   border-radius: 9999px;
 }
 
+/* ─── Logo circle ────────────────────────────────────────────────────────── */
 .pill-logo {
   width: var(--nav-h);
   height: var(--nav-h);
@@ -62,6 +80,7 @@
   display: block;
 }
 
+/* ─── Pill list ──────────────────────────────────────────────────────────── */
 .pill-list {
   list-style: none;
   display: flex;
@@ -77,6 +96,7 @@
   height: 100%;
 }
 
+/* ─── Individual pill ────────────────────────────────────────────────────── */
 .pill {
   display: inline-flex;
   align-items: center;
@@ -149,6 +169,7 @@
   z-index: 4;
 }
 
+/* ─── Show/hide helpers ──────────────────────────────────────────────────── */
 .desktop-only {
   display: block;
 }
@@ -167,20 +188,22 @@
   }
 }
 
+/* ─── Hamburger button ───────────────────────────────────────────────────── */
 .mobile-menu-button {
-  width: var(--nav-h);
-  height: var(--nav-h);
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: var(--base, #000);
+  background: var(--pill-bg, #7c3aed);
   border: none;
   display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 5px;
   cursor: pointer;
   padding: 0;
   position: relative;
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
@@ -192,50 +215,149 @@
 .hamburger-line {
   width: 16px;
   height: 2px;
-  background: var(--pill-bg, #fff);
+  background: #ffffff;
   border-radius: 1px;
   transition: all 0.01s ease;
   transform-origin: center;
 }
 
+/* ─── Mobile dropdown menu ───────────────────────────────────────────────── */
 .mobile-menu-popover {
-  position: absolute;
-  top: 3em;
-  left: 1rem;
-  right: 1rem;
-  background: var(--base, #f0f0f0);
-  border-radius: 27px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-  z-index: 998;
+  position: fixed;
+  top: 64px; /* sits flush below the fixed nav bar */
+  left: 0.75rem;
+  right: 0.75rem;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.14), 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  z-index: 997;
   opacity: 0;
   transform-origin: top center;
   visibility: hidden;
 }
 
+html.dark .mobile-menu-popover {
+  background: rgba(18, 18, 18, 0.96);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ─── Mobile menu list ───────────────────────────────────────────────────── */
 .mobile-menu-list {
   list-style: none;
   margin: 0;
-  padding: 3px;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
 }
 
 .mobile-menu-popover .mobile-menu-link {
-  display: block;
-  padding: 14px 16px;
-  min-height: 44px;
-  color: var(--pill-text, #fff);
-  background-color: var(--pill-bg, #fff);
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
+  min-height: 52px;
+  color: #1a1a2e;
+  background-color: transparent;
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
-  border-radius: 50px;
-  transition: all 0.2s ease;
+  border-radius: 14px;
+  transition: background 0.18s ease, color 0.18s ease;
+  letter-spacing: 0.01em;
 }
 
-.mobile-menu-popover .mobile-menu-link:hover {
+html.dark .mobile-menu-popover .mobile-menu-link {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.mobile-menu-popover .mobile-menu-link:hover,
+.mobile-menu-popover .mobile-menu-link:active {
+  background-color: rgba(124, 58, 237, 0.1);
+  color: #7c3aed;
+}
+
+html.dark .mobile-menu-popover .mobile-menu-link:hover,
+html.dark .mobile-menu-popover .mobile-menu-link:active {
+  background-color: rgba(124, 58, 237, 0.18);
+  color: #a78bfa;
+}
+
+.mobile-menu-popover .mobile-menu-link.is-active {
+  background-color: rgba(124, 58, 237, 0.12);
+  color: #7c3aed;
+  font-weight: 600;
+}
+
+html.dark .mobile-menu-popover .mobile-menu-link.is-active {
+  background-color: rgba(124, 58, 237, 0.22);
+  color: #a78bfa;
+}
+
+/* ─── Mobile menu divider ────────────────────────────────────────────────── */
+.mobile-menu-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.07);
+  margin: 0.25rem 1rem;
+}
+
+html.dark .mobile-menu-divider {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ─── Mobile theme toggle row ────────────────────────────────────────────── */
+.mobile-theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  min-height: 52px;
+  border-radius: 14px;
   cursor: pointer;
-  background-color: var(--base);
-  color: var(--hover-text, #fff);
+  transition: background 0.18s ease;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  color: #1a1a2e;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+html.dark .mobile-theme-toggle {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.mobile-theme-toggle:hover {
+  background-color: rgba(124, 58, 237, 0.1);
+  color: #7c3aed;
+}
+
+html.dark .mobile-theme-toggle:hover {
+  background-color: rgba(124, 58, 237, 0.18);
+  color: #a78bfa;
+}
+
+.mobile-theme-toggle-label {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.mobile-theme-toggle-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: rgba(124, 58, 237, 0.12);
+  color: #7c3aed;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+html.dark .mobile-theme-toggle-badge {
+  background: rgba(167, 139, 250, 0.18);
+  color: #a78bfa;
 }

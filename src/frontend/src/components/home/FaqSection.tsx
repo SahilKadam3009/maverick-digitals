@@ -7,44 +7,44 @@ const faqs = [
     id: "faq1",
     question: "What does Maverick Digitals do?",
     answer:
-      "Maverick Digitals is a Mumbai-based full-stack digital marketing agency helping ambitious brands scale through SEO, AEO, GEO, performance marketing, social media management, brand strategy, and website development. We've scaled 40+ brands with 15M+ organic views and 200%+ ROI.",
+      "We're a digital marketing agency based in Mumbai. We help brands grow through SEO, paid media, social content, brand strategy, and web development. So far we've worked with 40+ brands and driven over 15 million organic views.",
   },
   {
     id: "faq2",
     question: "Is Maverick Digitals a Mumbai-based digital marketing agency?",
     answer:
-      "Yes. Maverick Digitals is headquartered in Mumbai, Maharashtra, India. We serve clients across India, UAE, USA, UK, and Australia — making us a globally capable Mumbai-based digital marketing company with proven results in diverse markets.",
+      "Yes, we're based in Mumbai and that's where most of our team works. But we've run campaigns for clients in the UAE, USA, UK, and Australia — location hasn't been an issue.",
   },
   {
     id: "faq3",
     question:
       "What is AEO and does Maverick Digitals offer Answer Engine Optimization?",
     answer:
-      "AEO (Answer Engine Optimization) is the practice of optimizing content to appear in featured snippets, voice search results, and AI answer boxes. Yes, Maverick Digitals offers AEO as part of our search visibility services to help your brand appear when people ask questions online.",
+      "AEO (Answer Engine Optimization) is about making your content show up in featured snippets, voice search results, and AI answer boxes. We include AEO as part of our search visibility work so your brand surfaces when people ask questions related to what you do.",
   },
   {
     id: "faq4",
     question: "What is GEO and how does Generative Engine Optimization work?",
     answer:
-      "GEO (Generative Engine Optimization) ensures your brand is cited by AI tools like ChatGPT, Gemini, and Perplexity. Maverick Digitals implements GEO strategies using structured content, entity markup, and authority building so AI platforms recommend your business when users ask about relevant topics.",
+      "GEO (Generative Engine Optimization) is making sure AI tools like ChatGPT, Gemini, and Perplexity actually mention your brand when someone asks a relevant question. We do this through structured content, entity markup, and building the kind of authority those systems trust.",
   },
   {
     id: "faq5",
     question: "How much does digital marketing cost with Maverick Digitals?",
     answer:
-      "Pricing varies based on your business goals, services required, and campaign scale. We offer flexible packages for D2C brands, startups, coaches, and enterprises. Contact us at maverickdigitals18@gmail.com or fill out our contact form for a custom growth proposal.",
+      "It depends on what you need. We work with D2C brands, startups, coaches, and enterprises at different scales, so pricing is scoped to your goals. Reach out at maverickdigitals18@gmail.com or fill in our contact form and we'll put together a proposal that makes sense for your business.",
   },
   {
     id: "faq6",
     question: "Which industries does Maverick Digitals serve?",
     answer:
-      "We serve D2C Brands, Healthcare & Clinics, Travel & Hospitality, Coaches & Consultants, B2B Startups, and Wedding Planners. Our team has delivered results across India, UAE, USA, UK, and Australia with proven success across diverse markets and industries.",
+      "We've worked across D2C brands, healthcare and clinics, travel and hospitality, coaches and consultants, B2B startups, and wedding planners. Clients are based across India, the UAE, the USA, the UK, and Australia.",
   },
   {
     id: "faq7",
     question: "Who founded Maverick Digitals?",
     answer:
-      "Maverick Digitals was co-founded by Muskan Rathod (Founder & Brand Strategist) and Dhaval Shah (Co-Founder & Tech Innovator) in Mumbai, India. Together they bring expertise in brand strategy, performance marketing, and technical innovation to help brands achieve measurable growth.",
+      "Maverick Digitals was started by Muskan Rathod (Founder, brand strategist and growth marketer) and Dhaval Shah (Co-Founder, MERN stack developer and tech lead) in Mumbai. They work together on every client account — strategy and execution under the same roof.",
   },
 ];
 
@@ -145,8 +145,7 @@ export function FaqSection() {
             <span className="gradient-text-cyan">Questions</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto text-sm leading-relaxed">
-            Everything you need to know about working with Mumbai's leading
-            digital marketing agency.
+            Common questions about working with Maverick Digitals.
           </p>
         </div>
 

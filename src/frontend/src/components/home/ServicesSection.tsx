@@ -251,8 +251,8 @@ export function ServicesSection() {
               </span>
             </h2>
             <p className="text-muted-foreground text-sm mt-3 max-w-xl">
-              End-to-end digital marketing solutions designed to scale your
-              business profitably and sustainably
+              From search rankings to social ads, we handle the work that brings
+              in real customers.
             </p>
           </div>
           <Link

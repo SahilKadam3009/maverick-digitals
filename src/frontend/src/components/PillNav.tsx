@@ -22,6 +22,9 @@ interface PillNavProps {
   pillTextColor?: string;
   onMobileMenuClick?: () => void;
   initialLoadAnimation?: boolean;
+  // Theme integration for mobile dropdown
+  theme?: "light" | "dark";
+  onToggleTheme?: () => void;
 }
 
 const PillNav = ({
@@ -37,6 +40,8 @@ const PillNav = ({
   pillTextColor,
   onMobileMenuClick,
   initialLoadAnimation = true,
+  theme,
+  onToggleTheme,
 }: PillNavProps) => {
   const resolvedPillTextColor = pillTextColor ?? baseColor;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -182,6 +187,30 @@ const PillNav = ({
     });
   };
 
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+    const hamburger = hamburgerRef.current;
+    const menu = mobileMenuRef.current;
+    if (hamburger) {
+      const lines = hamburger.querySelectorAll(".hamburger-line");
+      gsap.to(lines[0], { rotation: 0, y: 0, duration: 0.3, ease });
+      gsap.to(lines[1], { rotation: 0, y: 0, duration: 0.3, ease });
+    }
+    if (menu) {
+      gsap.to(menu, {
+        opacity: 0,
+        y: 10,
+        scaleY: 1,
+        duration: 0.2,
+        ease,
+        transformOrigin: "top center",
+        onComplete: () => {
+          gsap.set(menu, { visibility: "hidden" });
+        },
+      });
+    }
+  };
+
   const toggleMobileMenu = () => {
     const newState = !isMobileMenuOpen;
     setIsMobileMenuOpen(newState);
@@ -249,6 +278,8 @@ const PillNav = ({
     "--hover-text": hoveredPillTextColor,
     "--pill-text": resolvedPillTextColor,
   } as React.CSSProperties;
+
+  const isDark = theme === "dark";
 
   return (
     <div className="pill-nav-container">
@@ -340,18 +371,21 @@ const PillNav = ({
           </ul>
         </div>
 
+        {/* Mobile hamburger — always on the RIGHT */}
         <button
           className="mobile-menu-button mobile-only"
           onClick={toggleMobileMenu}
           aria-label="Toggle menu"
           ref={hamburgerRef}
           type="button"
+          data-ocid="mobile-menu-toggle"
         >
           <span className="hamburger-line" />
           <span className="hamburger-line" />
         </button>
       </nav>
 
+      {/* Mobile dropdown — logo left / hamburger right above, links stack below */}
       <div
         className="mobile-menu-popover mobile-only"
         ref={mobileMenuRef}
@@ -364,8 +398,9 @@ const PillNav = ({
                 <Link
                   to={item.href as "/"}
                   className={`mobile-menu-link${activeHref === item.href ? " is-active" : ""}`}
+                  data-ocid={`mobile-nav-link-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
                   onClick={() => {
-                    setIsMobileMenuOpen(false);
+                    closeMobileMenu();
                     navigate({ to: item.href as "/" });
                   }}
                 >
@@ -375,13 +410,42 @@ const PillNav = ({
                 <a
                   href={item.href}
                   className={`mobile-menu-link${activeHref === item.href ? " is-active" : ""}`}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  data-ocid={`mobile-nav-link-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                  onClick={() => closeMobileMenu()}
                 >
                   {item.label}
                 </a>
               )}
             </li>
           ))}
+
+          {/* Theme toggle at bottom of mobile menu */}
+          {onToggleTheme && (
+            <>
+              <li aria-hidden="true">
+                <div className="mobile-menu-divider" />
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className="mobile-theme-toggle"
+                  onClick={() => {
+                    onToggleTheme();
+                    closeMobileMenu();
+                  }}
+                  data-ocid="mobile-theme-toggle"
+                  aria-label="Toggle theme"
+                >
+                  <span className="mobile-theme-toggle-label">
+                    {isDark ? "Switch to Light" : "Switch to Dark"}
+                  </span>
+                  <span className="mobile-theme-toggle-badge">
+                    {isDark ? "Light" : "Dark"}
+                  </span>
+                </button>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>

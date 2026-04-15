@@ -8,7 +8,7 @@ const steps = [
     icon: Search,
     title: "Discovery",
     description:
-      "Deep market research, competitor analysis, and audience mapping. We uncover the insights that build your advantage.",
+      "We start by understanding your market properly — who you're actually competing against, who your customers are, and what's already working in your space.",
     color: "primary",
   },
   {
@@ -16,7 +16,7 @@ const steps = [
     icon: Layers,
     title: "Strategy",
     description:
-      "We translate insights into a data-backed roadmap. Channel mix, messaging hierarchy, and KPIs locked in before a single ad runs.",
+      "Before anything goes live, we agree on the plan — which channels make sense for you, what success looks like, and how we're measuring it.",
     color: "secondary",
   },
   {
@@ -24,7 +24,7 @@ const steps = [
     icon: FlaskConical,
     title: "Creative",
     description:
-      "Strategy meets artistry. High-converting assets and brand narratives built by our creative team and validated by data.",
+      "Our creative team builds the content, ads, and brand assets. Everything gets pressure-tested before it ever reaches your audience.",
     color: "accent",
   },
   {
@@ -32,7 +32,7 @@ const steps = [
     icon: Rocket,
     title: "Launch",
     description:
-      "Precision execution across every channel. Campaigns live, tracking in place, optimizations running from day one.",
+      "We launch carefully, not quickly. Tracking is set up properly, everything goes through QA, and we're watching performance from the first hour.",
     color: "primary",
   },
   {
@@ -40,7 +40,7 @@ const steps = [
     icon: TrendingUp,
     title: "Optimize",
     description:
-      "Continuous A/B testing, performance review, and scaling what works. Growth compounds — and so do your results.",
+      "After launch, the real work starts. We test, cut what's underperforming, and put more behind what's working. Consistently.",
     color: "secondary",
   },
 ];
@@ -152,8 +152,7 @@ export function ProcessSection() {
             Our <span className="gradient-text-purple">Process</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            A battle-tested 5-step framework that delivers exceptional,
-            repeatable results.
+            Here's how we typically work with a new client.
           </p>
         </div>
 

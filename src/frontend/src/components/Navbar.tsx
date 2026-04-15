@@ -105,7 +105,8 @@ export function Navbar() {
         transition: "transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between py-3 sm:py-4">
+      {/* ── Desktop layout ── */}
+      <div className="hidden md:flex max-w-7xl mx-auto px-4 sm:px-6 items-center justify-between py-3 sm:py-4">
         {/* Logo */}
         <Link
           to="/"
@@ -125,22 +126,19 @@ export function Navbar() {
         </Link>
 
         {/* Desktop PillNav */}
-        <div className="hidden md:block">
-          <PillNav
-            items={navItems}
-            activeHref={activeHref}
-            baseColor={pillNavBaseColor}
-            pillColor={pillNavPillColor}
-            hoveredPillTextColor="#ffffff"
-            pillTextColor={pillNavPillTextColor}
-            initialLoadAnimation={false}
-            className=""
-          />
-        </div>
+        <PillNav
+          items={navItems}
+          activeHref={activeHref}
+          baseColor={pillNavBaseColor}
+          pillColor={pillNavPillColor}
+          hoveredPillTextColor="#ffffff"
+          pillTextColor={pillNavPillTextColor}
+          initialLoadAnimation={false}
+          className=""
+        />
 
-        {/* Desktop: CTA + Theme Toggle */}
-        <div className="hidden md:flex items-center gap-3 z-[100] relative">
-          {/* Theme Toggle */}
+        {/* Desktop: Theme Toggle + CTA */}
+        <div className="flex items-center gap-3 z-[100] relative">
           <button
             type="button"
             data-ocid="theme-toggle"
@@ -169,40 +167,51 @@ export function Navbar() {
             </Button>
           </Link>
         </div>
+      </div>
 
-        {/* Mobile: PillNav + Theme Toggle */}
-        <div className="md:hidden relative w-full absolute left-0 top-0 flex items-center">
-          <PillNav
-            items={navItems}
-            activeHref={activeHref}
-            baseColor={pillNavBaseColor}
-            pillColor={pillNavPillColor}
-            hoveredPillTextColor="#ffffff"
-            pillTextColor={pillNavPillTextColor}
-            initialLoadAnimation={false}
-            onMobileMenuClick={() => {}}
-          />
-          {/* Mobile Theme Toggle — positioned at the right edge of the navbar row */}
-          <button
-            type="button"
-            data-ocid="theme-toggle-mobile"
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-            className={`
-              absolute right-4 top-1/2 -translate-y-1/2
-              w-9 h-9 rounded-full flex items-center justify-center
-              border transition-all duration-300 z-[200]
-              ${
-                isDark
-                  ? "border-purple-500/50 text-purple-300 hover:border-purple-400 bg-[#1a1a2e]/80"
-                  : "border-purple-400/60 text-purple-600 hover:border-purple-500 bg-white/80"
-              }
-              backdrop-blur-sm hover:scale-110
-            `}
-          >
-            {isDark ? <SunIcon /> : <MoonIcon />}
-          </button>
-        </div>
+      {/* ── Mobile layout: logo left, hamburger right via PillNav ── */}
+      <div
+        className="md:hidden flex items-center justify-between px-5 py-3"
+        style={{
+          background: isDark ? "rgba(15,15,15,0.92)" : "rgba(255,255,255,0.92)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderBottom: isDark
+            ? "1px solid rgba(255,255,255,0.08)"
+            : "1px solid rgba(0,0,0,0.08)",
+        }}
+      >
+        {/* Mobile Logo */}
+        <Link
+          to="/"
+          className="flex items-center gap-2 group z-[100] relative"
+          data-ocid="nav-logo-mobile"
+        >
+          <div className="relative group-hover:scale-110 transition-smooth">
+            <MaverickLogo
+              size={26}
+              className="drop-shadow-[0_0_6px_oklch(0.68_0.24_308/0.5)]"
+            />
+          </div>
+          <span className="font-display font-bold text-base tracking-tight">
+            <span className="text-foreground">Maverick</span>
+            <span className="text-primary"> Digitals</span>
+          </span>
+        </Link>
+
+        {/* Mobile Hamburger (PillNav renders only the button + dropdown) */}
+        <PillNav
+          items={navItems}
+          activeHref={activeHref}
+          baseColor={pillNavBaseColor}
+          pillColor={pillNavPillColor}
+          hoveredPillTextColor="#ffffff"
+          pillTextColor={pillNavPillTextColor}
+          initialLoadAnimation={false}
+          onMobileMenuClick={() => {}}
+          theme={theme}
+          onToggleTheme={toggleTheme}
+        />
       </div>
     </nav>
   );

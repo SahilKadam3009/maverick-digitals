@@ -44,13 +44,12 @@ export function CtaSection() {
           Ready to Grow?
         </p>
         <h2 className="font-display font-bold text-4xl md:text-6xl text-foreground mb-6 text-balance leading-[1.1]">
-          Ready to Dominate Mumbai's{" "}
-          <span className="gradient-text-purple">Digital Landscape?</span>
+          Let's grow your{" "}
+          <span className="gradient-text-purple">brand online.</span>
         </h2>
         <p className="text-muted-foreground text-lg leading-relaxed mb-12 max-w-xl mx-auto">
-          Join 50+ Mumbai businesses that trust Maverick Digitals to grow their
-          brand, drive leads, and scale revenue. Let's build something
-          extraordinary together.
+          We've worked with 40+ brands across India and globally. If you're
+          serious about growing online, let's talk.
         </p>
 
         {/* Email capture */}
@@ -110,9 +109,11 @@ export function CtaSection() {
 
         {/* Social proof */}
         <div className="mt-12 flex items-center justify-center gap-6 text-xs text-muted-foreground/70 flex-wrap">
-          <span>✦ No lock-in contracts</span>
-          <span>✦ Results-focused approach</span>
-          <span>✦ 97% client retention rate</span>
+          <span>No lock-in contracts</span>
+          <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
+          <span>Results-focused approach</span>
+          <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
+          <span>97% client retention rate</span>
         </div>
       </div>
     </section>

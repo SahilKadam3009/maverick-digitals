@@ -100,11 +100,11 @@
 
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
+    color-scheme: light;
   }
 
-  html:not(.dark) {
-    color-scheme: light;
+  html.dark {
+    color-scheme: dark;
   }
 
   body {

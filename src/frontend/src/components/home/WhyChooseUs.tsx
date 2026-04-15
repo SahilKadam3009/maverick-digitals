@@ -6,9 +6,9 @@ const points = [
   {
     id: "data",
     icon: BarChart2,
-    title: "Performance-Driven",
+    title: "We care about numbers that matter",
     description:
-      "Data-driven results, not vanity metrics. Every campaign is built around measurable business outcomes and real ROI.",
+      "Not monthly report theatre. We track what's actually moving the needle — leads, sales, and revenue growth — and cut what doesn't work.",
     accent: "primary",
     stat: "200%+",
     statLabel: "Average ROI",
@@ -16,9 +16,9 @@ const points = [
   {
     id: "creative",
     icon: Lightbulb,
-    title: "Data-Informed Creativity",
+    title: "Creative that converts",
     description:
-      "We blend creativity, psychology, and data to craft campaigns that convert — not just content that looks good.",
+      "Good-looking content that nobody acts on is useless. We build campaigns that are both worth watching and worth clicking.",
     accent: "secondary",
     stat: "15M+",
     statLabel: "Organic Views",
@@ -26,9 +26,9 @@ const points = [
   {
     id: "transparent",
     icon: Eye,
-    title: "End-to-End Capability",
+    title: "One team, full ownership",
     description:
-      "From strategy to execution, we handle everything in-house with our lean, high-output team.",
+      "You don't get passed around. Our co-founders are involved from brief to delivery, and the team that pitches is the team that executes.",
     accent: "accent",
     stat: "40+",
     statLabel: "Brands Scaled",
@@ -36,9 +36,9 @@ const points = [
   {
     id: "proven",
     icon: ShieldCheck,
-    title: "Founder-Led Approach",
+    title: "Direct access, always",
     description:
-      "Founder-led with direct involvement. Co-founders Muskan Rathod and Dhaval Shah are personally invested in every client's success.",
+      "Muskan and Dhaval stay involved in every account. No account managers playing phone tag — you get real decisions made fast.",
     accent: "primary",
     stat: "2X+",
     statLabel: "Minimum Revenue Growth",
@@ -84,7 +84,7 @@ const ORBIT_ITEMS = [
     gradientTo: "oklch(0.35 0.22 280)",
     glow: "oklch(0.68 0.24 308)",
     angle: 0,
-    icon: "⚡",
+    icon: "SEO",
   },
   {
     id: "o2",
@@ -93,7 +93,7 @@ const ORBIT_ITEMS = [
     gradientTo: "oklch(0.32 0.2 220)",
     glow: "oklch(0.72 0.19 200)",
     angle: 60,
-    icon: "🎯",
+    icon: "PPC",
   },
   {
     id: "o3",
@@ -102,7 +102,7 @@ const ORBIT_ITEMS = [
     gradientTo: "oklch(0.30 0.22 240)",
     glow: "oklch(0.65 0.22 260)",
     angle: 120,
-    icon: "✦",
+    icon: "BRD",
   },
   {
     id: "o4",
@@ -111,7 +111,7 @@ const ORBIT_ITEMS = [
     gradientTo: "oklch(0.34 0.24 290)",
     glow: "oklch(0.68 0.24 308)",
     angle: 180,
-    icon: "◈",
+    icon: "SMM",
   },
   {
     id: "o5",
@@ -120,7 +120,7 @@ const ORBIT_ITEMS = [
     gradientTo: "oklch(0.28 0.2 210)",
     glow: "oklch(0.72 0.19 200)",
     angle: 240,
-    icon: "✧",
+    icon: "DEV",
   },
   {
     id: "o6",
@@ -129,7 +129,7 @@ const ORBIT_ITEMS = [
     gradientTo: "oklch(0.32 0.22 250)",
     glow: "oklch(0.65 0.22 260)",
     angle: 300,
-    icon: "◆",
+    icon: "PB",
   },
 ];
 
@@ -484,7 +484,11 @@ function OrbitVisualization() {
               {/* Icon + label */}
               <div className="relative flex flex-col items-center justify-center h-full gap-0.5">
                 <span
-                  style={{ fontSize: Math.round(size * 0.32), lineHeight: 1 }}
+                  className="font-mono font-bold text-white/80 uppercase tracking-wider"
+                  style={{
+                    fontSize: Math.max(8, Math.round(size * 0.22)),
+                    lineHeight: 1,
+                  }}
                 >
                   {item.icon}
                 </span>
@@ -623,7 +627,7 @@ export function WhyChooseUs() {
             {/* Label above orbit */}
             <div className="mb-4 text-center">
               <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1">
-                Services in Orbit
+                Where We Focus
               </p>
               <div
                 className="h-px w-24 mx-auto"
@@ -651,7 +655,9 @@ export function WhyChooseUs() {
                     color: item.glow,
                   }}
                 >
-                  <span>{item.icon}</span>
+                  <span className="font-mono text-[10px] font-bold opacity-70">
+                    {item.icon}
+                  </span>
                   <span>{item.label}</span>
                 </div>
               ))}

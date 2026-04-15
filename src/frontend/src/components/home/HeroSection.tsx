@@ -164,15 +164,14 @@ export function HeroSection() {
           className="mt-9 flex flex-col items-center gap-3"
         >
           <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed">
-            We help ambitious brands scale through high-conversion strategy,
-            storytelling, and execution. Blending creativity, psychology, and
-            data to drive measurable business outcomes.
+            We're a small team in Mumbai that's helped over 40 brands grow
+            online — through SEO, paid campaigns, and content that actually
+            connects with people.
           </p>
           <p className="text-muted-foreground/60 max-w-2xl text-sm leading-relaxed">
-            Maverick Digitals is a Mumbai-based full-stack digital marketing
-            agency co-founded by Muskan Rathod and Dhaval Shah. We blend
-            creativity, psychology, and data to deliver measurable business
-            outcomes for ambitious brands.
+            Maverick Digitals is co-founded by Muskan Rathod and Dhaval Shah.
+            Between brand strategy, performance marketing, and technical
+            execution, we handle the work that brings in real customers.
           </p>
           {/* Proof stats strip */}
           <div className="grid grid-cols-2 sm:flex sm:items-center sm:gap-6 gap-3 mt-4 text-xs font-semibold tracking-[0.15em] uppercase text-muted-foreground/70 w-full sm:w-auto">

@@ -347,16 +347,16 @@ function createPointer(
       document.body.addEventListener("pointerleave", onPointerLeave);
       document.body.addEventListener("click", onPointerClick);
       document.body.addEventListener("touchstart", onTouchStart, {
-        passive: false,
+        passive: true,
       });
       document.body.addEventListener("touchmove", onTouchMove, {
-        passive: false,
+        passive: true,
       });
       document.body.addEventListener("touchend", onTouchEnd, {
-        passive: false,
+        passive: true,
       });
       document.body.addEventListener("touchcancel", onTouchEnd, {
-        passive: false,
+        passive: true,
       });
       globalListenersAdded = true;
     }
@@ -423,7 +423,6 @@ function onPointerLeave() {
 
 function onTouchStart(e: TouchEvent) {
   if (e.touches.length > 0) {
-    e.preventDefault();
     globalPointer.x = e.touches[0].clientX;
     globalPointer.y = e.touches[0].clientY;
     for (const [elem, state] of pointerMap) {
@@ -443,7 +442,6 @@ function onTouchStart(e: TouchEvent) {
 
 function onTouchMove(e: TouchEvent) {
   if (e.touches.length > 0) {
-    e.preventDefault();
     globalPointer.x = e.touches[0].clientX;
     globalPointer.y = e.touches[0].clientY;
     for (const [elem, state] of pointerMap) {
@@ -822,7 +820,7 @@ function createBallpit(
   let spheres: BallpitMesh;
   let paused = false;
 
-  canvas.style.touchAction = "none";
+  canvas.style.touchAction = "pan-y";
   canvas.style.userSelect = "none";
   (
     canvas.style as CSSStyleDeclaration & { webkitUserSelect: string }

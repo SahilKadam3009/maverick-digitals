@@ -19,9 +19,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     try {
       const stored = localStorage.getItem("maverick-theme") as Theme | null;
-      return stored === "light" ? "light" : "dark";
+      return stored === "dark" ? "dark" : "light";
     } catch {
-      return "dark";
+      return "light";
     }
   });
 
