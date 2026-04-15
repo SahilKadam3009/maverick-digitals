@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRevealOnScroll } from "@/hooks/useIntersectionObserver";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Send } from "lucide-react";
+import { ArrowRight, CheckCircle, Send } from "lucide-react";
 import { useState } from "react";
 
 export function CtaSection() {
@@ -18,35 +18,39 @@ export function CtaSection() {
   };
 
   return (
-    <section className="relative py-20 sm:py-32 px-4 sm:px-6 overflow-hidden">
-      {/* Rich animated background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/12 via-background to-secondary/10" />
-      <div className="absolute inset-0 grid-glow-bg opacity-30" />
+    <section className="relative py-24 sm:py-36 px-4 sm:px-6 overflow-hidden">
+      {/* Rich background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/8" />
+      <div className="absolute inset-0 grid-glow-bg opacity-25" />
 
-      {/* Large blobs */}
-      <div className="absolute -top-20 left-1/4 w-96 h-96 bg-primary/18 rounded-full blur-[130px] animate-float" />
+      {/* Blobs */}
+      <div className="absolute -top-24 left-1/4 w-96 h-96 bg-primary/14 rounded-full blur-[140px] animate-float" />
       <div
-        className="absolute -bottom-20 right-1/4 w-80 h-80 bg-secondary/15 rounded-full blur-[110px] animate-float"
+        className="absolute -bottom-24 right-1/4 w-80 h-80 bg-secondary/12 rounded-full blur-[120px] animate-float"
         style={{ animationDelay: "1.5s" }}
       />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-accent/8 rounded-full blur-[120px]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[320px] bg-accent/6 rounded-full blur-[130px]" />
 
-      {/* Thin neon ring accent */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-primary/10 pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-secondary/6 pointer-events-none" />
+      {/* Decorative rings */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] rounded-full border border-primary/8 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[580px] h-[580px] rounded-full border border-secondary/5 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[760px] h-[760px] rounded-full border border-accent/3 pointer-events-none" />
 
       <div
         ref={ref as React.RefObject<HTMLDivElement>}
         style={style}
         className="relative max-w-3xl mx-auto text-center"
       >
-        <p className="text-primary text-xs font-semibold uppercase tracking-widest mb-5">
+        <p className="text-primary text-xs font-semibold uppercase tracking-widest mb-5 inline-flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
           Ready to Grow?
         </p>
-        <h2 className="font-display font-bold text-4xl md:text-6xl text-foreground mb-6 text-balance leading-[1.1]">
+
+        <h2 className="font-display font-bold text-4xl md:text-6xl text-foreground mb-6 text-balance leading-[1.08]">
           Let's grow your{" "}
           <span className="gradient-text-purple">brand online.</span>
         </h2>
+
         <p className="text-muted-foreground text-lg leading-relaxed mb-12 max-w-xl mx-auto">
           40+ brands across India and globally. If you're serious about growing
           online, let's find out what's possible for yours.
@@ -64,13 +68,13 @@ export function CtaSection() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="flex-1 bg-card/60 border-white/15 focus:border-primary/50 placeholder:text-muted-foreground/50 h-12"
+              className="flex-1 bg-card/70 dark:bg-card/50 border-border hover:border-primary/30 focus:border-primary/50 placeholder:text-muted-foreground/50 text-foreground h-12 rounded-xl"
               data-ocid="cta-email-input"
             />
             <Button
               type="submit"
               size="lg"
-              className="gradient-neon-purple text-background font-semibold glow-neon hover:scale-105 transition-smooth border-0 h-12 px-6 whitespace-nowrap"
+              className="gradient-neon-purple text-white font-semibold glow-neon hover:scale-105 transition-smooth border-0 h-12 px-7 whitespace-nowrap rounded-xl"
               data-ocid="cta-email-submit"
             >
               Get Strategy Call
@@ -78,19 +82,19 @@ export function CtaSection() {
             </Button>
           </form>
         ) : (
-          <div className="glassmorphic border-primary/30 px-8 py-4 inline-flex items-center gap-3 mb-8 text-primary font-semibold">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+          <div className="glassmorphic border-primary/25 px-8 py-4 inline-flex items-center gap-3 mb-8 text-primary font-semibold rounded-xl">
+            <CheckCircle size={16} className="shrink-0" />
             We'll reach out within 24 hours!
           </div>
         )}
 
-        {/* Secondary CTA */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        {/* Secondary CTAs */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
           <Link to="/contact" data-ocid="cta-section-primary">
             <Button
               size="lg"
               variant="outline"
-              className="border-white/20 text-foreground hover:bg-white/5 hover:border-primary/40 transition-smooth px-8 h-12 text-base"
+              className="border-border hover:border-primary/40 text-foreground hover:bg-primary/5 transition-smooth px-8 h-12 text-base rounded-xl"
             >
               Book a Discovery Call
               <ArrowRight size={16} className="ml-2" />
@@ -100,20 +104,29 @@ export function CtaSection() {
             <Button
               size="lg"
               variant="ghost"
-              className="text-muted-foreground hover:text-foreground hover:bg-white/5 transition-smooth px-8 h-12 text-base"
+              className="text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-smooth px-8 h-12 text-base rounded-xl"
             >
               See Our Work
             </Button>
           </Link>
         </div>
 
-        {/* Social proof */}
-        <div className="mt-12 flex items-center justify-center gap-6 text-xs text-muted-foreground/70 flex-wrap">
-          <span>No lock-in contracts</span>
-          <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
-          <span>You see results before we ask for long-term commitment</span>
-          <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
-          <span>97% client retention</span>
+        {/* Social proof strip */}
+        <div className="flex items-center justify-center gap-5 text-xs text-muted-foreground/65 flex-wrap">
+          <span className="flex items-center gap-1.5">
+            <CheckCircle size={12} className="text-primary/60" />
+            No lock-in contracts
+          </span>
+          <span className="w-1 h-1 rounded-full bg-muted-foreground/25" />
+          <span className="flex items-center gap-1.5">
+            <CheckCircle size={12} className="text-primary/60" />
+            Results before long-term commitment
+          </span>
+          <span className="w-1 h-1 rounded-full bg-muted-foreground/25" />
+          <span className="flex items-center gap-1.5">
+            <CheckCircle size={12} className="text-primary/60" />
+            97% client retention
+          </span>
         </div>
       </div>
     </section>

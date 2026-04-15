@@ -1,5 +1,15 @@
 import { useRevealOnScroll } from "@/hooks/useIntersectionObserver";
-import { BarChart2, Eye, Lightbulb, ShieldCheck } from "lucide-react";
+import {
+  BarChart2,
+  Code2,
+  Eye,
+  Globe,
+  Lightbulb,
+  Megaphone,
+  Share2,
+  ShieldCheck,
+  User,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const points = [
@@ -52,7 +62,6 @@ const accentColor = {
     icon: "text-primary",
     iconBg: "bg-primary/10",
     stat: "text-primary",
-    connector: "bg-primary/30",
     hoverBorder: "hover:border-primary/45",
   },
   secondary: {
@@ -61,7 +70,6 @@ const accentColor = {
     icon: "text-secondary",
     iconBg: "bg-secondary/10",
     stat: "text-secondary",
-    connector: "bg-secondary/30",
     hoverBorder: "hover:border-secondary/45",
   },
   accent: {
@@ -70,74 +78,85 @@ const accentColor = {
     icon: "text-accent",
     iconBg: "bg-accent/10",
     stat: "text-accent",
-    connector: "bg-accent/30",
     hoverBorder: "hover:border-accent/45",
   },
 };
 
-// 6 orbit items representing agency work
+// 6 orbit items with service data
 const ORBIT_ITEMS = [
   {
     id: "o1",
     label: "SEO & SEM",
+    description: "Search visibility that drives real traffic",
     gradientFrom: "oklch(0.45 0.28 308)",
-    gradientTo: "oklch(0.35 0.22 280)",
+    gradientTo: "oklch(0.32 0.22 280)",
     glow: "oklch(0.68 0.24 308)",
     angle: 0,
     icon: "SEO",
+    LucideIcon: Globe,
   },
   {
     id: "o2",
     label: "Performance",
-    gradientFrom: "oklch(0.42 0.25 200)",
-    gradientTo: "oklch(0.32 0.2 220)",
+    description: "Paid ads that earn more than they spend",
+    gradientFrom: "oklch(0.40 0.25 200)",
+    gradientTo: "oklch(0.30 0.2 220)",
     glow: "oklch(0.72 0.19 200)",
     angle: 60,
     icon: "PPC",
+    LucideIcon: BarChart2,
   },
   {
     id: "o3",
     label: "Brand Strategy",
-    gradientFrom: "oklch(0.40 0.26 260)",
-    gradientTo: "oklch(0.30 0.22 240)",
+    description: "Position your brand to win the right customers",
+    gradientFrom: "oklch(0.38 0.26 260)",
+    gradientTo: "oklch(0.28 0.22 240)",
     glow: "oklch(0.65 0.22 260)",
     angle: 120,
     icon: "BRD",
+    LucideIcon: Megaphone,
   },
   {
     id: "o4",
     label: "Social Media",
+    description: "Consistent presence that builds community",
     gradientFrom: "oklch(0.44 0.27 308)",
     gradientTo: "oklch(0.34 0.24 290)",
     glow: "oklch(0.68 0.24 308)",
     angle: 180,
     icon: "SMM",
+    LucideIcon: Share2,
   },
   {
     id: "o5",
     label: "Web Dev",
+    description: "Sites that load fast and convert visitors",
     gradientFrom: "oklch(0.38 0.24 195)",
     gradientTo: "oklch(0.28 0.2 210)",
     glow: "oklch(0.72 0.19 200)",
     angle: 240,
     icon: "DEV",
+    LucideIcon: Code2,
   },
   {
     id: "o6",
     label: "Personal Brand",
+    description: "Build a founder presence that opens doors",
     gradientFrom: "oklch(0.42 0.26 265)",
     gradientTo: "oklch(0.32 0.22 250)",
     glow: "oklch(0.65 0.22 260)",
     angle: 300,
     icon: "PB",
+    LucideIcon: User,
   },
 ];
 
-// Ellipse dimensions (3D tilt feel)
-const OX = 240; // center X
-const OY = 200; // center Y
-const RX = 160; // horizontal radius (wide)
-const RY = 52; // vertical radius (compressed for tilt illusion)
+// Larger orbit ellipse for more visual presence
+const OX = 260;
+const OY = 210;
+const RX = 220;
+const RY = 70;
 
 function getEllipsePos(angleDeg: number) {
   const rad = (angleDeg * Math.PI) / 180;
@@ -147,11 +166,10 @@ function getEllipsePos(angleDeg: number) {
   };
 }
 
-// Depth scale: items at top of ellipse appear smaller (farther)
+// Wider depth scale range for stronger 3D illusion
 function getDepthScale(angleDeg: number) {
   const rad = (angleDeg * Math.PI) / 180;
-  // sin goes from -1 (top) to 1 (bottom); map to 0.55..1.0
-  return 0.75 + 0.25 * ((Math.sin(rad) + 1) / 2);
+  return 0.6 + 0.5 * ((Math.sin(rad) + 1) / 2);
 }
 
 function OrbitVisualization() {
@@ -165,8 +183,9 @@ function OrbitVisualization() {
       if (lastTimeRef.current === 0) lastTimeRef.current = now;
       const dt = now - lastTimeRef.current;
       lastTimeRef.current = now;
-      const speed = isHovered ? 0.3 : 0.65; // deg/s factor
-      setRotation((prev) => (prev + dt * speed * 0.012) % 360);
+      // Slower, smoother: ~0.35 deg/frame equivalent at 60fps
+      const speed = isHovered ? 0.18 : 0.35;
+      setRotation((prev) => (prev + dt * speed * 0.01) % 360);
       animRef.current = requestAnimationFrame(animate);
     };
     animRef.current = requestAnimationFrame(animate);
@@ -175,10 +194,9 @@ function OrbitVisualization() {
     };
   }, [isHovered]);
 
-  const SVG_W = 480;
-  const SVG_H = 400;
+  const SVG_W = 520;
+  const SVG_H = 420;
 
-  // Sort orbit items by depth so farther ones render behind closer ones
   const sortedItems = [...ORBIT_ITEMS].sort((a, b) => {
     const depA = getDepthScale((a.angle + rotation) % 360);
     const depB = getDepthScale((b.angle + rotation) % 360);
@@ -188,27 +206,32 @@ function OrbitVisualization() {
   return (
     <div
       className="relative flex-shrink-0 select-none"
-      style={{ width: SVG_W, height: SVG_H }}
+      style={{
+        width: SVG_W,
+        height: SVG_H,
+        perspective: "800px",
+        perspectiveOrigin: "50% 40%",
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       aria-hidden="true"
     >
-      {/* Background glow */}
+      {/* Background radial glow */}
       <div
         className="absolute rounded-full pointer-events-none"
         style={{
-          width: 400,
-          height: 300,
+          width: 440,
+          height: 320,
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           background:
-            "radial-gradient(ellipse, oklch(var(--primary)/0.08) 0%, oklch(var(--accent)/0.05) 45%, transparent 70%)",
-          filter: "blur(32px)",
+            "radial-gradient(ellipse, oklch(var(--primary)/0.10) 0%, oklch(var(--accent)/0.06) 40%, transparent 68%)",
+          filter: "blur(38px)",
         }}
       />
 
-      {/* SVG: ellipse ring + decorative elements */}
+      {/* SVG: ellipse ring */}
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none"
         viewBox={`0 0 ${SVG_W} ${SVG_H}`}
@@ -229,19 +252,19 @@ function OrbitVisualization() {
               stopOpacity="0.0"
             />
             <stop
-              offset="25%"
+              offset="20%"
               stopColor="oklch(var(--primary))"
               stopOpacity="0.5"
             />
             <stop
               offset="50%"
               stopColor="oklch(var(--secondary))"
-              stopOpacity="0.35"
+              stopOpacity="0.4"
             />
             <stop
-              offset="75%"
+              offset="80%"
               stopColor="oklch(var(--accent))"
-              stopOpacity="0.3"
+              stopOpacity="0.35"
             />
             <stop
               offset="100%"
@@ -250,7 +273,7 @@ function OrbitVisualization() {
             />
           </linearGradient>
           <linearGradient
-            id="orbitEllipseShadow"
+            id="orbitShadowGrad"
             x1="0%"
             y1="0%"
             x2="100%"
@@ -262,14 +285,14 @@ function OrbitVisualization() {
               stopOpacity="0.0"
             />
             <stop
-              offset="40%"
+              offset="45%"
               stopColor="oklch(var(--primary))"
-              stopOpacity="0.12"
+              stopOpacity="0.14"
             />
             <stop
-              offset="60%"
+              offset="55%"
               stopColor="oklch(var(--secondary))"
-              stopOpacity="0.08"
+              stopOpacity="0.1"
             />
             <stop
               offset="100%"
@@ -278,7 +301,7 @@ function OrbitVisualization() {
             />
           </linearGradient>
           <filter id="ellipseGlow">
-            <feGaussianBlur stdDeviation="2.5" result="blur" />
+            <feGaussianBlur stdDeviation="2" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -287,19 +310,19 @@ function OrbitVisualization() {
           <title>3D orbit ring animation</title>
         </defs>
 
-        {/* Shadow ellipse below (depth illusion) */}
+        {/* Shadow ellipse (depth illusion) */}
         <ellipse
           cx={OX}
-          cy={OY + 8}
-          rx={RX + 4}
-          ry={RY + 2}
-          stroke="url(#orbitEllipseShadow)"
-          strokeWidth="6"
+          cy={OY + 10}
+          rx={RX + 5}
+          ry={RY + 3}
+          stroke="url(#orbitShadowGrad)"
+          strokeWidth="7"
           fill="none"
           opacity="0.5"
         />
 
-        {/* Main orbit ellipse ring */}
+        {/* Main orbit ellipse */}
         <ellipse
           cx={OX}
           cy={OY}
@@ -309,44 +332,44 @@ function OrbitVisualization() {
           strokeWidth="1.5"
           fill="none"
           filter="url(#ellipseGlow)"
-          strokeDasharray="3 7"
+          strokeDasharray="4 8"
         />
 
-        {/* Subtle inner ellipse ring */}
+        {/* Inner subtle ellipse */}
         <ellipse
           cx={OX}
           cy={OY}
-          rx={RX - 22}
-          ry={RY - 7}
+          rx={RX - 30}
+          ry={RY - 10}
           stroke="oklch(var(--foreground)/0.04)"
           strokeWidth="1"
           fill="none"
-          strokeDasharray="2 10"
+          strokeDasharray="2 12"
         />
 
-        {/* Tiny particle dots on the ellipse */}
+        {/* Animated particles on ellipse */}
         {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => {
-          const pos = getEllipsePos((deg + rotation * 0.3) % 360);
-          const depth = getDepthScale((deg + rotation * 0.3) % 360);
+          const pos = getEllipsePos((deg + rotation * 0.35) % 360);
+          const depth = getDepthScale((deg + rotation * 0.35) % 360);
           const isBright = deg % 60 === 0;
           return (
             <circle
               key={`particle-${deg}`}
               cx={pos.x}
               cy={pos.y}
-              r={isBright ? 2 : 1.2}
+              r={isBright ? 2.2 : 1.3}
               fill={
                 isBright
-                  ? "oklch(var(--secondary)/0.7)"
-                  : "oklch(var(--primary)/0.4)"
+                  ? "oklch(var(--secondary)/0.75)"
+                  : "oklch(var(--primary)/0.45)"
               }
-              opacity={0.4 + depth * 0.4}
+              opacity={0.3 + depth * 0.55}
             />
           );
         })}
       </svg>
 
-      {/* Center focal point — M logo / Our Work */}
+      {/* Center focal point — M symbol with pulsing glow ring */}
       <div
         className="absolute z-30 pointer-events-none flex flex-col items-center justify-center"
         style={{
@@ -355,43 +378,53 @@ function OrbitVisualization() {
           transform: "translate(-50%, -50%)",
         }}
       >
-        {/* Outer glow halo */}
+        {/* Outer pulse ring */}
         <div
-          className="absolute rounded-full"
+          className="absolute rounded-full animate-ping"
           style={{
-            width: 100,
-            height: 100,
-            background:
-              "radial-gradient(circle, oklch(var(--primary)/0.22) 0%, transparent 70%)",
-            filter: "blur(12px)",
+            width: 96,
+            height: 96,
+            border: "1px solid oklch(var(--primary)/0.18)",
+            animationDuration: "3s",
           }}
         />
-        {/* Inner ring */}
+        {/* Glow halo */}
         <div
           className="absolute rounded-full"
           style={{
-            width: 64,
-            height: 64,
-            border: "1px solid oklch(var(--primary)/0.3)",
-            boxShadow: "0 0 16px oklch(var(--primary)/0.15)",
+            width: 110,
+            height: 110,
+            background:
+              "radial-gradient(circle, oklch(var(--primary)/0.25) 0%, transparent 68%)",
+            filter: "blur(14px)",
+          }}
+        />
+        {/* Outer ring */}
+        <div
+          className="absolute rounded-full"
+          style={{
+            width: 72,
+            height: 72,
+            border: "1px solid oklch(var(--primary)/0.35)",
+            boxShadow: "0 0 20px oklch(var(--primary)/0.2)",
           }}
         />
         {/* M shield */}
         <div
           className="relative flex items-center justify-center rounded-full"
           style={{
-            width: 54,
-            height: 54,
+            width: 58,
+            height: 58,
             background:
-              "linear-gradient(135deg, oklch(var(--primary)/0.25), oklch(var(--accent)/0.15))",
-            border: "1.5px solid oklch(var(--primary)/0.5)",
+              "linear-gradient(135deg, oklch(var(--primary)/0.30), oklch(var(--accent)/0.18))",
+            border: "1.5px solid oklch(var(--primary)/0.55)",
             boxShadow:
-              "0 0 20px oklch(var(--primary)/0.4), inset 0 0 12px oklch(var(--primary)/0.1)",
+              "0 0 24px oklch(var(--primary)/0.45), inset 0 0 14px oklch(var(--primary)/0.12)",
           }}
         >
           <svg
-            width="26"
-            height="26"
+            width="28"
+            height="28"
             viewBox="0 0 32 32"
             fill="none"
             aria-label="Maverick Digitals M logo"
@@ -402,7 +435,7 @@ function OrbitVisualization() {
               fill="none"
               stroke="oklch(var(--primary))"
               strokeWidth="1.5"
-              strokeOpacity="0.8"
+              strokeOpacity="0.9"
             />
             <text
               x="16"
@@ -419,19 +452,20 @@ function OrbitVisualization() {
         </div>
         <span
           className="mt-2 font-display font-semibold text-[10px] tracking-widest uppercase"
-          style={{ color: "oklch(var(--primary)/0.8)" }}
+          style={{ color: "oklch(var(--primary)/0.85)" }}
         >
           Our Work
         </span>
       </div>
 
-      {/* Orbiting image thumbnails — sorted by depth for proper layering */}
+      {/* Orbiting tiles sorted by depth */}
       {sortedItems.map((item) => {
         const currentAngle = (item.angle + rotation) % 360;
         const pos = getEllipsePos(currentAngle);
         const depth = getDepthScale(currentAngle);
-        const size = Math.round(62 * depth); // 47px..62px
-        const opacity = 0.6 + 0.4 * ((depth - 0.75) / 0.25);
+        const size = Math.round(66 * depth);
+        const minSize = Math.max(40, size);
+        const opacity = 0.55 + 0.45 * ((depth - 0.6) / 0.5);
         const zIndex = Math.round(depth * 20);
 
         return (
@@ -441,8 +475,8 @@ function OrbitVisualization() {
             style={{
               left: pos.x,
               top: pos.y,
-              width: size,
-              height: size,
+              width: minSize,
+              height: minSize,
               transform: "translate(-50%, -50%)",
               zIndex,
               opacity,
@@ -451,30 +485,30 @@ function OrbitVisualization() {
           >
             {/* Glow halo */}
             <div
-              className="absolute inset-0 rounded-lg"
+              className="absolute inset-0 rounded-xl"
               style={{
-                boxShadow: `0 0 ${Math.round(12 * depth)}px ${item.glow}55, 0 0 ${Math.round(24 * depth)}px ${item.glow}22`,
+                boxShadow: `0 0 ${Math.round(14 * depth)}px ${item.glow}55, 0 0 ${Math.round(28 * depth)}px ${item.glow}20`,
               }}
             />
-            {/* Thumbnail square */}
+            {/* Tile */}
             <div
-              className="relative w-full h-full rounded-lg overflow-hidden"
+              className="relative w-full h-full rounded-xl overflow-hidden"
               style={{
                 background: `linear-gradient(135deg, ${item.gradientFrom}, ${item.gradientTo})`,
-                border: `1px solid ${item.glow}55`,
-                boxShadow: `inset 0 1px 0 ${item.glow}30`,
+                border: `1px solid ${item.glow}60`,
+                boxShadow: `inset 0 1px 0 ${item.glow}35`,
               }}
             >
-              {/* Inner shimmer */}
+              {/* Shimmer */}
               <div
                 className="absolute inset-0"
                 style={{
-                  background: `linear-gradient(135deg, ${item.glow}22 0%, transparent 50%, ${item.glow}11 100%)`,
+                  background: `linear-gradient(135deg, ${item.glow}28 0%, transparent 50%, ${item.glow}14 100%)`,
                 }}
               />
-              {/* Noise texture overlay */}
+              {/* Noise */}
               <div
-                className="absolute inset-0 opacity-20"
+                className="absolute inset-0 opacity-15"
                 style={{
                   backgroundImage:
                     "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
@@ -482,19 +516,19 @@ function OrbitVisualization() {
                 }}
               />
               {/* Icon + label */}
-              <div className="relative flex flex-col items-center justify-center h-full gap-0.5">
+              <div className="relative flex flex-col items-center justify-center h-full gap-0.5 px-1">
                 <span
-                  className="font-mono font-bold text-white/80 uppercase tracking-wider"
+                  className="font-mono font-bold text-white/85 uppercase tracking-wider"
                   style={{
-                    fontSize: Math.max(8, Math.round(size * 0.22)),
+                    fontSize: Math.max(8, Math.round(minSize * 0.21)),
                     lineHeight: 1,
                   }}
                 >
                   {item.icon}
                 </span>
                 <span
-                  className="font-display font-bold uppercase tracking-wider text-white/90"
-                  style={{ fontSize: Math.max(7, Math.round(size * 0.16)) }}
+                  className="font-display font-bold uppercase tracking-wider text-white/90 text-center leading-tight"
+                  style={{ fontSize: Math.max(6, Math.round(minSize * 0.15)) }}
                 >
                   {item.label}
                 </span>
@@ -504,21 +538,21 @@ function OrbitVisualization() {
         );
       })}
 
-      {/* Floating ambient particles around the orbit */}
+      {/* Ambient particles */}
       {[
-        { id: "a1", x: 60, y: 60, size: 3, color: "primary", delay: "0s" },
-        { id: "a2", x: 400, y: 80, size: 2, color: "secondary", delay: "0.8s" },
-        { id: "a3", x: 420, y: 320, size: 2.5, color: "accent", delay: "1.4s" },
-        { id: "a4", x: 50, y: 330, size: 2, color: "primary", delay: "0.5s" },
+        { id: "a1", x: 55, y: 65, size: 3, color: "primary", delay: "0s" },
+        { id: "a2", x: 440, y: 80, size: 2, color: "secondary", delay: "0.8s" },
+        { id: "a3", x: 455, y: 340, size: 2.5, color: "accent", delay: "1.4s" },
+        { id: "a4", x: 45, y: 350, size: 2, color: "primary", delay: "0.5s" },
         {
           id: "a5",
-          x: 240,
-          y: 30,
+          x: 260,
+          y: 28,
           size: 1.5,
           color: "secondary",
           delay: "1.1s",
         },
-        { id: "a6", x: 240, y: 370, size: 1.5, color: "accent", delay: "0.3s" },
+        { id: "a6", x: 260, y: 392, size: 1.5, color: "accent", delay: "0.3s" },
       ].map((p) => (
         <div
           key={p.id}
@@ -528,10 +562,10 @@ function OrbitVisualization() {
             height: p.size,
             left: p.x,
             top: p.y,
-            background: `oklch(var(--${p.color})/0.7)`,
-            boxShadow: `0 0 ${p.size * 4}px oklch(var(--${p.color})/0.5)`,
+            background: `oklch(var(--${p.color})/0.75)`,
+            boxShadow: `0 0 ${p.size * 4}px oklch(var(--${p.color})/0.55)`,
             animationDelay: p.delay,
-            animationDuration: "2.5s",
+            animationDuration: "2.8s",
           }}
         />
       ))}
@@ -542,10 +576,7 @@ function OrbitVisualization() {
 function PointCard({
   point,
   index,
-}: {
-  point: (typeof points)[0];
-  index: number;
-}) {
+}: { point: (typeof points)[0]; index: number }) {
   const { ref, style } = useRevealOnScroll(index * 120);
   const a = accentColor[point.accent as keyof typeof accentColor];
   const Icon = point.icon;
@@ -557,8 +588,7 @@ function PointCard({
       className={`group relative glassmorphic bg-gradient-to-br ${a.bg} ${a.border} ${a.hoverBorder} p-7 transition-all duration-300 hover:scale-[1.02] hover:shadow-elevated`}
       data-ocid={`why-us-${point.id}`}
     >
-      {/* Index number watermark */}
-      <div className="absolute top-4 right-5 font-display font-black text-6xl text-white/3 select-none pointer-events-none">
+      <div className="absolute top-4 right-5 font-display font-black text-6xl text-foreground/3 select-none pointer-events-none">
         {String(index + 1).padStart(2, "0")}
       </div>
 
@@ -575,7 +605,6 @@ function PointCard({
         {point.description}
       </p>
 
-      {/* Stat pill */}
       <div className="flex items-baseline gap-2">
         <span className={`font-display font-black text-3xl ${a.stat}`}>
           {point.stat}
@@ -586,14 +615,62 @@ function PointCard({
   );
 }
 
+// Service legend cards rendered below the orbit
+function ServiceLegend() {
+  const { ref, style } = useRevealOnScroll(300);
+  return (
+    <div
+      ref={ref as React.RefObject<HTMLDivElement>}
+      style={style}
+      className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-8 w-full max-w-[520px]"
+      data-ocid="our-work.services_legend"
+    >
+      {ORBIT_ITEMS.map((item) => {
+        const LucideIcon = item.LucideIcon;
+        return (
+          <div
+            key={item.id}
+            className="flex items-start gap-2.5 p-3 rounded-xl border border-border bg-card/60 dark:bg-card/40 backdrop-blur-sm hover:border-primary/25 transition-smooth"
+            data-ocid={`our-work.service.${item.id}`}
+          >
+            <div
+              className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
+              style={{
+                background: `linear-gradient(135deg, ${item.gradientFrom}55, ${item.gradientTo}33)`,
+                border: `1px solid ${item.glow}44`,
+              }}
+            >
+              <LucideIcon size={13} style={{ color: item.glow }} />
+            </div>
+            <div className="min-w-0">
+              <p
+                className="font-display font-bold text-xs leading-none mb-0.5"
+                style={{ color: item.glow }}
+              >
+                {item.icon}
+              </p>
+              <p className="text-[11px] text-foreground font-medium leading-tight truncate">
+                {item.label}
+              </p>
+              <p className="text-[10px] text-muted-foreground leading-tight mt-0.5 line-clamp-2">
+                {item.description}
+              </p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export function WhyChooseUs() {
   const { ref: titleRef, style: titleStyle } = useRevealOnScroll(0);
   const { ref: orbitRef, style: orbitStyle } = useRevealOnScroll(200);
 
   return (
-    <section className="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden bg-background">
+    <section className="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden bg-background">
       <div className="absolute inset-0 grid-glow-bg opacity-20" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/4 rounded-full blur-[160px]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-primary/4 rounded-full blur-[180px]" />
 
       <div className="relative max-w-7xl mx-auto">
         {/* Section Header */}
@@ -603,28 +680,28 @@ export function WhyChooseUs() {
           className="text-center mb-20"
         >
           <p className="text-primary text-xs font-semibold uppercase tracking-widest mb-3">
-            Why Maverick
+            Our Work
           </p>
           <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground mb-5">
-            Why Choose{" "}
-            <span className="gradient-text-cyan">Maverick Digitals?</span>
+            We don't just execute campaigns.{" "}
+            <span className="gradient-text-purple">We engineer growth.</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto text-base leading-relaxed">
             A Mumbai-based digital marketing agency that's helped 40+ brands go
-            from overlooked to unforgettable.
+            from overlooked to unforgettable — across six disciplines, all
+            measured.
           </p>
         </div>
 
-        {/* ── Orbit + Cards layout ──────────────────────────────────────── */}
+        {/* Orbit + Cards */}
         <div className="flex flex-col xl:flex-row items-center gap-12 xl:gap-16">
-          {/* Left: 3D Orbit Animation */}
+          {/* Left: orbit */}
           <div
             ref={orbitRef as React.RefObject<HTMLDivElement>}
             style={orbitStyle}
             className="flex flex-col items-center flex-shrink-0"
             data-ocid="why-us-orbit.section"
           >
-            {/* Label above orbit */}
             <div className="mb-4 text-center">
               <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1">
                 Where We Focus
@@ -638,12 +715,12 @@ export function WhyChooseUs() {
               />
             </div>
 
-            {/* Orbit container — hidden on small mobile, scaled on md */}
+            {/* Desktop: 3D orbit */}
             <div className="hidden sm:block">
               <OrbitVisualization />
             </div>
 
-            {/* Mobile fallback: simple 2D pill badges */}
+            {/* Mobile: pill badges */}
             <div className="flex flex-wrap gap-2 justify-center sm:hidden px-4">
               {ORBIT_ITEMS.map((item) => (
                 <div
@@ -663,8 +740,8 @@ export function WhyChooseUs() {
               ))}
             </div>
 
-            {/* Below orbit stats strip */}
-            <div className="hidden sm:flex items-center gap-6 mt-4">
+            {/* Stats strip */}
+            <div className="hidden sm:flex items-center gap-8 mt-4">
               {[
                 { value: "15M+", label: "Organic Views" },
                 { value: "40+", label: "Brands Scaled" },
@@ -680,14 +757,18 @@ export function WhyChooseUs() {
                 </div>
               ))}
             </div>
+
+            {/* Service legend grid — desktop only */}
+            <div className="hidden sm:block">
+              <ServiceLegend />
+            </div>
           </div>
 
           {/* Right: Feature Cards */}
           <div className="flex-1 w-full">
             <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              {/* Animated connector lines (desktop) */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-3/4 bg-gradient-to-b from-transparent via-primary/20 to-transparent hidden md:block" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-px w-3/4 bg-gradient-to-r from-transparent via-secondary/20 to-transparent hidden md:block" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-3/4 bg-gradient-to-b from-transparent via-primary/15 to-transparent hidden md:block" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-px w-3/4 bg-gradient-to-r from-transparent via-secondary/15 to-transparent hidden md:block" />
 
               {points.map((point, i) => (
                 <PointCard key={point.id} point={point} index={i} />

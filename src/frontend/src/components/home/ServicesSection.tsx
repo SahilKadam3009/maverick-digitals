@@ -106,25 +106,31 @@ const services = [
 
 const accentMap = {
   primary: {
-    border: "border-primary/20 hover:border-primary/50",
-    icon: "from-primary/25 to-primary/5",
-    glow: "hover:shadow-[0_0_40px_oklch(0.68_0.24_308_/_0.15)]",
+    border: "border-primary/15 hover:border-primary/50",
+    icon: "from-primary/20 to-primary/4",
+    glowClass:
+      "hover:shadow-[0_8px_40px_oklch(0.68_0.24_308_/_0.18)] dark:hover:shadow-[0_8px_40px_oklch(0.68_0.24_308_/_0.22)]",
     text: "text-primary",
-    badge: "bg-primary/10 text-primary",
+    badge: "bg-primary/8 text-primary",
+    dot: "bg-primary/40 group-hover:bg-primary",
   },
   secondary: {
-    border: "border-secondary/20 hover:border-secondary/50",
-    icon: "from-secondary/25 to-secondary/5",
-    glow: "hover:shadow-[0_0_40px_oklch(0.72_0.19_200_/_0.15)]",
+    border: "border-secondary/15 hover:border-secondary/50",
+    icon: "from-secondary/20 to-secondary/4",
+    glowClass:
+      "hover:shadow-[0_8px_40px_oklch(0.72_0.19_200_/_0.18)] dark:hover:shadow-[0_8px_40px_oklch(0.72_0.19_200_/_0.22)]",
     text: "text-secondary",
-    badge: "bg-secondary/10 text-secondary",
+    badge: "bg-secondary/8 text-secondary",
+    dot: "bg-secondary/40 group-hover:bg-secondary",
   },
   accent: {
-    border: "border-accent/20 hover:border-accent/50",
-    icon: "from-accent/25 to-accent/5",
-    glow: "hover:shadow-[0_0_40px_oklch(0.65_0.22_260_/_0.15)]",
+    border: "border-accent/15 hover:border-accent/50",
+    icon: "from-accent/20 to-accent/4",
+    glowClass:
+      "hover:shadow-[0_8px_40px_oklch(0.65_0.22_260_/_0.18)] dark:hover:shadow-[0_8px_40px_oklch(0.65_0.22_260_/_0.22)]",
     text: "text-accent",
-    badge: "bg-accent/10 text-accent",
+    badge: "bg-accent/8 text-accent",
+    dot: "bg-accent/40 group-hover:bg-accent",
   },
 };
 
@@ -150,7 +156,7 @@ function ServiceCard({
     const cy = rect.top + rect.height / 2;
     const dx = (e.clientX - cx) / (rect.width / 2);
     const dy = (e.clientY - cy) / (rect.height / 2);
-    setTilt({ x: -dy * 8, y: dx * 8 });
+    setTilt({ x: -dy * 6, y: dx * 6 });
   };
 
   return (
@@ -168,18 +174,18 @@ function ServiceCard({
           setTilt({ x: 0, y: 0 });
         }}
         data-ocid={`service-card-${service.id}`}
-        className={`group glassmorphic ${accent.border} ${accent.glow} p-7 h-full transition-all duration-300 cursor-pointer relative overflow-hidden`}
+        className={`group relative rounded-xl border bg-card/80 dark:bg-card/60 backdrop-blur-sm ${accent.border} ${accent.glowClass} p-7 h-full transition-all duration-300 cursor-pointer overflow-hidden`}
         style={{
           transform: isHovered
-            ? `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(1.02)`
-            : "perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)",
+            ? `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(1.02)`
+            : "perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)",
           transition:
             "transform 0.15s ease, box-shadow 0.3s ease, border-color 0.3s ease",
         }}
       >
-        {/* Background gradient sweep on hover */}
+        {/* Background gradient on hover */}
         <div
-          className={`absolute inset-0 bg-gradient-to-br ${accent.icon} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg`}
+          className={`absolute inset-0 bg-gradient-to-br ${accent.icon} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl`}
         />
 
         <div className="relative">
@@ -197,14 +203,14 @@ function ServiceCard({
           </p>
 
           {service.subItems && service.subItems.length > 0 && (
-            <ul className="mt-4 space-y-1.5">
+            <ul className="mt-4 space-y-2">
               {service.subItems.map((item) => (
                 <li
                   key={item}
-                  className="flex items-center gap-2 text-xs text-muted-foreground"
+                  className="flex items-center gap-2.5 text-xs text-muted-foreground"
                 >
                   <span
-                    className={`w-1 h-1 rounded-full flex-shrink-0 bg-current ${accent.text}`}
+                    className={`w-1.5 h-1.5 rounded-full flex-shrink-0 transition-smooth ${accent.dot}`}
                   />
                   {item}
                 </li>
@@ -213,7 +219,7 @@ function ServiceCard({
           )}
 
           <div
-            className={`mt-5 inline-flex items-center gap-2 text-xs font-semibold ${accent.text} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+            className={`mt-6 inline-flex items-center gap-2 text-xs font-semibold ${accent.text} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
           >
             Learn More <ArrowRight size={12} />
           </div>
@@ -228,12 +234,12 @@ export function ServicesSection() {
 
   return (
     <section
-      className="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden bg-muted/10"
+      className="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden bg-muted/10"
       id="services-preview"
     >
-      <div className="absolute inset-0 grid-glow-bg opacity-25" />
-      <div className="absolute top-0 right-1/3 w-80 h-80 bg-primary/6 rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-secondary/6 rounded-full blur-[100px]" />
+      <div className="absolute inset-0 grid-glow-bg opacity-20" />
+      <div className="absolute top-0 right-1/3 w-80 h-80 bg-primary/5 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-secondary/5 rounded-full blur-[100px]" />
 
       <div className="relative max-w-7xl mx-auto">
         <div
@@ -269,14 +275,11 @@ export function ServicesSection() {
 
         {/* Asymmetric grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {/* Row 1: large + 2 small */}
           <div className="lg:col-span-2">
             <ServiceCard service={services[0]} index={0} />
           </div>
           <ServiceCard service={services[1]} index={1} />
           <ServiceCard service={services[2]} index={2} />
-
-          {/* Row 2: 2 small + large */}
           <ServiceCard service={services[3]} index={3} />
           <ServiceCard service={services[4]} index={4} />
           <div className="sm:col-span-2 lg:col-span-2">
