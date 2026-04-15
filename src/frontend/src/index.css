@@ -133,7 +133,7 @@
   }
 
   .glassmorphic {
-    @apply bg-card/70 backdrop-blur-xl border border-white/10 rounded-lg;
+    @apply bg-card/90 dark:bg-card/70 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-lg;
   }
 
   .glassmorphic-dark {
@@ -211,9 +211,14 @@
 
   .grid-glow-bg {
     background-image: linear-gradient(
-        rgba(255, 255, 255, 0.03) 1px,
+        oklch(var(--foreground) / 0.03) 1px,
         transparent 1px
-      ), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      ),
+      linear-gradient(
+        90deg,
+        oklch(var(--foreground) / 0.03) 1px,
+        transparent 1px
+      );
     background-size: 60px 60px;
   }
 

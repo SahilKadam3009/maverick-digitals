@@ -24,7 +24,7 @@ const services = [
   {
     icon: Search,
     title: "SEO & Search Visibility",
-    tagline: "Dominate organic search at scale",
+    tagline: "Get found. Stay found. Turn search traffic into revenue.",
     tier: "Core",
     tierColor: "bg-primary/20 text-primary border-primary/30",
     gradient: "from-primary/25 to-primary/5",
@@ -40,7 +40,7 @@ const services = [
   {
     icon: BarChart3,
     title: "Paid Media & PPC",
-    tagline: "Ad spend turned into predictable revenue",
+    tagline: "Ads that earn more than they cost.",
     tier: "Performance",
     tierColor: "bg-secondary/20 text-secondary border-secondary/30",
     gradient: "from-secondary/25 to-secondary/5",
@@ -56,7 +56,7 @@ const services = [
   {
     icon: PenLine,
     title: "Brand Strategy",
-    tagline: "Identity that commands market authority",
+    tagline: "A clear identity so the right customers choose you first.",
     tier: "Foundation",
     tierColor: "bg-accent/20 text-accent border-accent/30",
     gradient: "from-accent/25 to-accent/5",
@@ -72,7 +72,7 @@ const services = [
   {
     icon: FileText,
     title: "Content Marketing",
-    tagline: "Stories that captivate and convert",
+    tagline: "Content people actually read — and act on.",
     tier: "Core",
     tierColor: "bg-primary/20 text-primary border-primary/30",
     gradient: "from-primary/20 to-secondary/5",
@@ -88,7 +88,7 @@ const services = [
   {
     icon: Share2,
     title: "Social Media Management",
-    tagline: "Communities that engage and buy",
+    tagline: "Consistent presence on the channels your customers actually use.",
     tier: "Growth",
     tierColor: "bg-secondary/20 text-secondary border-secondary/30",
     gradient: "from-secondary/20 to-primary/5",
@@ -104,7 +104,7 @@ const services = [
   {
     icon: TrendingUp,
     title: "Growth Marketing",
-    tagline: "Full-funnel growth engineered for scale",
+    tagline: "All channels working together, all pointing toward growth.",
     tier: "Premium",
     tierColor: "bg-accent/20 text-accent border-accent/30",
     gradient: "from-accent/20 to-primary/10",
@@ -125,7 +125,7 @@ const methodology = [
     step: "01",
     label: "Research",
     icon: Search,
-    desc: "Deep-dive market analysis, competitor audits, and audience profiling to uncover untapped opportunities.",
+    desc: "We start by understanding your market properly — who you're competing with, who your best customers actually are, and what's already working in your space.",
     color: "text-primary",
     bg: "from-primary/20 to-transparent",
     border: "border-primary/30",
@@ -134,7 +134,7 @@ const methodology = [
     step: "02",
     label: "Strategy",
     icon: Lightbulb,
-    desc: "Data-informed go-to-market plan with clear KPIs, channel mix, and a 90-day execution roadmap.",
+    desc: "Before anything goes live, we agree on a clear plan — which channels make sense, what success looks like, and how we're measuring it.",
     color: "text-accent",
     bg: "from-accent/20 to-transparent",
     border: "border-accent/30",
@@ -143,7 +143,7 @@ const methodology = [
     step: "03",
     label: "Execute",
     icon: Rocket,
-    desc: "Precision launch across all channels with creative production, campaign management, and continuous iteration.",
+    desc: "We launch carefully, not quickly. Tracking is in place, everything's been reviewed, and we're watching performance from day one.",
     color: "text-secondary",
     bg: "from-secondary/20 to-transparent",
     border: "border-secondary/30",
@@ -152,7 +152,7 @@ const methodology = [
     step: "04",
     label: "Measure",
     icon: BarChart3,
-    desc: "Live dashboards, attribution modeling, and bi-weekly performance reviews to optimize every dollar.",
+    desc: "Regular performance reviews, clear reporting, and a habit of cutting what isn't working and doubling down on what is.",
     color: "text-primary",
     bg: "from-primary/20 to-transparent",
     border: "border-primary/30",
@@ -358,9 +358,9 @@ export function Services() {
             </span>
           </h1>
           <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl">
-            Maverick Digitals combines data science, creative excellence, and
-            battle-tested strategy to deliver marketing that doesn't just look
-            good — it scales your business.
+            Maverick Digitals brings together creative thinking, sharp strategy,
+            and technical execution to build marketing that doesn't just look
+            good — it grows your business.
           </p>
         </div>
 
@@ -392,8 +392,8 @@ export function Services() {
               <span className="gradient-text-cyan">Methodology</span>
             </h2>
             <p className="text-muted-foreground text-base max-w-xl mx-auto">
-              Every engagement follows a proven 4-phase process that turns
-              ambiguity into clarity, and clarity into results.
+              A consistent four-phase approach — same structure, adapted to your
+              business — so nothing falls through the cracks.
             </p>
           </div>
 
@@ -426,8 +426,9 @@ export function Services() {
               <span className="gradient-text-purple">expertise</span>
             </h2>
             <p className="text-muted-foreground text-base max-w-xl">
-              We've driven growth across competitive markets — so we speak your
-              industry's language from day one.
+              We've worked across a range of industries — so we understand the
+              dynamics, the customer mindset, and the competitive landscape
+              before we start.
             </p>
           </div>
 
@@ -460,8 +461,8 @@ export function Services() {
               <span className="gradient-text-purple">Extraordinary</span>
             </h2>
             <p className="text-muted-foreground text-lg mb-10 max-w-lg mx-auto">
-              Book a free strategy call with Maverick Digitals and get a custom
-              growth plan built for your business goals.
+              Book a free strategy call and we'll put together a clear growth
+              plan for your business — no jargon, no fluff.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/contact">

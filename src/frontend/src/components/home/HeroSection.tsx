@@ -169,9 +169,9 @@ export function HeroSection() {
             connects with people.
           </p>
           <p className="text-muted-foreground/60 max-w-2xl text-sm leading-relaxed">
-            Maverick Digitals is co-founded by Muskan Rathod and Dhaval Shah.
-            Between brand strategy, performance marketing, and technical
-            execution, we handle the work that brings in real customers.
+            We help ambitious brands scale through high-conversion strategy,
+            storytelling, and execution. Blending creativity, psychology, and
+            data to drive measurable business outcomes.
           </p>
           {/* Proof stats strip */}
           <div className="grid grid-cols-2 sm:flex sm:items-center sm:gap-6 gap-3 mt-4 text-xs font-semibold tracking-[0.15em] uppercase text-muted-foreground/70 w-full sm:w-auto">

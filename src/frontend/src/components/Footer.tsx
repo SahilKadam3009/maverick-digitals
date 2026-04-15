@@ -6,7 +6,6 @@ import {
   MapPin,
   Phone,
   Twitter,
-  Zap,
 } from "lucide-react";
 
 const quickLinks = [
@@ -43,11 +42,11 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-2.5 mb-5 group w-fit">
-              <div className="w-8 h-8 rounded-lg gradient-neon-purple flex items-center justify-center glow-neon group-hover:scale-110 transition-smooth">
-                <Zap
-                  size={16}
-                  className="text-background"
-                  fill="currentColor"
+              <div className="w-8 h-8 group-hover:scale-110 transition-smooth flex items-center justify-center">
+                <img
+                  src="/assets/logo.png"
+                  alt="Maverick Digitals logo"
+                  className="w-8 h-8 object-contain"
                 />
               </div>
               <span className="font-display font-bold text-lg">

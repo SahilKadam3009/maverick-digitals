@@ -381,35 +381,35 @@ const timeline = [
   {
     year: "2021",
     event: "Founded Maverick Digitals",
-    desc: "Born from a vision to help brands break through the noise with strategy, storytelling, and data.",
+    desc: "Started with a simple question: why does marketing that looks good so rarely actually work? We set out to fix that.",
   },
   {
     year: "2022",
     event: "First 10 Clients",
-    desc: "Early believers who became our loudest advocates — spanning D2C, healthcare, and coaching niches.",
+    desc: "Our first 10 clients believed in what we were building before the results were obvious. Most of them are still with us.",
   },
   {
     year: "2023",
     event: "15M+ Organic Views",
-    desc: "Crossed 15 million organic views for clients through SEO, AEO, and content-led growth strategies.",
+    desc: "Hit 15 million organic views across client content through SEO, answer engine optimization, and content-led growth.",
   },
   {
     year: "2024",
     event: "40+ Brands Scaled",
-    desc: "From Indian startups to global brands — delivering 200%+ average ROI across every engagement.",
+    desc: "From Mumbai startups to international brands — 40+ engagements with a 200%+ average ROI across the board.",
   },
   {
     year: "2025",
     event: "5-Country Presence",
-    desc: "Active across India, UAE, USA, UK, and Australia — shaping digital culture on a global scale.",
+    desc: "Now running campaigns for clients in India, UAE, USA, UK, and Australia. The markets are different; the approach is the same.",
   },
 ];
 
 const storyParagraphs = [
-  "Maverick Digitals is co-founded by Muskan Rathod and Dhaval Shah, bringing together expertise in brand strategy and technical innovation. We're known for blending creativity, psychology, and data to drive measurable business outcomes.",
-  "We partner with growth-focused businesses across industries — D2C brands, healthcare & clinics, travel & hospitality, coaches & consultants, B2B startups, and wedding planners — helping any business that wants to build authority and scale.",
-  "In 2021, Maverick Digitals was founded with a single promise: to deliver performance-driven digital marketing solutions that combine creativity, technology, and data to help brands grow. No templates. No shortcuts. Just obsessive, handcrafted strategy built for the long game.",
-  "The results speak for themselves. 40+ brands scaled, 15M+ organic views, 200%+ average ROI, and an active presence across India, UAE, USA, UK, and Australia.",
+  "Maverick Digitals was started by Muskan Rathod and Dhaval Shah in Mumbai — one with a background in brand strategy, the other in tech. The idea was simple: bring the two sides of modern marketing under one roof so brands don't have to choose between creative work and technical execution.",
+  "We work with D2C brands, healthcare businesses, travel companies, coaches, B2B startups, and wedding planners. If you're a business that wants to actually build authority and grow — not just tick marketing boxes — we're probably a good fit.",
+  "We started in 2021 with one commitment: no templates, no shortcuts. Just real strategy built around your business, your audience, and your goals. Five years in, that's still how we work.",
+  "The numbers tell part of the story. 40+ brands scaled, 15M+ organic views, 200%+ average ROI, clients across India, UAE, USA, UK, and Australia. But what we're actually proud of is the brands that went from unknown to recognized — that's the work we show up for.",
 ];
 
 const stats = [
@@ -536,9 +536,9 @@ export function About() {
             transition={{ delay: 0.7, duration: 0.6 }}
             className="text-muted-foreground text-lg md:text-xl leading-relaxed max-w-2xl mx-auto"
           >
-            A Mumbai-based full-stack digital marketing agency helping ambitious
-            brands scale through high-conversion strategy, storytelling, and
-            execution.
+            A Mumbai-based digital marketing agency helping ambitious brands
+            grow through strategy that connects, content that converts, and
+            execution that actually delivers.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
@@ -633,9 +633,8 @@ export function About() {
               the Maverick
             </h2>
             <p className="text-muted-foreground text-base max-w-xl mx-auto">
-              Two visionaries. One mission — to deliver performance-driven
-              digital marketing solutions that combine creativity, technology,
-              and data to help brands grow across India and beyond.
+              Two people building one focused team — with a single goal of
+              helping good brands grow in ways that last.
             </p>
           </motion.div>
 
@@ -666,9 +665,10 @@ export function About() {
               />
               <div className="text-center max-w-xs">
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Founder &amp; Brand Strategist — expert in storytelling,
-                  personal branding, and scaling businesses with digital-first
-                  positioning across India and global markets.
+                  Founder &amp; Brand Strategist — she's obsessed with
+                  storytelling that moves people and positioning that sticks.
+                  Muskan has built personal brands and growth strategies for
+                  founders and businesses across India and global markets.
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center mt-3">
                   {[
@@ -734,9 +734,10 @@ export function About() {
               />
               <div className="text-center max-w-xs">
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  Co-Founder &amp; Tech Innovator — MERN stack specialist with
-                  5+ years building conversion-optimized digital platforms for
-                  brands across India and abroad.
+                  Co-Founder &amp; Tech Lead — Dhaval builds the platforms that
+                  make everything else possible. 5+ years in the MERN stack,
+                  focused on sites and apps that are fast, clean, and built to
+                  convert.
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center mt-3">
                   {[
@@ -830,16 +831,15 @@ export function About() {
           </p>
           <blockquote className="font-display font-bold text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-tight">
             <span className="text-foreground">
-              We don't just market brands.
+              We don't just run campaigns.
             </span>
             <br />
-            <span className="gradient-text-purple">We build icons.</span>
+            <span className="gradient-text-purple">We build real brands.</span>
           </blockquote>
           <p className="text-muted-foreground text-lg mt-8 max-w-2xl mx-auto leading-relaxed">
-            To deliver performance-driven digital marketing solutions that
-            combine creativity, technology, and data to help brands grow. Active
-            presence across India, UAE, USA, UK, and Australia with proven
-            success across diverse markets and industries.
+            Creativity, strategy, and technical execution — brought together for
+            brands that want to grow properly. We're active across India, UAE,
+            USA, UK, and Australia.
           </p>
         </div>
       </section>
@@ -882,9 +882,9 @@ export function About() {
                   <span className="gradient-text-cyan">bold moves</span>
                 </h2>
                 <p className="text-muted-foreground text-base leading-relaxed max-w-sm">
-                  Every milestone earned through relentless execution, authentic
-                  storytelling, and an unwavering belief in brands worth
-                  building.
+                  Every milestone happened because the team kept showing up and
+                  doing the work — no shortcuts, no overpromising, just
+                  consistent effort and honest results.
                 </p>
               </motion.div>
             </div>
@@ -920,8 +920,8 @@ export function About() {
             <span className="gradient-text-purple">Together</span>
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed mb-10 max-w-xl mx-auto">
-            Your brand has a story that deserves to be told at scale. Let's make
-            it impossible to ignore.
+            Your brand has a story worth telling. Let's make sure the right
+            people actually hear it.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link to="/contact">

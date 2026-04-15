@@ -15,7 +15,7 @@ const caseStudies = [
     industry: "B2B SaaS",
     headline: "10x MRR in 14 months",
     description:
-      "Rebuilt their entire go-to-market from scratch — new ICP positioning, LinkedIn ABM, and a content engine that drove 340% increase in qualified demo requests.",
+      "Rebuilt their go-to-market from scratch — new ICP positioning, LinkedIn ABM, and a content engine that drove a 340% increase in qualified demo requests.",
     metrics: [
       { label: "MRR Growth", value: "10x" },
       { label: "Demo Requests", value: "+340%" },
@@ -31,7 +31,7 @@ const caseStudies = [
     industry: "D2C E-commerce",
     headline: "ROAS 3x in 60 days",
     description:
-      "Overhauled their Meta and Google ad architecture with creative testing frameworks and audience segmentation, tripling ROAS while scaling spend by 200%.",
+      "Overhauled their Meta and Google ad structure with a proper creative testing process and sharper audience segmentation. ROAS tripled while they scaled spend by 200%.",
     metrics: [
       { label: "ROAS", value: "3x" },
       { label: "Revenue", value: "+$2.1M" },
@@ -47,7 +47,7 @@ const caseStudies = [
     industry: "Real Estate",
     headline: "3-month waitlist built",
     description:
-      "Transformed a struggling real estate developer into a recognized premium brand with editorial content, local SEO dominance, and a high-converting lead gen funnel.",
+      "Took a real estate developer from struggling to get inquiries to building a recognized premium brand — with editorial content, strong local SEO, and a lead gen funnel that actually converted.",
     metrics: [
       { label: "Lead Gen", value: "+410%" },
       { label: "Organic Traffic", value: "+190%" },

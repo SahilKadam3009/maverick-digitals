@@ -69,7 +69,7 @@ export function Navbar() {
   // PillNav colors adapt to theme
   const pillNavBaseColor = isDark ? "#1a1a2e" : "#ffffff";
   const pillNavPillColor = isDark ? "#7c3aed" : "#7c3aed";
-  const pillNavPillTextColor = isDark ? "#ffffff" : "#ffffff";
+  const pillNavPillTextColor = isDark ? "#ffffff" : "#1a1a2e";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -131,7 +131,7 @@ export function Navbar() {
           activeHref={activeHref}
           baseColor={pillNavBaseColor}
           pillColor={pillNavPillColor}
-          hoveredPillTextColor="#ffffff"
+          hoveredPillTextColor={isDark ? "#ffffff" : "#1a1a2e"}
           pillTextColor={pillNavPillTextColor}
           initialLoadAnimation={false}
           className=""
@@ -205,7 +205,7 @@ export function Navbar() {
           activeHref={activeHref}
           baseColor={pillNavBaseColor}
           pillColor={pillNavPillColor}
-          hoveredPillTextColor="#ffffff"
+          hoveredPillTextColor={isDark ? "#ffffff" : "#1a1a2e"}
           pillTextColor={pillNavPillTextColor}
           initialLoadAnimation={false}
           onMobileMenuClick={() => {}}

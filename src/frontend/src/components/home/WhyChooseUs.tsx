@@ -610,8 +610,8 @@ export function WhyChooseUs() {
             <span className="gradient-text-cyan">Maverick Digitals?</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto text-base leading-relaxed">
-            A Mumbai-based digital marketing agency with a proven track record
-            of scaling ambitious brands.
+            A Mumbai-based digital marketing agency that's helped 40+ brands go
+            from overlooked to unforgettable.
           </p>
         </div>
 

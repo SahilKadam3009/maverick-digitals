@@ -17,7 +17,7 @@ const services = [
     icon: Globe,
     title: "Personal Branding",
     description:
-      "Strategy, ghostwriting, content systems for founders & creators",
+      "We build your personal brand so opportunities come to you, not the other way around.",
     subItems: [
       "Personal Brand Strategy",
       "Ghostwriting & Content",
@@ -31,7 +31,8 @@ const services = [
     id: "social-media",
     icon: TrendingUp,
     title: "Social Media Management",
-    description: "Done-for-you content, growth, and analytics across platforms",
+    description:
+      "We run your social presence — content, scheduling, comments, and growth — while you focus on the business.",
     subItems: [
       "Analytics & Reporting",
       "Growth Strategy",
@@ -45,7 +46,8 @@ const services = [
     id: "web-dev",
     icon: Rocket,
     title: "Website & App Development",
-    description: "High-performance sites, e-commerce, and custom web apps",
+    description:
+      "Websites that load fast, look sharp, and convert visitors into paying customers.",
     subItems: [
       "Performance Optimization",
       "Mobile App Development",
@@ -60,7 +62,7 @@ const services = [
     icon: BarChart3,
     title: "SEO & SEM",
     description:
-      "Keyword strategy, optimization, Google Ads, and inbound lead engines",
+      "We get you found on Google — and turn that traffic into leads, not just clicks.",
     subItems: [
       "Local SEO Optimization",
       "Google Ads Management",
@@ -75,7 +77,7 @@ const services = [
     icon: FileText,
     title: "Performance Marketing",
     description:
-      "ROI-first Meta & Google campaigns with funnel-driven execution",
+      "Paid ads that earn more than they spend — tracked by revenue, not impressions.",
     subItems: [
       "ROI Tracking & Analysis",
       "Conversion Optimization",
@@ -90,7 +92,7 @@ const services = [
     icon: Palette,
     title: "Branding & Strategy",
     description:
-      "Identity, messaging, GTM launches, and positioning frameworks",
+      "Your story, your positioning, your market — made clear so the right customers choose you first.",
     subItems: [
       "Brand Guidelines",
       "Go-to-Market Strategy",
@@ -244,15 +246,15 @@ export function ServicesSection() {
               What We Do
             </p>
             <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground">
-              Our Core Services
+              What We Do
               <br />
               <span className="gradient-text-purple">
-                That Deliver Real Results
+                And Why It Actually Works
               </span>
             </h2>
             <p className="text-muted-foreground text-sm mt-3 max-w-xl">
-              From search rankings to social ads, we handle the work that brings
-              in real customers.
+              Six things we do — all connected, all measured, all aimed at
+              growing your revenue.
             </p>
           </div>
           <Link

@@ -9,7 +9,7 @@ const testimonials = [
     role: "CEO",
     company: "TechWave SaaS",
     content:
-      "Maverick Digitals didn't just run our campaigns — they rebuilt our entire growth engine. The results speak for themselves: 10x MRR in 14 months.",
+      "Maverick Digitals didn't just run our campaigns — they rebuilt our entire growth engine from the ground up. 10x MRR in 14 months speaks for itself.",
     rating: 5,
     initials: "AM",
     color: "primary" as const,
@@ -21,7 +21,7 @@ const testimonials = [
     role: "Marketing Director",
     company: "Bloom Fashion",
     content:
-      "The creative strategy they developed was unlike anything we'd seen. Our ROAS tripled and we reached audiences we never thought were attainable.",
+      "The creative direction they brought was something we hadn't seen before. Our ROAS tripled and we started reaching audiences we'd been chasing for years.",
     rating: 5,
     initials: "PS",
     color: "secondary" as const,
@@ -33,7 +33,7 @@ const testimonials = [
     role: "Founder",
     company: "Urban Realty Group",
     content:
-      "We went from struggling to generate leads to having a 3-month waitlist. Muskan's team completely transformed our digital presence.",
+      "We went from struggling to get leads to having a 3-month waitlist. Muskan's team turned our digital presence around completely.",
     rating: 5,
     initials: "RG",
     color: "accent" as const,
@@ -45,7 +45,7 @@ const testimonials = [
     role: "CMO",
     company: "VitaHealth",
     content:
-      "The content strategy they built for us established genuine authority in the health space. Our organic traffic went up 190% in under 9 months.",
+      "They built a content strategy that actually made us an authority in the health space. Organic traffic up 190% in under 9 months — without burning our ad budget.",
     rating: 5,
     initials: "NV",
     color: "primary" as const,
@@ -57,7 +57,7 @@ const testimonials = [
     role: "Co-Founder",
     company: "EduFuture",
     content:
-      "We cut our cost per lead by 65% while tripling enrollment. The team's depth of understanding across paid and organic channels is exceptional.",
+      "Cost per lead down 65%, enrollments tripled. The way they connect paid and organic channels is genuinely impressive — not many teams can do both well.",
     rating: 5,
     initials: "KP",
     color: "secondary" as const,
@@ -154,10 +154,7 @@ export function TestimonialsSection() {
   const INNER_R = 110; // inner particle ring
 
   return (
-    <section
-      className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden"
-      style={{ background: "oklch(0.09 0 0)" }}
-    >
+    <section className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden bg-muted/30">
       {/* ── Background depth layers ─────────────────────────────────────── */}
       <div className="absolute inset-0 grid-glow-bg opacity-20" />
       {/* Deep center glow */}
@@ -202,7 +199,7 @@ export function TestimonialsSection() {
             What Our <span className="gradient-text-purple">Clients</span> Say
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto text-sm">
-            Real words from real brands we've helped transform.
+            Straight from the founders and marketers we've worked with.
           </p>
         </div>
 
@@ -226,7 +223,7 @@ export function TestimonialsSection() {
                 cx="240"
                 cy="240"
                 r={OUTER_R}
-                stroke="rgba(255,255,255,0.06)"
+                stroke="oklch(var(--foreground)/0.08)"
                 strokeWidth="1"
                 strokeDasharray="4 8"
                 style={{
@@ -252,7 +249,7 @@ export function TestimonialsSection() {
                 cx="240"
                 cy="240"
                 r={INNER_R}
-                stroke="rgba(255,255,255,0.04)"
+                stroke="oklch(var(--foreground)/0.06)"
                 strokeWidth="1"
                 style={{
                   transform: `rotate(${innerRotation}deg)`,
@@ -439,9 +436,7 @@ export function TestimonialsSection() {
                       ${isActive ? `${colors.activeBg} ${colors.active} scale-125` : `${colors.bg} ${colors.inactive} hover:scale-110`}
                     `}
                   >
-                    <span
-                      className={isActive ? "text-background" : colors.text}
-                    >
+                    <span className={isActive ? "text-white" : colors.text}>
                       {t.initials}
                     </span>
                   </div>
@@ -483,7 +478,7 @@ export function TestimonialsSection() {
               />
               <div
                 key={active.id}
-                className="relative w-20 h-20 rounded-full gradient-neon-purple glow-neon flex items-center justify-center font-display font-bold text-2xl text-background mb-2 animate-float"
+                className="relative w-20 h-20 rounded-full gradient-neon-purple glow-neon flex items-center justify-center font-display font-bold text-2xl text-white mb-2 animate-float"
                 style={{ animationDuration: "3s" }}
               >
                 {active.initials}
@@ -501,7 +496,7 @@ export function TestimonialsSection() {
           <div className="flex-1 max-w-lg w-full">
             <div
               key={active.id}
-              className="glassmorphic border-primary/15 p-6 sm:p-8 relative overflow-hidden"
+              className="glassmorphic border border-primary/15 p-6 sm:p-8 relative overflow-hidden shadow-subtle"
               style={{
                 animation:
                   "fadeSlideIn 0.45s cubic-bezier(0.4,0,0.2,1) forwards",
@@ -520,7 +515,7 @@ export function TestimonialsSection() {
               <div className="relative">
                 {/* Quote icon */}
                 <div className="w-10 h-10 rounded-xl gradient-neon-purple flex items-center justify-center mb-6 glow-neon">
-                  <Quote size={18} className="text-background" />
+                  <Quote size={18} className="text-white" />
                 </div>
 
                 {/* Stars */}
@@ -543,7 +538,7 @@ export function TestimonialsSection() {
 
                 {/* Attribution */}
                 <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-full gradient-neon-purple glow-neon flex items-center justify-center font-display font-bold text-sm text-background flex-shrink-0">
+                  <div className="w-11 h-11 rounded-full gradient-neon-purple glow-neon flex items-center justify-center font-display font-bold text-sm text-white flex-shrink-0">
                     {active.initials}
                   </div>
                   <div>
@@ -602,7 +597,7 @@ export function TestimonialsSection() {
                   className={`text-xs px-3 py-1.5 rounded-full border transition-all duration-300 cursor-pointer ${
                     i === activeIdx
                       ? "border-primary/50 text-primary bg-primary/10"
-                      : "border-white/10 text-muted-foreground bg-card/40 hover:border-white/20"
+                      : "border-foreground/10 text-muted-foreground bg-card/40 hover:border-foreground/20"
                   }`}
                 >
                   {t.company}

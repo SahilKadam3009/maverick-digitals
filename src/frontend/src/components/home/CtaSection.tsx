@@ -48,8 +48,8 @@ export function CtaSection() {
           <span className="gradient-text-purple">brand online.</span>
         </h2>
         <p className="text-muted-foreground text-lg leading-relaxed mb-12 max-w-xl mx-auto">
-          We've worked with 40+ brands across India and globally. If you're
-          serious about growing online, let's talk.
+          40+ brands across India and globally. If you're serious about growing
+          online, let's find out what's possible for yours.
         </p>
 
         {/* Email capture */}
@@ -111,9 +111,9 @@ export function CtaSection() {
         <div className="mt-12 flex items-center justify-center gap-6 text-xs text-muted-foreground/70 flex-wrap">
           <span>No lock-in contracts</span>
           <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
-          <span>Results-focused approach</span>
+          <span>You see results before we ask for long-term commitment</span>
           <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
-          <span>97% client retention rate</span>
+          <span>97% client retention</span>
         </div>
       </div>
     </section>
