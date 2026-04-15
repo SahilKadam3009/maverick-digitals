@@ -227,7 +227,7 @@ function ServiceCard({
 
       {/* Shimmer edge */}
       <div
-        className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent transition-opacity duration-300 ${hovered ? "opacity-100" : "opacity-0"}`}
+        className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent transition-opacity duration-300 ${hovered ? "opacity-100" : "opacity-0"}`}
       />
 
       <div className="relative p-7">
@@ -252,7 +252,7 @@ function ServiceCard({
         <p className="text-muted-foreground text-sm mb-5">{service.tagline}</p>
 
         {/* Divider */}
-        <div className="h-px bg-white/8 mb-5" />
+        <div className="h-px bg-foreground/8 mb-5" />
 
         {/* Deliverables */}
         <ul className="space-y-2.5">
@@ -293,8 +293,8 @@ function MethodStep({
       {/* Connector line */}
       {!isLast && (
         <div className="hidden lg:block absolute top-10 left-[calc(50%+3rem)] right-[calc(-50%+3rem)] h-px">
-          <div className="h-px w-full bg-gradient-to-r from-white/20 via-white/10 to-transparent" />
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white/20" />
+          <div className="h-px w-full bg-gradient-to-r from-foreground/15 via-foreground/8 to-transparent" />
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-foreground/15" />
         </div>
       )}
 
@@ -398,7 +398,7 @@ export function Services() {
           </div>
 
           {/* Steps */}
-          <div className="relative glassmorphic-dark border border-white/8 rounded-2xl p-6 sm:p-10 md:p-14">
+          <div className="relative bg-card dark:bg-card/70 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-2xl p-6 sm:p-10 md:p-14">
             {/* Background glow */}
             <div className="absolute inset-0 bg-gradient-to-b from-secondary/5 to-transparent rounded-2xl pointer-events-none" />
 
@@ -450,7 +450,7 @@ export function Services() {
           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/15 to-secondary/20" />
           <div className="absolute inset-0 grid-glow-bg opacity-30" />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-48 bg-primary/15 blur-[80px]" />
-          <div className="absolute inset-0 border border-white/10 rounded-2xl" />
+          <div className="absolute inset-0 border border-black/10 dark:border-white/10 rounded-2xl" />
 
           <div className="relative px-6 sm:px-10 py-12 sm:py-16 md:py-20 text-center">
             <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-4">
@@ -479,7 +479,7 @@ export function Services() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="glassmorphic border-white/20 hover:border-primary/40 text-foreground hover:text-primary transition-smooth px-10 h-13 text-base font-semibold"
+                  className="glassmorphic border-black/15 dark:border-white/20 hover:border-primary/40 text-foreground hover:text-primary transition-smooth px-10 h-13 text-base font-semibold"
                   data-ocid="cta-secondary-btn"
                 >
                   View Case Studies
@@ -508,7 +508,7 @@ function IndustryPill({
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       style={style}
-      className="group glassmorphic border border-white/10 hover:border-primary/30 p-5 rounded-xl flex items-center gap-3 transition-smooth hover:bg-primary/5 cursor-default"
+      className="group glassmorphic border border-black/10 dark:border-white/10 hover:border-primary/30 p-5 rounded-xl flex items-center gap-3 transition-smooth hover:bg-primary/5 cursor-default"
       data-ocid={`industry-pill-${index}`}
     >
       <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-smooth">

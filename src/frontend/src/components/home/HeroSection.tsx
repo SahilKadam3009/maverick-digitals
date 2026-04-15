@@ -1,4 +1,3 @@
-import { MaverickLogo } from "@/components/MaverickLogo";
 import BallpitBackground from "@/components/home/BallpitBackground";
 import { Button } from "@/components/ui/button";
 import { useRevealOnScroll } from "@/hooks/useIntersectionObserver";
@@ -21,7 +20,6 @@ function FloatingShape({
 }
 
 export function HeroSection() {
-  const { ref: badgeRef, style: badgeStyle } = useRevealOnScroll(0);
   const { ref: headRef, style: headStyle } = useRevealOnScroll(150);
   const { ref: subRef, style: subStyle } = useRevealOnScroll(300);
   const { ref: ctaRef, style: ctaStyle } = useRevealOnScroll(450);
@@ -109,34 +107,6 @@ export function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center max-w-5xl">
-        {/* Brand identity mark */}
-        <div
-          ref={badgeRef as React.RefObject<HTMLDivElement>}
-          style={badgeStyle}
-          className="flex flex-col items-center gap-4 mb-10"
-        >
-          {/* Large logo mark with animated glow */}
-          <div
-            className="relative"
-            style={{
-              filter:
-                "drop-shadow(0 0 18px oklch(0.68 0.24 308 / 0.55)) drop-shadow(0 0 36px oklch(0.72 0.19 200 / 0.25))",
-              animation: "float 4s ease-in-out infinite",
-            }}
-          >
-            <MaverickLogo size={64} />
-          </div>
-
-          {/* Thin rule + label line */}
-          <div className="flex items-center gap-4">
-            <span className="block w-12 h-px bg-primary/40" />
-            <span className="text-[10px] font-semibold tracking-[0.3em] uppercase text-primary/80">
-              Mumbai-based&nbsp;Digital&nbsp;Marketing&nbsp;Agency
-            </span>
-            <span className="block w-12 h-px bg-primary/40" />
-          </div>
-        </div>
-
         {/* Editorial headline */}
         <h1
           ref={headRef as React.RefObject<HTMLDivElement>}
