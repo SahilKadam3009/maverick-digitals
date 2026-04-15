@@ -12,9 +12,11 @@ import {
 import { motion, useScroll, useTransform } from "motion/react";
 import { useEffect, useRef } from "react";
 import ProfileCard from "../components/ProfileCard";
+import { useTheme } from "../context/ThemeContext";
 
 // --- Galaxy Canvas Background ---
-function GalaxyCanvas() {
+// Draws a dark space scene in dark mode, and a soft airy sky in light mode
+function GalaxyCanvas({ isDark }: { isDark: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -55,11 +57,13 @@ function GalaxyCanvas() {
       y: number;
       r: number;
       color: string;
+      lightColor: string;
       opacity: number;
       dx: number;
       dy: number;
       phase: number;
     }
+    // Dark mode: vivid neon nebulas. Light mode: soft pastel versions of same hues
     const nebulaColors = [
       "168,85,247",
       "6,182,212",
@@ -70,11 +74,22 @@ function GalaxyCanvas() {
       "56,189,248",
       "167,139,250",
     ];
+    const lightNebulaColors = [
+      "180,140,240", // soft lavender-purple
+      "80,190,220", // soft sky cyan
+      "150,160,240", // soft periwinkle
+      "210,170,250", // soft lilac
+      "100,220,230", // soft teal
+      "170,140,240", // soft violet
+      "120,200,245", // soft blue
+      "190,170,245", // soft pale purple
+    ];
     const nebulas: Nebula[] = Array.from({ length: 12 }, (_, i) => ({
       x: Math.random() * width,
       y: Math.random() * height,
       r: 130 + Math.random() * 220,
       color: nebulaColors[i % nebulaColors.length],
+      lightColor: lightNebulaColors[i % lightNebulaColors.length],
       opacity: 0.3 + Math.random() * 0.2,
       dx: (Math.random() - 0.5) * 0.18,
       dy: (Math.random() - 0.5) * 0.14,
@@ -123,62 +138,125 @@ function GalaxyCanvas() {
       t += 0.016;
       ctx.clearRect(0, 0, width, height);
 
-      const bgGrad = ctx.createRadialGradient(
-        width * 0.5,
-        height * 0.4,
-        0,
-        width * 0.5,
-        height * 0.4,
-        Math.max(width, height) * 0.95,
-      );
-      bgGrad.addColorStop(0, "rgba(22,10,50,1)");
-      bgGrad.addColorStop(0.35, "rgba(14,7,34,1)");
-      bgGrad.addColorStop(0.7, "rgba(8,4,20,1)");
-      bgGrad.addColorStop(1, "rgba(4,2,12,1)");
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, width, height);
+      if (isDark) {
+        // --- DARK MODE: rich deep space background ---
+        const bgGrad = ctx.createRadialGradient(
+          width * 0.5,
+          height * 0.4,
+          0,
+          width * 0.5,
+          height * 0.4,
+          Math.max(width, height) * 0.95,
+        );
+        bgGrad.addColorStop(0, "rgba(22,10,50,1)");
+        bgGrad.addColorStop(0.35, "rgba(14,7,34,1)");
+        bgGrad.addColorStop(0.7, "rgba(8,4,20,1)");
+        bgGrad.addColorStop(1, "rgba(4,2,12,1)");
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, width, height);
 
-      const blob1 = ctx.createRadialGradient(
-        width * 0.2,
-        height * 0.25,
-        0,
-        width * 0.2,
-        height * 0.25,
-        width * 0.55,
-      );
-      blob1.addColorStop(0, "rgba(168,85,247,0.32)");
-      blob1.addColorStop(0.5, "rgba(168,85,247,0.12)");
-      blob1.addColorStop(1, "rgba(168,85,247,0)");
-      ctx.fillStyle = blob1;
-      ctx.fillRect(0, 0, width, height);
+        // Dark mode: vivid purple and cyan nebula blobs
+        const blob1 = ctx.createRadialGradient(
+          width * 0.2,
+          height * 0.25,
+          0,
+          width * 0.2,
+          height * 0.25,
+          width * 0.55,
+        );
+        blob1.addColorStop(0, "rgba(168,85,247,0.32)");
+        blob1.addColorStop(0.5, "rgba(168,85,247,0.12)");
+        blob1.addColorStop(1, "rgba(168,85,247,0)");
+        ctx.fillStyle = blob1;
+        ctx.fillRect(0, 0, width, height);
 
-      const blob2 = ctx.createRadialGradient(
-        width * 0.8,
-        height * 0.75,
-        0,
-        width * 0.8,
-        height * 0.75,
-        width * 0.45,
-      );
-      blob2.addColorStop(0, "rgba(6,182,212,0.28)");
-      blob2.addColorStop(0.5, "rgba(6,182,212,0.10)");
-      blob2.addColorStop(1, "rgba(6,182,212,0)");
-      ctx.fillStyle = blob2;
-      ctx.fillRect(0, 0, width, height);
+        const blob2 = ctx.createRadialGradient(
+          width * 0.8,
+          height * 0.75,
+          0,
+          width * 0.8,
+          height * 0.75,
+          width * 0.45,
+        );
+        blob2.addColorStop(0, "rgba(6,182,212,0.28)");
+        blob2.addColorStop(0.5, "rgba(6,182,212,0.10)");
+        blob2.addColorStop(1, "rgba(6,182,212,0)");
+        ctx.fillStyle = blob2;
+        ctx.fillRect(0, 0, width, height);
 
-      const blob3 = ctx.createRadialGradient(
-        width * 0.5,
-        height * 0.5,
-        0,
-        width * 0.5,
-        height * 0.5,
-        width * 0.38,
-      );
-      blob3.addColorStop(0, "rgba(99,102,241,0.22)");
-      blob3.addColorStop(1, "rgba(99,102,241,0)");
-      ctx.fillStyle = blob3;
-      ctx.fillRect(0, 0, width, height);
+        const blob3 = ctx.createRadialGradient(
+          width * 0.5,
+          height * 0.5,
+          0,
+          width * 0.5,
+          height * 0.5,
+          width * 0.38,
+        );
+        blob3.addColorStop(0, "rgba(99,102,241,0.22)");
+        blob3.addColorStop(1, "rgba(99,102,241,0)");
+        ctx.fillStyle = blob3;
+        ctx.fillRect(0, 0, width, height);
+      } else {
+        // --- LIGHT MODE: soft airy sky background ---
+        const bgGrad = ctx.createRadialGradient(
+          width * 0.5,
+          height * 0.3,
+          0,
+          width * 0.5,
+          height * 0.6,
+          Math.max(width, height) * 0.95,
+        );
+        bgGrad.addColorStop(0, "rgba(240,242,255,1)");
+        bgGrad.addColorStop(0.4, "rgba(230,235,255,1)");
+        bgGrad.addColorStop(0.75, "rgba(220,228,250,1)");
+        bgGrad.addColorStop(1, "rgba(210,220,248,1)");
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, width, height);
 
+        // Light mode: gentle lavender and sky-blue cloud blobs
+        const blob1 = ctx.createRadialGradient(
+          width * 0.2,
+          height * 0.25,
+          0,
+          width * 0.2,
+          height * 0.25,
+          width * 0.55,
+        );
+        blob1.addColorStop(0, "rgba(180,140,240,0.18)");
+        blob1.addColorStop(0.5, "rgba(180,140,240,0.07)");
+        blob1.addColorStop(1, "rgba(180,140,240,0)");
+        ctx.fillStyle = blob1;
+        ctx.fillRect(0, 0, width, height);
+
+        const blob2 = ctx.createRadialGradient(
+          width * 0.8,
+          height * 0.75,
+          0,
+          width * 0.8,
+          height * 0.75,
+          width * 0.45,
+        );
+        blob2.addColorStop(0, "rgba(80,190,220,0.15)");
+        blob2.addColorStop(0.5, "rgba(80,190,220,0.06)");
+        blob2.addColorStop(1, "rgba(80,190,220,0)");
+        ctx.fillStyle = blob2;
+        ctx.fillRect(0, 0, width, height);
+
+        const blob3 = ctx.createRadialGradient(
+          width * 0.5,
+          height * 0.5,
+          0,
+          width * 0.5,
+          height * 0.5,
+          width * 0.38,
+        );
+        blob3.addColorStop(0, "rgba(150,160,240,0.12)");
+        blob3.addColorStop(1, "rgba(150,160,240,0)");
+        ctx.fillStyle = blob3;
+        ctx.fillRect(0, 0, width, height);
+      }
+
+      // Nebulas — use neon colors in dark, pastel colors in light
       for (const n of nebulas) {
         n.x += n.dx;
         n.y += n.dy;
@@ -189,34 +267,56 @@ function GalaxyCanvas() {
         if (n.y > height + n.r) n.y = -n.r;
         const pulsedR = n.r * (1 + 0.12 * Math.sin(n.phase));
         const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, pulsedR);
-        const pulse = n.opacity * (0.82 + 0.18 * Math.sin(n.phase * 2));
-        grad.addColorStop(0, `rgba(${n.color},${pulse})`);
-        grad.addColorStop(0.38, `rgba(${n.color},${pulse * 0.38})`);
-        grad.addColorStop(1, `rgba(${n.color},0)`);
+        // In light mode: softer opacity so nebulas look like gentle clouds
+        const baseOpacity = isDark ? n.opacity : n.opacity * 0.35;
+        const pulse = baseOpacity * (0.82 + 0.18 * Math.sin(n.phase * 2));
+        const colorStr = isDark ? n.color : n.lightColor;
+        grad.addColorStop(0, `rgba(${colorStr},${pulse})`);
+        grad.addColorStop(0.38, `rgba(${colorStr},${pulse * 0.38})`);
+        grad.addColorStop(1, `rgba(${colorStr},0)`);
         ctx.fillStyle = grad;
         ctx.beginPath();
         ctx.arc(n.x, n.y, pulsedR, 0, Math.PI * 2);
         ctx.fill();
       }
 
+      // Stars — bright white dots in dark mode, tiny faint specks in light mode
       for (const s of stars) {
         s.phase += s.twinkleSpeed;
         s.opacity = s.baseOpacity * (0.3 + 0.7 * Math.sin(s.phase));
         if (s.opacity < 0.05) continue;
         const pulse = s.r * (1 + 0.35 * Math.sin(s.phase * 1.5));
-        const glow = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, pulse * 5);
-        glow.addColorStop(0, `rgba(220,200,255,${s.opacity * 0.45})`);
-        glow.addColorStop(1, "rgba(220,200,255,0)");
-        ctx.fillStyle = glow;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, pulse * 5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, pulse, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(245,235,255,${s.opacity})`;
-        ctx.fill();
+
+        if (isDark) {
+          // Glowing white stars for dark space feel
+          const glow = ctx.createRadialGradient(
+            s.x,
+            s.y,
+            0,
+            s.x,
+            s.y,
+            pulse * 5,
+          );
+          glow.addColorStop(0, `rgba(220,200,255,${s.opacity * 0.45})`);
+          glow.addColorStop(1, "rgba(220,200,255,0)");
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, pulse * 5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, pulse, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(245,235,255,${s.opacity})`;
+          ctx.fill();
+        } else {
+          // Tiny soft violet dots for a delicate light-sky feel
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, pulse * 0.6, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(150,140,200,${s.opacity * 0.3})`;
+          ctx.fill();
+        }
       }
 
+      // Meteors — vivid in dark mode, barely visible soft streaks in light mode
       const now = t;
       if (now - lastMeteorTime > 1.5 + Math.random() * 2.5) {
         const idle = meteors.find((m) => !m.active);
@@ -234,9 +334,19 @@ function GalaxyCanvas() {
         const fade =
           progress < 0.2 ? progress / 0.2 : 1 - (progress - 0.2) / 0.8;
         const grad = ctx.createLinearGradient(m.x, m.y, tailX, tailY);
-        grad.addColorStop(0, `rgba(255,255,255,${m.opacity * fade})`);
-        grad.addColorStop(0.3, `rgba(200,180,255,${m.opacity * fade * 0.65})`);
-        grad.addColorStop(1, "rgba(168,85,247,0)");
+        if (isDark) {
+          grad.addColorStop(0, `rgba(255,255,255,${m.opacity * fade})`);
+          grad.addColorStop(
+            0.3,
+            `rgba(200,180,255,${m.opacity * fade * 0.65})`,
+          );
+          grad.addColorStop(1, "rgba(168,85,247,0)");
+        } else {
+          // Soft lilac streak for light mode
+          grad.addColorStop(0, `rgba(180,160,240,${m.opacity * fade * 0.4})`);
+          grad.addColorStop(0.3, `rgba(160,140,220,${m.opacity * fade * 0.2})`);
+          grad.addColorStop(1, "rgba(140,120,200,0)");
+        }
         ctx.strokeStyle = grad;
         ctx.lineWidth = 2.2;
         ctx.beginPath();
@@ -266,7 +376,7 @@ function GalaxyCanvas() {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [isDark]); // Re-run when theme changes so the canvas redraws correctly
 
   return (
     <canvas
@@ -483,6 +593,8 @@ function StatBadge({
 
 // --- Main Component ---
 export function About() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -581,24 +693,25 @@ export function About() {
       {/* ── FOUNDERS / TEAM ── */}
       <section
         className="relative py-28 overflow-hidden"
-        style={{ minHeight: "800px", background: "#060210" }}
+        style={{ minHeight: "800px" }}
         data-ocid="about-founder"
       >
-        {/* Galaxy canvas — fills 100% of section */}
+        {/* Galaxy canvas — draws dark space in dark mode, soft sky in light mode */}
         <div
           className="absolute inset-0"
           style={{ zIndex: 0 }}
           aria-hidden="true"
         >
-          <GalaxyCanvas />
+          <GalaxyCanvas isDark={isDark} />
         </div>
 
-        {/* Vignette overlay */}
+        {/* Vignette overlay — darker edge in dark mode, barely-there in light mode */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 50%, rgba(6,2,16,0.25) 100%)",
+            background: isDark
+              ? "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 50%, rgba(6,2,16,0.25) 100%)"
+              : "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 50%, rgba(200,210,240,0.10) 100%)",
             zIndex: 1,
           }}
         />
@@ -679,7 +792,7 @@ export function About() {
                   ].map((skill) => (
                     <span
                       key={skill}
-                      className="text-xs px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300"
+                      className="text-xs px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-700 dark:text-purple-300"
                     >
                       {skill}
                     </span>
@@ -748,7 +861,7 @@ export function About() {
                   ].map((skill) => (
                     <span
                       key={skill}
-                      className="text-xs px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300"
+                      className="text-xs px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-700 dark:text-cyan-300"
                     >
                       {skill}
                     </span>
