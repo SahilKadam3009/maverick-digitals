@@ -542,11 +542,6 @@ function PointCard({
       className={`group relative glass-card bg-gradient-to-br ${a.bg} ${a.border} ${a.hoverBorder} ${a.hoverShadow} p-7 transition-all duration-300 hover:-translate-y-1`}
       data-ocid={`why-us-${point.id}`}
     >
-      {/* Faint number watermark */}
-      <div className="absolute top-4 right-5 font-display font-black text-6xl text-foreground/[0.04] select-none pointer-events-none leading-none">
-        {String(index + 1).padStart(2, "0")}
-      </div>
-
       <div className="relative">
         <h3 className="text-h4 text-foreground mb-3 pt-2">{point.title}</h3>
         <p className="text-muted-foreground text-sm leading-relaxed mb-6">
