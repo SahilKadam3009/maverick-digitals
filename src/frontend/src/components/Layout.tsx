@@ -12,8 +12,8 @@ export function Layout({ children }: LayoutProps) {
   const cursorGlowRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
+  // Smooth cursor glow — desktop only
   useEffect(() => {
-    // Disable cursor glow on touch/mobile devices
     if (isMobile) return;
 
     const glow = cursorGlowRef.current;
@@ -49,11 +49,11 @@ export function Layout({ children }: LayoutProps) {
   }, [isMobile]);
 
   return (
-    <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
-      {/* Fluid splash cursor effect — disabled on touch/mobile */}
+    <div className="layout-root relative min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Fluid splash cursor — desktop only */}
       {!isMobile && <SplashCursor />}
 
-      {/* Global cursor glow effect — desktop only */}
+      {/* Global cursor ambient glow — desktop only */}
       {!isMobile && (
         <div
           ref={cursorGlowRef}
@@ -69,7 +69,8 @@ export function Layout({ children }: LayoutProps) {
 
       <Navbar />
 
-      <main className="relative z-10">{children}</main>
+      {/* Page fade-in on mount */}
+      <main className="layout-main relative z-10 flex-1">{children}</main>
 
       <Footer />
     </div>

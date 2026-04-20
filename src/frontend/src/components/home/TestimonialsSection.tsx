@@ -1,5 +1,4 @@
 import { useRevealOnScroll } from "@/hooks/useIntersectionObserver";
-import { Quote, Star } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const testimonials = [
@@ -10,7 +9,6 @@ const testimonials = [
     company: "TechWave SaaS",
     content:
       "Maverick Digitals didn't just run our campaigns — they rebuilt our entire growth engine from the ground up. 10x MRR in 14 months speaks for itself.",
-    rating: 5,
     initials: "AM",
     color: "primary" as const,
     baseAngle: 0,
@@ -22,7 +20,6 @@ const testimonials = [
     company: "Bloom Fashion",
     content:
       "The creative direction they brought was something we hadn't seen before. Our ROAS tripled and we started reaching audiences we'd been chasing for years.",
-    rating: 5,
     initials: "PS",
     color: "secondary" as const,
     baseAngle: 72,
@@ -34,7 +31,6 @@ const testimonials = [
     company: "Urban Realty Group",
     content:
       "We went from struggling to get leads to having a 3-month waitlist. Muskan's team turned our digital presence around completely.",
-    rating: 5,
     initials: "RG",
     color: "accent" as const,
     baseAngle: 144,
@@ -46,7 +42,6 @@ const testimonials = [
     company: "VitaHealth",
     content:
       "They built a content strategy that actually made us an authority in the health space. Organic traffic up 190% in under 9 months — without burning our ad budget.",
-    rating: 5,
     initials: "NV",
     color: "primary" as const,
     baseAngle: 216,
@@ -58,7 +53,6 @@ const testimonials = [
     company: "EduFuture",
     content:
       "Cost per lead down 65%, enrollments tripled. The way they connect paid and organic channels is genuinely impressive — not many teams can do both well.",
-    rating: 5,
     initials: "KP",
     color: "secondary" as const,
     baseAngle: 288,
@@ -76,7 +70,6 @@ const COLOR_STYLES = {
     bg: "bg-[oklch(var(--primary)/0.15)]",
     activeBg: "gradient-neon-purple",
     text: "text-primary",
-    glow: "shadow-[0_0_12px_oklch(var(--primary)/0.5)]",
   },
   secondary: {
     active:
@@ -85,7 +78,6 @@ const COLOR_STYLES = {
     bg: "bg-[oklch(var(--secondary)/0.15)]",
     activeBg: "gradient-neon-cyan",
     text: "text-secondary",
-    glow: "shadow-[0_0_12px_oklch(var(--secondary)/0.5)]",
   },
   accent: {
     active:
@@ -94,7 +86,6 @@ const COLOR_STYLES = {
     bg: "bg-[oklch(var(--accent)/0.15)]",
     activeBg: "bg-accent",
     text: "text-accent",
-    glow: "shadow-[0_0_12px_oklch(var(--accent)/0.5)]",
   },
 };
 
@@ -111,17 +102,17 @@ export function TestimonialsSection() {
   const { ref: sectionRef, style: sectionStyle } = useRevealOnScroll(0);
   const orbitRef = useRef<HTMLDivElement>(null);
 
-  // Continuous orbit animation
+  // Continuous orbit animation — DO NOT MODIFY
   useEffect(() => {
     const animate = (now: number) => {
       if (lastTimeRef.current === 0) lastTimeRef.current = now;
       const dt = now - lastTimeRef.current;
       lastTimeRef.current = now;
 
-      const speed = isHovered ? 0.25 : 0.5; // px/ms → deg/ms
+      const speed = isHovered ? 0.25 : 0.5;
       setOrbitRotation((prev) => (prev + dt * speed * 0.012) % 360);
-      setInnerRotation((prev) => (prev - dt * speed * 0.008) % 360); // counter-rotate inner
-      setOuterRotation((prev) => (prev + dt * speed * 0.004) % 360); // slow outer
+      setInnerRotation((prev) => (prev - dt * speed * 0.008) % 360);
+      setOuterRotation((prev) => (prev + dt * speed * 0.004) % 360);
 
       animFrameRef.current = requestAnimationFrame(animate);
     };
@@ -131,7 +122,7 @@ export function TestimonialsSection() {
     };
   }, [isHovered]);
 
-  // Auto-advance testimonials
+  // Auto-advance testimonials — DO NOT MODIFY
   useEffect(() => {
     if (!autoPlay) return;
     intervalRef.current = setInterval(() => {
@@ -149,15 +140,14 @@ export function TestimonialsSection() {
   };
 
   const active = testimonials[activeIdx];
-  const MAIN_R = 175; // main orbit radius
-  const OUTER_R = 215; // outer particle ring
-  const INNER_R = 110; // inner particle ring
+  const MAIN_R = 175;
+  const OUTER_R = 215;
+  const INNER_R = 110;
 
   return (
-    <section className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden bg-muted/30">
-      {/* ── Background depth layers ─────────────────────────────────────── */}
+    <section className="relative py-16 sm:py-28 px-4 sm:px-6 overflow-hidden bg-muted/30 section-gradient-border">
+      {/* Background depth layers */}
       <div className="absolute inset-0 grid-glow-bg opacity-20" />
-      {/* Deep center glow */}
       <div
         className="absolute rounded-full pointer-events-none"
         style={{
@@ -190,22 +180,26 @@ export function TestimonialsSection() {
         style={sectionStyle}
         className="relative max-w-7xl mx-auto"
       >
-        {/* ── Section header ──────────────────────────────────────────────── */}
+        {/* Section header */}
         <div className="text-center mb-16">
-          <p className="text-primary text-xs font-semibold uppercase tracking-widest mb-3">
+          <span className="tag-label mb-4 inline-flex">
+            <span
+              className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
+              aria-hidden="true"
+            />
             Client Stories
-          </p>
-          <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground mb-4">
+          </span>
+          <h2 className="text-h2 text-foreground mt-4 mb-4">
             What Our <span className="gradient-text-purple">Clients</span> Say
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto text-sm">
+          <p className="text-muted-foreground max-w-xl mx-auto text-body-lg">
             Straight from the founders and marketers we've worked with.
           </p>
         </div>
 
-        {/* ── Orbit + Quote layout ─────────────────────────────────────────── */}
+        {/* Orbit + Quote layout */}
         <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
-          {/* ── Orbit visualization ─────────────────────────────────────── */}
+          {/* Orbit visualization — ALL ANIMATION CODE PRESERVED EXACTLY */}
           <div
             ref={orbitRef}
             onMouseEnter={() => setIsHovered(true)}
@@ -404,7 +398,6 @@ export function TestimonialsSection() {
                     transition: "z-index 0s",
                   }}
                 >
-                  {/* Outer pulse ring when active */}
                   {isActive && (
                     <>
                       <div
@@ -427,7 +420,6 @@ export function TestimonialsSection() {
                     </>
                   )}
 
-                  {/* Avatar circle */}
                   <div
                     className={`
                       relative w-12 h-12 rounded-full border-2 flex items-center justify-center
@@ -441,7 +433,6 @@ export function TestimonialsSection() {
                     </span>
                   </div>
 
-                  {/* Name tooltip */}
                   <div
                     className={`
                       absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-0.5
@@ -465,7 +456,6 @@ export function TestimonialsSection() {
                 transform: "translate(-50%, -50%)",
               }}
             >
-              {/* Glow core */}
               <div
                 className="absolute rounded-full"
                 style={{
@@ -492,47 +482,53 @@ export function TestimonialsSection() {
             </div>
           </div>
 
-          {/* ── Quote panel ──────────────────────────────────────────────── */}
+          {/* Quote panel */}
           <div className="flex-1 max-w-lg w-full">
             <div
               key={active.id}
-              className="glassmorphic border border-primary/15 p-6 sm:p-8 relative overflow-hidden shadow-subtle"
+              className="glass-card relative overflow-hidden"
               style={{
+                padding: "2rem 2rem 1.75rem",
+                borderColor: "oklch(var(--primary)/0.18)",
                 animation:
                   "fadeSlideIn 0.45s cubic-bezier(0.4,0,0.2,1) forwards",
               }}
             >
-              {/* Glow accent */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/6 via-transparent to-accent/4 rounded-lg pointer-events-none" />
+              {/* Top accent line */}
               <div
-                className="absolute top-0 left-0 right-0 h-px"
+                className="absolute top-0 left-0 right-0 h-[2px] rounded-t-[1rem]"
                 style={{
                   background:
-                    "linear-gradient(90deg, transparent, oklch(var(--primary)/0.5), transparent)",
+                    "linear-gradient(90deg, transparent 0%, oklch(var(--primary)/0.7) 40%, oklch(var(--accent)/0.5) 75%, transparent 100%)",
                 }}
               />
+              {/* Subtle inner glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/4 rounded-[1rem] pointer-events-none" />
 
               <div className="relative">
-                {/* Quote icon */}
-                <div className="w-10 h-10 rounded-xl gradient-neon-purple flex items-center justify-center mb-6 glow-neon">
-                  <Quote size={18} className="text-white" />
-                </div>
-
-                {/* Stars */}
-                <div className="flex gap-1 mb-5">
-                  {["s1", "s2", "s3", "s4", "s5"]
-                    .slice(0, active.rating)
-                    .map((sid) => (
-                      <Star
-                        key={sid}
-                        size={14}
-                        className="text-primary fill-primary"
-                      />
-                    ))}
+                {/* Editorial quote mark */}
+                <div className="mb-5">
+                  <svg
+                    width="42"
+                    height="32"
+                    viewBox="0 0 42 32"
+                    fill="none"
+                    aria-hidden="true"
+                    className="opacity-90"
+                  >
+                    <path
+                      d="M0 32 L0 18 C0 7.2 5.6 1.6 16.8 0 L18 4 C13.6 5.2 11.2 8 10.8 12.4 L18 12.4 L18 32 Z"
+                      fill="oklch(var(--primary))"
+                    />
+                    <path
+                      d="M24 32 L24 18 C24 7.2 29.6 1.6 40.8 0 L42 4 C37.6 5.2 35.2 8 34.8 12.4 L42 12.4 L42 32 Z"
+                      fill="oklch(var(--accent))"
+                    />
+                  </svg>
                 </div>
 
                 {/* Quote */}
-                <blockquote className="font-display text-xl text-foreground leading-relaxed mb-8 text-balance">
+                <blockquote className="font-display text-[1.2rem] leading-[1.65] text-foreground mb-8 text-balance">
                   "{active.content}"
                 </blockquote>
 
@@ -542,10 +538,10 @@ export function TestimonialsSection() {
                     {active.initials}
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground text-sm">
+                    <p className="font-display font-bold text-[0.95rem] gradient-text-purple leading-tight">
                       {active.name}
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {active.role} · {active.company}
                     </p>
                   </div>
@@ -594,10 +590,10 @@ export function TestimonialsSection() {
                   type="button"
                   onClick={() => handleAvatarClick(i)}
                   data-ocid={`testimonial-company-${t.id}`}
-                  className={`text-xs px-3 py-1.5 rounded-full border transition-all duration-300 cursor-pointer ${
+                  className={`text-xs px-3 py-1.5 rounded-full border transition-all duration-300 cursor-pointer font-medium ${
                     i === activeIdx
-                      ? "border-primary/50 text-primary bg-primary/10"
-                      : "border-foreground/10 text-muted-foreground bg-card/40 hover:border-foreground/20"
+                      ? "border-primary/50 text-primary bg-primary/10 shadow-[0_0_10px_oklch(var(--primary)/0.15)]"
+                      : "border-foreground/10 text-muted-foreground bg-card/40 hover:border-primary/25 hover:text-foreground"
                   }`}
                 >
                   {t.company}

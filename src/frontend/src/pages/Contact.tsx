@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -11,25 +10,11 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useRevealOnScroll } from "@/hooks/useIntersectionObserver";
 import { useSubmitContact } from "@/hooks/useQueries";
-import {
-  CheckCircle,
-  Clock,
-  ExternalLink,
-  Instagram,
-  Linkedin,
-  Mail,
-  MapPin,
-  Phone,
-  Send,
-  Shield,
-  Star,
-  Twitter,
-  Users,
-  Zap,
-} from "lucide-react";
+import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
+// ── Constants ────────────────────────────────────────────────────────────────
 const SERVICE_TYPES = [
   "SEO & Search Marketing",
   "Performance / Paid Ads",
@@ -49,47 +34,28 @@ const BUDGET_RANGES = [
 ];
 
 const SOCIAL_LINKS = [
-  {
-    icon: Instagram,
-    label: "Instagram",
-    href: "#",
-    color: "hover:text-pink-400",
-  },
-  {
-    icon: Linkedin,
-    label: "LinkedIn",
-    href: "#",
-    color: "hover:text-blue-400",
-  },
-  {
-    icon: Twitter,
-    label: "Twitter / X",
-    href: "#",
-    color: "hover:text-sky-400",
-  },
+  { label: "Instagram", href: "#", color: "hover:text-pink-500" },
+  { label: "LinkedIn", href: "#", color: "hover:text-blue-500" },
+  { label: "Twitter / X", href: "#", color: "hover:text-sky-500" },
 ];
 
 const CONTACT_DETAILS = [
   {
-    icon: Mail,
     label: "Email",
     value: "maverickdigitals18@gmail.com",
     href: "mailto:maverickdigitals18@gmail.com",
   },
   {
-    icon: Phone,
     label: "Phone",
     value: "+91 98765 43210",
     href: "tel:+919876543210",
   },
   {
-    icon: MapPin,
     label: "Location",
     value: "Mumbai, Maharashtra, India",
     href: null,
   },
   {
-    icon: Clock,
     label: "Response Time",
     value: "Within 24 hours",
     href: null,
@@ -105,34 +71,13 @@ const TRUST_POINTS = [
 ];
 
 const PROOF_STATS = [
-  { value: "40+", label: "Brands Scaled", icon: Users },
-  { value: "5", label: "Countries Served", icon: Star },
-  { value: "200%+", label: "Average ROI", icon: Zap },
-  { value: "24hr", label: "Response Time", icon: Shield },
+  { value: "40+", label: "Brands Scaled" },
+  { value: "5", label: "Countries Served" },
+  { value: "200%+", label: "Average ROI" },
+  { value: "24hr", label: "Response Time" },
 ];
 
-interface FormData {
-  name: string;
-  email: string;
-  company: string;
-  serviceType: string;
-  budget: string;
-  message: string;
-}
-
-interface FormErrors {
-  name?: string;
-  email?: string;
-  company?: string;
-  serviceType?: string;
-  budget?: string;
-  message?: string;
-}
-
-function validateEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
+// ── Particle background ───────────────────────────────────────────────────
 function ParticleField() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -141,8 +86,6 @@ function ParticleField() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
-    const isDark = document.documentElement.classList.contains("dark");
 
     const particles: {
       x: number;
@@ -161,15 +104,15 @@ function ParticleField() {
     resize();
     window.addEventListener("resize", resize);
 
-    const count = window.innerWidth < 768 ? 20 : 45;
+    const count = window.innerWidth < 768 ? 18 : 40;
     for (let i = 0; i < count; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        r: Math.random() * 1.5 + 0.4,
-        alpha: isDark ? Math.random() * 0.4 + 0.1 : Math.random() * 0.25 + 0.05,
+        vx: (Math.random() - 0.5) * 0.22,
+        vy: (Math.random() - 0.5) * 0.22,
+        r: Math.random() * 1.4 + 0.3,
+        alpha: Math.random() * 0.35 + 0.08,
         hue: Math.random() > 0.5 ? 308 : 200,
       });
     }
@@ -177,8 +120,8 @@ function ParticleField() {
     let raf: number;
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const currentIsDark = document.documentElement.classList.contains("dark");
-      const alphaMultiplier = currentIsDark ? 1 : 0.5;
+      const isDark = document.documentElement.classList.contains("dark");
+      const alphaMultiplier = isDark ? 1 : 0.45;
 
       for (const p of particles) {
         p.x += p.vx;
@@ -199,11 +142,11 @@ function ParticleField() {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
+          if (dist < 90) {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `oklch(0.68 0.18 260 / ${0.05 * alphaMultiplier * (1 - dist / 100)})`;
+            ctx.strokeStyle = `oklch(0.65 0.18 260 / ${0.04 * alphaMultiplier * (1 - dist / 90)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -228,6 +171,30 @@ function ParticleField() {
   );
 }
 
+// ── Types ────────────────────────────────────────────────────────────────────
+interface FormData {
+  name: string;
+  email: string;
+  company: string;
+  serviceType: string;
+  budget: string;
+  message: string;
+}
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  company?: string;
+  serviceType?: string;
+  budget?: string;
+  message?: string;
+}
+
+function validateEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// ── Main Component ───────────────────────────────────────────────────────────
 export function Contact() {
   const [form, setForm] = useState<FormData>({
     name: "",
@@ -296,70 +263,132 @@ export function Contact() {
     }
   };
 
-  const inputBase =
-    "bg-background/80 dark:bg-muted/20 border transition-all duration-300 focus:ring-0 h-11 text-foreground placeholder:text-muted-foreground/50 rounded-lg";
-
   const fieldClass = (field: keyof FormData) =>
-    `${inputBase} ${
+    `premium-input ${
       touched[field] && errors[field]
-        ? "border-destructive/70 focus:border-destructive"
-        : "border-border hover:border-primary/30 focus:border-primary/60 focus:shadow-[0_0_0_3px_oklch(var(--primary)/0.10)]"
+        ? "border-destructive/70 focus:border-destructive dark:border-destructive/60"
+        : ""
     }`;
 
+  const resetForm = () => {
+    setSubmitted(false);
+    setForm({
+      name: "",
+      email: "",
+      company: "",
+      serviceType: "",
+      budget: "",
+      message: "",
+    });
+    setTouched({
+      name: false,
+      email: false,
+      company: false,
+      serviceType: false,
+      budget: false,
+      message: false,
+    });
+    setErrors({});
+  };
+
   return (
-    <div className="relative pt-20 sm:pt-24 pb-24 min-h-screen overflow-hidden bg-background">
+    <div className="relative pt-20 sm:pt-28 pb-24 min-h-screen overflow-hidden bg-background">
       <ParticleField />
 
       {/* Ambient glows */}
-      <div className="absolute inset-0 grid-glow-bg opacity-20 pointer-events-none" />
-      <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/6 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-0 w-80 h-80 bg-secondary/6 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute inset-0 grid-glow-bg opacity-15 pointer-events-none" />
+      <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/5 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-0 w-80 h-80 bg-secondary/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        {/* ── Page Header ───────────────────────────────────────────────────── */}
+        {/* ── PAGE HEADER ── */}
         <div
           ref={titleRef as React.RefObject<HTMLDivElement>}
           style={titleStyle}
-          className="mb-14 text-center max-w-3xl mx-auto"
+          className="mb-16 text-center max-w-3xl mx-auto"
         >
-          <p className="text-primary text-xs font-semibold uppercase tracking-widest mb-4 inline-flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            Get In Touch
-          </p>
-          <h1 className="font-display font-bold text-5xl md:text-6xl text-foreground leading-tight mb-5">
+          <div className="flex justify-center mb-5">
+            <span className="tag-label">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              Get In Touch
+            </span>
+          </div>
+          <h1
+            className="font-display font-extrabold text-foreground mb-5"
+            style={{
+              fontSize: "var(--font-size-h1)",
+              lineHeight: "var(--line-height-heading)",
+              letterSpacing: "var(--tracking-tight)",
+            }}
+          >
             Let's build something{" "}
             <span className="gradient-text-purple">great together</span>
           </h1>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p
+            className="text-muted-foreground max-w-xl mx-auto"
+            style={{
+              fontSize: "var(--font-size-body-lg)",
+              lineHeight: "var(--line-height-body)",
+            }}
+          >
             Whether you're starting fresh or scaling an existing brand — we map
             out a custom path to measurable growth. Real strategy, real results.
           </p>
         </div>
 
-        {/* ── Split Layout ──────────────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-14">
-          {/* ──── LEFT: Brand info panel ──────────────────────────────────── */}
+        {/* ── TRUST STATS STRIP ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 mb-14"
+          data-ocid="contact.trust_strip"
+        >
+          {PROOF_STATS.map(({ value, label }) => (
+            <div
+              key={label}
+              className="flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-border bg-card/80 dark:bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-smooth"
+            >
+              <span className="font-display font-black text-sm gradient-text-purple">
+                {value}
+              </span>
+              <span className="text-muted-foreground text-xs">{label}</span>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* ── SPLIT LAYOUT ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12">
+          {/* ── LEFT PANEL ── */}
           <div
             ref={leftRef as React.RefObject<HTMLDivElement>}
             style={leftStyle}
-            className="lg:col-span-5 flex flex-col gap-5"
+            className="lg:col-span-5 flex flex-col gap-4"
             data-ocid="contact.left_panel"
           >
-            {/* Headline card */}
-            <div className="relative rounded-2xl overflow-hidden border border-primary/15 bg-card/80 dark:bg-card/60 backdrop-blur-xl p-7">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/5 pointer-events-none" />
+            {/* Brand headline card */}
+            <div className="glass-card p-7 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/6 via-transparent to-accent/4 pointer-events-none rounded-2xl" />
               <div className="relative">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-primary mb-3 block">
                   Maverick Digitals — Mumbai
                 </span>
-                <h2 className="font-display font-bold text-2xl md:text-3xl text-foreground leading-tight mb-3">
+                <h2
+                  className="font-display font-bold text-foreground mb-3"
+                  style={{
+                    fontSize: "var(--font-size-h3)",
+                    lineHeight: "var(--line-height-heading)",
+                    letterSpacing: "var(--tracking-tight)",
+                  }}
+                >
                   Your growth partner,
                   <br />
                   <span className="gradient-text-cyan">
                     not just an agency.
                   </span>
                 </h2>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   We don't just run campaigns — we build growth systems tailored
                   to your brand. From brief to delivery, you work directly with
                   the founders.
@@ -367,49 +396,23 @@ export function Contact() {
               </div>
             </div>
 
-            {/* Proof stats grid */}
-            <div className="grid grid-cols-2 gap-3" data-ocid="contact.stats">
-              {PROOF_STATS.map(({ value, label, icon: Icon }) => (
+            {/* Contact details */}
+            <div className="glass-card p-5 space-y-1">
+              {CONTACT_DETAILS.map(({ label, value, href }) => (
                 <div
                   key={label}
-                  className="rounded-xl border border-border bg-card/70 dark:bg-card/50 backdrop-blur-sm p-4 flex items-center gap-3 hover:border-primary/25 transition-smooth"
+                  className="flex items-center gap-4 py-3 border-b border-border/50 last:border-0 group"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
-                    <Icon size={14} className="text-primary" />
-                  </div>
                   <div className="min-w-0">
-                    <p className="font-display font-black text-xl gradient-text-purple leading-none">
-                      {value}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground leading-tight mt-0.5 truncate">
-                      {label}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Contact details */}
-            <div className="rounded-2xl border border-border bg-card/70 dark:bg-card/50 backdrop-blur-xl p-5 space-y-4">
-              {CONTACT_DETAILS.map(({ icon: Icon, label, value, href }) => (
-                <div key={label} className="flex items-center gap-4 group">
-                  <div className="w-9 h-9 rounded-xl bg-primary/8 border border-primary/15 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-smooth">
-                    <Icon size={15} className="text-primary" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider leading-none mb-0.5">
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-widest leading-none mb-1 font-semibold">
                       {label}
                     </p>
                     {href ? (
                       <a
                         href={href}
-                        className="text-sm text-foreground font-medium hover:text-primary transition-smooth flex items-center gap-1 group/link"
+                        className="text-sm text-foreground font-medium hover:text-primary transition-smooth flex items-center gap-1"
                       >
                         <span className="truncate">{value}</span>
-                        <ExternalLink
-                          size={10}
-                          className="opacity-0 group-hover/link:opacity-50 transition-smooth shrink-0"
-                        />
                       </a>
                     ) : (
                       <p className="text-sm text-foreground font-medium">
@@ -422,8 +425,8 @@ export function Contact() {
             </div>
 
             {/* Why Maverick */}
-            <div className="rounded-2xl border border-border bg-card/70 dark:bg-card/50 backdrop-blur-xl p-5">
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-4 font-semibold">
+            <div className="glass-card p-5">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-4 font-bold">
                 Why Maverick?
               </p>
               <ul className="space-y-2.5">
@@ -432,52 +435,74 @@ export function Contact() {
                     key={item}
                     className="flex items-center gap-3 text-sm text-foreground"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full gradient-neon-purple shrink-0" />
+                    <span className="w-5 h-5 rounded-full gradient-neon-purple flex items-center justify-center shrink-0">
+                      <svg
+                        width="9"
+                        height="9"
+                        viewBox="0 0 9 9"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M2 4.5L3.5 6L7 2.5"
+                          stroke="white"
+                          strokeWidth="1.3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Social links */}
-            <div className="rounded-2xl border border-border bg-card/70 dark:bg-card/50 backdrop-blur-xl p-5">
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-4 font-semibold">
+            {/* Social links — text labels */}
+            <div className="glass-card p-5">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-4 font-bold">
                 Follow Us
               </p>
               <div className="flex items-center gap-3">
-                {SOCIAL_LINKS.map(({ icon: Icon, label, href, color }) => (
+                {SOCIAL_LINKS.map(({ label, href, color }) => (
                   <a
                     key={label}
                     href={href}
                     aria-label={label}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-10 h-10 rounded-xl border border-border bg-muted/40 flex items-center justify-center text-muted-foreground ${color} transition-smooth hover:scale-110 hover:border-primary/30 hover:shadow-[0_0_16px_oklch(var(--primary)/0.2)]`}
+                    className={`px-3 py-2 rounded-xl border border-border bg-muted/30 text-sm font-semibold text-muted-foreground ${color} transition-smooth hover:scale-105 hover:border-primary/30`}
                     data-ocid={`social-${label.toLowerCase().replace(/\s+.*/, "")}`}
                   >
-                    <Icon size={16} />
+                    {label.split(" ")[0]}
                   </a>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* ──── RIGHT: Form panel ───────────────────────────────────────── */}
+          {/* ── RIGHT PANEL: FORM ── */}
           <div
             ref={rightRef as React.RefObject<HTMLDivElement>}
             style={rightStyle}
             className="lg:col-span-7"
           >
             {submitted ? (
+              /* ── SUCCESS STATE ── */
               <div
-                className="rounded-2xl border border-primary/25 bg-card/80 dark:bg-card/60 backdrop-blur-xl p-10 md:p-14 flex flex-col items-center justify-center text-center min-h-[600px] relative overflow-hidden"
+                className="glass-card p-10 md:p-14 flex flex-col items-center justify-center text-center min-h-[620px] relative overflow-hidden"
                 data-ocid="contact-success"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/6 via-transparent to-accent/4 pointer-events-none rounded-2xl" />
-                <div className="relative flex flex-col items-center">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/4 pointer-events-none rounded-2xl" />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative flex flex-col items-center"
+                >
                   <div className="relative mb-8">
                     <div className="w-24 h-24 rounded-full gradient-neon-purple glow-neon flex items-center justify-center">
-                      <CheckCircle size={44} className="text-white" />
+                      <span className="text-white text-4xl font-bold">✓</span>
                     </div>
                     <div className="absolute -inset-3 rounded-full border border-primary/20 animate-ping" />
                     <div
@@ -485,67 +510,64 @@ export function Contact() {
                       style={{ animationDelay: "0.3s" }}
                     />
                   </div>
-                  <h3 className="font-display font-bold text-3xl text-foreground mb-3">
+                  <h3
+                    className="font-display font-bold text-foreground mb-3"
+                    style={{ fontSize: "var(--font-size-h3)" }}
+                  >
                     Message Received!
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed max-w-sm mb-2">
+                  <p
+                    className="text-muted-foreground leading-relaxed max-w-sm mb-2"
+                    style={{ lineHeight: "var(--line-height-body)" }}
+                  >
                     Thank you for reaching out. We'll review your project
                     details and respond within{" "}
                     <span className="text-primary font-semibold">24 hours</span>
                     .
                   </p>
-                  <p className="text-muted-foreground/60 text-sm mb-8">
+                  <p className="text-muted-foreground/60 text-sm mb-10">
                     Check your inbox at{" "}
                     <span className="text-foreground/80">{form.email}</span>
                   </p>
                   <button
                     type="button"
-                    onClick={() => {
-                      setSubmitted(false);
-                      setForm({
-                        name: "",
-                        email: "",
-                        company: "",
-                        serviceType: "",
-                        budget: "",
-                        message: "",
-                      });
-                      setTouched({
-                        name: false,
-                        email: false,
-                        company: false,
-                        serviceType: false,
-                        budget: false,
-                        message: false,
-                      });
-                      setErrors({});
-                    }}
-                    className="text-primary hover:text-primary/80 transition-smooth text-sm font-medium border border-primary/30 rounded-lg px-5 py-2.5 hover:border-primary/60 hover:bg-primary/5"
+                    onClick={resetForm}
+                    className="btn-secondary text-sm"
                     data-ocid="contact.send_again_button"
                   >
                     Send another message
                   </button>
-                </div>
+                </motion.div>
               </div>
             ) : (
+              /* ── FORM ── */
               <form
                 onSubmit={handleSubmit}
                 noValidate
-                className="rounded-2xl border border-border bg-card/80 dark:bg-card/60 backdrop-blur-xl p-7 md:p-10 space-y-6 relative overflow-hidden"
+                className="glass-card p-7 md:p-10 space-y-6 relative overflow-hidden"
                 data-ocid="contact-form"
               >
-                {/* Form ambient glows */}
-                <div className="absolute top-0 right-0 w-56 h-56 bg-primary/4 rounded-full blur-[80px] pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-40 h-40 bg-accent/4 rounded-full blur-[60px] pointer-events-none" />
+                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/4 rounded-full blur-[100px] pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent/4 rounded-full blur-[80px] pointer-events-none" />
 
+                {/* Form heading */}
                 <div className="relative">
-                  <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">
+                  <span className="tag-label mb-3 inline-flex">
                     Start a Conversation
-                  </p>
-                  <h3 className="font-display font-bold text-2xl md:text-3xl text-foreground">
+                  </span>
+                  <h3
+                    className="font-display font-bold text-foreground mt-3 mb-1"
+                    style={{
+                      fontSize: "var(--font-size-h3)",
+                      lineHeight: "var(--line-height-heading)",
+                    }}
+                  >
                     Tell us about your goals
                   </h3>
-                  <p className="text-muted-foreground text-sm mt-1">
+                  <p
+                    className="text-muted-foreground text-sm"
+                    style={{ lineHeight: "var(--line-height-relaxed)" }}
+                  >
                     The more you share, the better we can tailor our approach.
                   </p>
                 </div>
@@ -555,13 +577,13 @@ export function Contact() {
                   <div className="space-y-1.5">
                     <Label
                       htmlFor="contact-name"
-                      className="text-sm font-medium text-foreground/90"
+                      className="text-sm font-semibold text-foreground"
                     >
                       Full Name <span className="text-primary">*</span>
                     </Label>
-                    <Input
+                    <input
                       id="contact-name"
-                      placeholder="Muskan Rathod"
+                      placeholder="Your full name"
                       value={form.name}
                       onChange={(e) =>
                         setForm({ ...form, name: e.target.value })
@@ -583,11 +605,11 @@ export function Contact() {
                   <div className="space-y-1.5">
                     <Label
                       htmlFor="contact-email"
-                      className="text-sm font-medium text-foreground/90"
+                      className="text-sm font-semibold text-foreground"
                     >
                       Email Address <span className="text-primary">*</span>
                     </Label>
-                    <Input
+                    <input
                       id="contact-email"
                       type="email"
                       placeholder="you@company.com"
@@ -615,11 +637,11 @@ export function Contact() {
                 <div className="space-y-1.5">
                   <Label
                     htmlFor="contact-company"
-                    className="text-sm font-medium text-foreground/90"
+                    className="text-sm font-semibold text-foreground"
                   >
                     Company / Brand Name
                   </Label>
-                  <Input
+                  <input
                     id="contact-company"
                     placeholder="Your company or personal brand"
                     value={form.company}
@@ -638,7 +660,7 @@ export function Contact() {
                   <div className="space-y-1.5">
                     <Label
                       htmlFor="contact-service"
-                      className="text-sm font-medium text-foreground/90"
+                      className="text-sm font-semibold text-foreground"
                     >
                       Service Interested In{" "}
                       <span className="text-primary">*</span>
@@ -652,11 +674,7 @@ export function Contact() {
                       }}
                     >
                       <SelectTrigger
-                        className={`h-11 bg-background/80 dark:bg-muted/20 border text-foreground transition-all duration-300 rounded-lg ${
-                          touched.serviceType && errors.serviceType
-                            ? "border-destructive/70"
-                            : "border-border hover:border-primary/30 focus:border-primary/60"
-                        }`}
+                        className={`premium-input h-auto py-3.5 ${touched.serviceType && errors.serviceType ? "border-destructive/70" : ""}`}
                         data-ocid="contact-select-service"
                       >
                         <SelectValue placeholder="Choose a service..." />
@@ -686,7 +704,7 @@ export function Contact() {
                   <div className="space-y-1.5">
                     <Label
                       htmlFor="contact-budget"
-                      className="text-sm font-medium text-foreground/90"
+                      className="text-sm font-semibold text-foreground"
                     >
                       Project Budget
                     </Label>
@@ -695,7 +713,7 @@ export function Contact() {
                       onValueChange={(v) => setForm({ ...form, budget: v })}
                     >
                       <SelectTrigger
-                        className="h-11 bg-background/80 dark:bg-muted/20 border border-border hover:border-primary/30 focus:border-primary/60 text-foreground transition-all duration-300 rounded-lg"
+                        className="premium-input h-auto py-3.5"
                         data-ocid="contact.budget.select"
                       >
                         <SelectValue placeholder="Select a range..." />
@@ -719,12 +737,12 @@ export function Contact() {
                 <div className="space-y-1.5">
                   <Label
                     htmlFor="contact-message"
-                    className="text-sm font-medium text-foreground/90"
+                    className="text-sm font-semibold text-foreground"
                   >
                     Tell Us About Your Project{" "}
                     <span className="text-primary">*</span>
                   </Label>
-                  <Textarea
+                  <textarea
                     id="contact-message"
                     placeholder="Describe your goals, current challenges, and what success looks like for you..."
                     value={form.message}
@@ -732,7 +750,7 @@ export function Contact() {
                       setForm({ ...form, message: e.target.value })
                     }
                     onBlur={() => handleBlur("message")}
-                    className={`${fieldClass("message")} h-auto min-h-[140px] resize-none`}
+                    className={`${fieldClass("message")} min-h-[140px] resize-none`}
                     data-ocid="contact-input-message"
                   />
                   <div className="flex items-center justify-between">
@@ -754,34 +772,31 @@ export function Contact() {
                   </div>
                 </div>
 
-                {/* Submit + trust badge */}
-                <div className="space-y-3">
-                  <Button
+                {/* Submit */}
+                <div className="space-y-3 pt-1">
+                  <button
                     type="submit"
-                    size="lg"
                     disabled={isPending}
-                    className="w-full gradient-neon-purple text-white font-semibold glow-neon hover:scale-[1.02] transition-smooth border-0 h-13 text-base rounded-xl"
+                    className="btn-primary w-full justify-center py-4 text-[15px] rounded-xl disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
                     data-ocid="contact-submit"
                   >
                     {isPending ? (
-                      <span className="flex items-center gap-2.5">
+                      <span className="flex items-center gap-2.5 justify-center">
                         <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
                         Sending your message...
                       </span>
                     ) : (
-                      <span className="flex items-center gap-2.5">
-                        <Send size={16} />
-                        Start Your Growth Journey
+                      <span className="flex items-center gap-2.5 justify-center">
+                        Send Message
                       </span>
                     )}
-                  </Button>
+                  </button>
 
-                  {/* Trust badge */}
-                  <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-lg bg-primary/5 border border-primary/10">
-                    <CheckCircle size={13} className="text-primary shrink-0" />
+                  <div className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-primary/5 border border-primary/12">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/70 shrink-0" />
                     <p className="text-xs text-muted-foreground">
                       Response within{" "}
-                      <span className="text-foreground font-medium">
+                      <span className="text-foreground font-semibold">
                         24 hours
                       </span>{" "}
                       — No spam, no lock-ins, just honest conversations.

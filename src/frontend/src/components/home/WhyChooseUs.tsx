@@ -1,21 +1,9 @@
 import { useRevealOnScroll } from "@/hooks/useIntersectionObserver";
-import {
-  BarChart2,
-  Code2,
-  Eye,
-  Globe,
-  Lightbulb,
-  Megaphone,
-  Share2,
-  ShieldCheck,
-  User,
-} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const points = [
   {
     id: "data",
-    icon: BarChart2,
     title: "We care about numbers that matter",
     description:
       "Not monthly report theatre. We track what's actually moving the needle — leads, sales, and revenue growth — and cut what doesn't work.",
@@ -25,7 +13,6 @@ const points = [
   },
   {
     id: "creative",
-    icon: Lightbulb,
     title: "Creative that converts",
     description:
       "Good-looking content that nobody acts on is useless. We build campaigns that are both worth watching and worth clicking.",
@@ -35,7 +22,6 @@ const points = [
   },
   {
     id: "transparent",
-    icon: Eye,
     title: "One team, full ownership",
     description:
       "You don't get passed around. Our co-founders are involved from brief to delivery, and the team that pitches is the team that executes.",
@@ -45,7 +31,6 @@ const points = [
   },
   {
     id: "proven",
-    icon: ShieldCheck,
     title: "Direct access, always",
     description:
       "Muskan and Dhaval stay involved in every account. No account managers playing phone tag — you get real decisions made fast.",
@@ -57,32 +42,29 @@ const points = [
 
 const accentColor = {
   primary: {
-    bg: "from-primary/15 to-primary/3",
+    bg: "from-primary/12 to-primary/2",
     border: "border-primary/20",
-    icon: "text-primary",
-    iconBg: "bg-primary/10",
-    stat: "text-primary",
-    hoverBorder: "hover:border-primary/45",
+    stat: "gradient-text-purple",
+    hoverBorder: "hover:border-primary/50",
+    hoverShadow: "hover:shadow-[0_0_28px_oklch(var(--primary)/0.12)]",
   },
   secondary: {
-    bg: "from-secondary/15 to-secondary/3",
+    bg: "from-secondary/12 to-secondary/2",
     border: "border-secondary/20",
-    icon: "text-secondary",
-    iconBg: "bg-secondary/10",
-    stat: "text-secondary",
-    hoverBorder: "hover:border-secondary/45",
+    stat: "gradient-text-cyan",
+    hoverBorder: "hover:border-secondary/50",
+    hoverShadow: "hover:shadow-[0_0_28px_oklch(var(--secondary)/0.12)]",
   },
   accent: {
-    bg: "from-accent/15 to-accent/3",
+    bg: "from-accent/12 to-accent/2",
     border: "border-accent/20",
-    icon: "text-accent",
-    iconBg: "bg-accent/10",
     stat: "text-accent",
-    hoverBorder: "hover:border-accent/45",
+    hoverBorder: "hover:border-accent/50",
+    hoverShadow: "hover:shadow-[0_0_28px_oklch(var(--accent)/0.12)]",
   },
 };
 
-// 6 orbit items with service data
+// Orbit items — text-label based, no icons
 const ORBIT_ITEMS = [
   {
     id: "o1",
@@ -93,7 +75,6 @@ const ORBIT_ITEMS = [
     glow: "oklch(0.68 0.24 308)",
     angle: 0,
     icon: "SEO",
-    LucideIcon: Globe,
   },
   {
     id: "o2",
@@ -104,7 +85,6 @@ const ORBIT_ITEMS = [
     glow: "oklch(0.72 0.19 200)",
     angle: 60,
     icon: "PPC",
-    LucideIcon: BarChart2,
   },
   {
     id: "o3",
@@ -115,7 +95,6 @@ const ORBIT_ITEMS = [
     glow: "oklch(0.65 0.22 260)",
     angle: 120,
     icon: "BRD",
-    LucideIcon: Megaphone,
   },
   {
     id: "o4",
@@ -126,7 +105,6 @@ const ORBIT_ITEMS = [
     glow: "oklch(0.68 0.24 308)",
     angle: 180,
     icon: "SMM",
-    LucideIcon: Share2,
   },
   {
     id: "o5",
@@ -137,7 +115,6 @@ const ORBIT_ITEMS = [
     glow: "oklch(0.72 0.19 200)",
     angle: 240,
     icon: "DEV",
-    LucideIcon: Code2,
   },
   {
     id: "o6",
@@ -148,11 +125,9 @@ const ORBIT_ITEMS = [
     glow: "oklch(0.65 0.22 260)",
     angle: 300,
     icon: "PB",
-    LucideIcon: User,
   },
 ];
 
-// Larger orbit ellipse for more visual presence
 const OX = 260;
 const OY = 210;
 const RX = 220;
@@ -166,12 +141,12 @@ function getEllipsePos(angleDeg: number) {
   };
 }
 
-// Wider depth scale range for stronger 3D illusion
 function getDepthScale(angleDeg: number) {
   const rad = (angleDeg * Math.PI) / 180;
   return 0.6 + 0.5 * ((Math.sin(rad) + 1) / 2);
 }
 
+// ── ORBIT VISUALIZATION — DO NOT MODIFY ANY ANIMATION CODE ────────────────
 function OrbitVisualization() {
   const [rotation, setRotation] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -183,7 +158,6 @@ function OrbitVisualization() {
       if (lastTimeRef.current === 0) lastTimeRef.current = now;
       const dt = now - lastTimeRef.current;
       lastTimeRef.current = now;
-      // Slower, smoother: ~0.35 deg/frame equivalent at 60fps
       const speed = isHovered ? 0.18 : 0.35;
       setRotation((prev) => (prev + dt * speed * 0.01) % 360);
       animRef.current = requestAnimationFrame(animate);
@@ -310,7 +284,6 @@ function OrbitVisualization() {
           <title>3D orbit ring animation</title>
         </defs>
 
-        {/* Shadow ellipse (depth illusion) */}
         <ellipse
           cx={OX}
           cy={OY + 10}
@@ -321,8 +294,6 @@ function OrbitVisualization() {
           fill="none"
           opacity="0.5"
         />
-
-        {/* Main orbit ellipse */}
         <ellipse
           cx={OX}
           cy={OY}
@@ -334,8 +305,6 @@ function OrbitVisualization() {
           filter="url(#ellipseGlow)"
           strokeDasharray="4 8"
         />
-
-        {/* Inner subtle ellipse */}
         <ellipse
           cx={OX}
           cy={OY}
@@ -347,7 +316,6 @@ function OrbitVisualization() {
           strokeDasharray="2 12"
         />
 
-        {/* Animated particles on ellipse */}
         {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => {
           const pos = getEllipsePos((deg + rotation * 0.35) % 360);
           const depth = getDepthScale((deg + rotation * 0.35) % 360);
@@ -369,16 +337,11 @@ function OrbitVisualization() {
         })}
       </svg>
 
-      {/* Center focal point — M symbol with pulsing glow ring */}
+      {/* Center focal point — M symbol — DO NOT MODIFY */}
       <div
         className="absolute z-30 pointer-events-none flex flex-col items-center justify-center"
-        style={{
-          left: OX,
-          top: OY,
-          transform: "translate(-50%, -50%)",
-        }}
+        style={{ left: OX, top: OY, transform: "translate(-50%, -50%)" }}
       >
-        {/* Outer pulse ring */}
         <div
           className="absolute rounded-full animate-ping"
           style={{
@@ -388,7 +351,6 @@ function OrbitVisualization() {
             animationDuration: "3s",
           }}
         />
-        {/* Glow halo */}
         <div
           className="absolute rounded-full"
           style={{
@@ -399,7 +361,6 @@ function OrbitVisualization() {
             filter: "blur(14px)",
           }}
         />
-        {/* Outer ring */}
         <div
           className="absolute rounded-full"
           style={{
@@ -409,7 +370,6 @@ function OrbitVisualization() {
             boxShadow: "0 0 20px oklch(var(--primary)/0.2)",
           }}
         />
-        {/* M shield */}
         <div
           className="relative flex items-center justify-center rounded-full"
           style={{
@@ -458,7 +418,7 @@ function OrbitVisualization() {
         </span>
       </div>
 
-      {/* Orbiting tiles sorted by depth */}
+      {/* Orbiting tiles — DO NOT MODIFY */}
       {sortedItems.map((item) => {
         const currentAngle = (item.angle + rotation) % 360;
         const pos = getEllipsePos(currentAngle);
@@ -483,14 +443,12 @@ function OrbitVisualization() {
               transition: "opacity 0.1s",
             }}
           >
-            {/* Glow halo */}
             <div
               className="absolute inset-0 rounded-xl"
               style={{
                 boxShadow: `0 0 ${Math.round(14 * depth)}px ${item.glow}55, 0 0 ${Math.round(28 * depth)}px ${item.glow}20`,
               }}
             />
-            {/* Tile */}
             <div
               className="relative w-full h-full rounded-xl overflow-hidden"
               style={{
@@ -499,14 +457,12 @@ function OrbitVisualization() {
                 boxShadow: `inset 0 1px 0 ${item.glow}35`,
               }}
             >
-              {/* Shimmer */}
               <div
                 className="absolute inset-0"
                 style={{
                   background: `linear-gradient(135deg, ${item.glow}28 0%, transparent 50%, ${item.glow}14 100%)`,
                 }}
               />
-              {/* Noise */}
               <div
                 className="absolute inset-0 opacity-15"
                 style={{
@@ -515,7 +471,6 @@ function OrbitVisualization() {
                   backgroundSize: "64px 64px",
                 }}
               />
-              {/* Icon + label */}
               <div className="relative flex flex-col items-center justify-center h-full gap-0.5 px-1">
                 <span
                   className="font-mono font-bold text-white/85 uppercase tracking-wider"
@@ -579,43 +534,38 @@ function PointCard({
 }: { point: (typeof points)[0]; index: number }) {
   const { ref, style } = useRevealOnScroll(index * 120);
   const a = accentColor[point.accent as keyof typeof accentColor];
-  const Icon = point.icon;
 
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       style={style}
-      className={`group relative glassmorphic bg-gradient-to-br ${a.bg} ${a.border} ${a.hoverBorder} p-7 transition-all duration-300 hover:scale-[1.02] hover:shadow-elevated`}
+      className={`group relative glass-card bg-gradient-to-br ${a.bg} ${a.border} ${a.hoverBorder} ${a.hoverShadow} p-7 transition-all duration-300 hover:-translate-y-1`}
       data-ocid={`why-us-${point.id}`}
     >
-      <div className="absolute top-4 right-5 font-display font-black text-6xl text-foreground/3 select-none pointer-events-none">
+      {/* Faint number watermark */}
+      <div className="absolute top-4 right-5 font-display font-black text-6xl text-foreground/[0.04] select-none pointer-events-none leading-none">
         {String(index + 1).padStart(2, "0")}
       </div>
 
-      <div
-        className={`w-12 h-12 rounded-xl ${a.iconBg} border ${a.border} flex items-center justify-center mb-5`}
-      >
-        <Icon size={22} className={a.icon} />
-      </div>
+      <div className="relative">
+        <h3 className="text-h4 text-foreground mb-3 pt-2">{point.title}</h3>
+        <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+          {point.description}
+        </p>
 
-      <h3 className="font-display font-bold text-xl text-foreground mb-3">
-        {point.title}
-      </h3>
-      <p className="text-muted-foreground text-sm leading-relaxed mb-5">
-        {point.description}
-      </p>
-
-      <div className="flex items-baseline gap-2">
-        <span className={`font-display font-black text-3xl ${a.stat}`}>
-          {point.stat}
-        </span>
-        <span className="text-xs text-muted-foreground">{point.statLabel}</span>
+        <div className="flex items-baseline gap-2 pt-4 border-t border-foreground/6">
+          <span className={`font-display font-black text-3xl ${a.stat}`}>
+            {point.stat}
+          </span>
+          <span className="text-xs text-muted-foreground uppercase tracking-widest font-medium">
+            {point.statLabel}
+          </span>
+        </div>
       </div>
     </div>
   );
 }
 
-// Service legend cards rendered below the orbit
 function ServiceLegend() {
   const { ref, style } = useRevealOnScroll(300);
   return (
@@ -625,40 +575,42 @@ function ServiceLegend() {
       className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-8 w-full max-w-[520px]"
       data-ocid="our-work.services_legend"
     >
-      {ORBIT_ITEMS.map((item) => {
-        const LucideIcon = item.LucideIcon;
-        return (
+      {ORBIT_ITEMS.map((item) => (
+        <div
+          key={item.id}
+          className="flex items-start gap-2.5 p-3 rounded-xl border border-border bg-card/60 dark:bg-card/40 backdrop-blur-sm hover:border-primary/25 transition-smooth"
+          data-ocid={`our-work.service.${item.id}`}
+        >
           <div
-            key={item.id}
-            className="flex items-start gap-2.5 p-3 rounded-xl border border-border bg-card/60 dark:bg-card/40 backdrop-blur-sm hover:border-primary/25 transition-smooth"
-            data-ocid={`our-work.service.${item.id}`}
+            className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
+            style={{
+              background: `linear-gradient(135deg, ${item.gradientFrom}55, ${item.gradientTo}33)`,
+              border: `1px solid ${item.glow}44`,
+            }}
           >
-            <div
-              className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
-              style={{
-                background: `linear-gradient(135deg, ${item.gradientFrom}55, ${item.gradientTo}33)`,
-                border: `1px solid ${item.glow}44`,
-              }}
+            <span
+              className="font-mono font-black text-[9px] uppercase tracking-wider leading-none"
+              style={{ color: item.glow }}
             >
-              <LucideIcon size={13} style={{ color: item.glow }} />
-            </div>
-            <div className="min-w-0">
-              <p
-                className="font-display font-bold text-xs leading-none mb-0.5"
-                style={{ color: item.glow }}
-              >
-                {item.icon}
-              </p>
-              <p className="text-[11px] text-foreground font-medium leading-tight truncate">
-                {item.label}
-              </p>
-              <p className="text-[10px] text-muted-foreground leading-tight mt-0.5 line-clamp-2">
-                {item.description}
-              </p>
-            </div>
+              {item.icon}
+            </span>
           </div>
-        );
-      })}
+          <div className="min-w-0">
+            <p
+              className="font-display font-bold text-xs leading-none mb-0.5"
+              style={{ color: item.glow }}
+            >
+              {item.icon}
+            </p>
+            <p className="text-[11px] text-foreground font-medium leading-tight truncate">
+              {item.label}
+            </p>
+            <p className="text-[10px] text-muted-foreground leading-tight mt-0.5 line-clamp-2">
+              {item.description}
+            </p>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -673,29 +625,25 @@ export function WhyChooseUs() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-primary/4 rounded-full blur-[180px]" />
 
       <div className="relative max-w-7xl mx-auto">
-        {/* Section Header */}
         <div
           ref={titleRef as React.RefObject<HTMLDivElement>}
           style={titleStyle}
           className="text-center mb-20"
         >
-          <p className="text-primary text-xs font-semibold uppercase tracking-widest mb-3">
-            Our Work
-          </p>
-          <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground mb-5">
+          <span className="tag-label mb-4 inline-flex">Our Work</span>
+          <h2 className="text-h2 text-foreground mt-4 mb-5">
             We don't just execute campaigns.{" "}
             <span className="gradient-text-purple">We engineer growth.</span>
           </h2>
-          <p className="text-muted-foreground max-w-lg mx-auto text-base leading-relaxed">
+          <p className="text-muted-foreground max-w-lg mx-auto text-body-lg leading-relaxed">
             A Mumbai-based digital marketing agency that's helped 40+ brands go
             from overlooked to unforgettable — across six disciplines, all
             measured.
           </p>
         </div>
 
-        {/* Orbit + Cards */}
         <div className="flex flex-col xl:flex-row items-center gap-12 xl:gap-16">
-          {/* Left: orbit */}
+          {/* Left: orbit — DO NOT MODIFY */}
           <div
             ref={orbitRef as React.RefObject<HTMLDivElement>}
             style={orbitStyle}
@@ -715,7 +663,6 @@ export function WhyChooseUs() {
               />
             </div>
 
-            {/* Desktop: 3D orbit */}
             <div className="hidden sm:block">
               <OrbitVisualization />
             </div>
@@ -758,7 +705,6 @@ export function WhyChooseUs() {
               ))}
             </div>
 
-            {/* Service legend grid — desktop only */}
             <div className="hidden sm:block">
               <ServiceLegend />
             </div>
@@ -766,10 +712,9 @@ export function WhyChooseUs() {
 
           {/* Right: Feature Cards */}
           <div className="flex-1 w-full">
-            <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-3/4 bg-gradient-to-b from-transparent via-primary/15 to-transparent hidden md:block" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-px w-3/4 bg-gradient-to-r from-transparent via-secondary/15 to-transparent hidden md:block" />
-
+            <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-3/4 bg-gradient-to-b from-transparent via-primary/12 to-transparent hidden md:block" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-px w-3/4 bg-gradient-to-r from-transparent via-secondary/12 to-transparent hidden md:block" />
               {points.map((point, i) => (
                 <PointCard key={point.id} point={point} index={i} />
               ))}

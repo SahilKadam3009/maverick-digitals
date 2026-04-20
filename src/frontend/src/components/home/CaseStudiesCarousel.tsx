@@ -1,11 +1,5 @@
 import { useRevealOnScroll } from "@/hooks/useIntersectionObserver";
 import { Link } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  ChevronLeft,
-  ChevronRight,
-  TrendingUp,
-} from "lucide-react";
 import { useRef, useState } from "react";
 
 const caseStudies = [
@@ -134,7 +128,6 @@ export function CaseStudiesCarousel() {
             data-ocid="case-studies-view-all"
           >
             All Case Studies
-            <ArrowRight size={14} />
           </Link>
         </div>
 
@@ -247,7 +240,6 @@ export function CaseStudiesCarousel() {
                       <div
                         className={`mt-6 inline-flex items-center gap-2 text-sm font-semibold ${a.text}`}
                       >
-                        <TrendingUp size={14} />
                         Read Full Case Study
                       </div>
                     )}
@@ -262,11 +254,11 @@ export function CaseStudiesCarousel() {
             <button
               type="button"
               onClick={prev}
-              className="w-11 h-11 rounded-full glassmorphic border-white/15 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/30 transition-smooth"
+              className="w-11 h-11 rounded-full glassmorphic border-white/15 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/30 transition-smooth text-lg font-medium"
               aria-label="Previous case study"
               data-ocid="case-carousel-prev"
             >
-              <ChevronLeft size={20} />
+              ←
             </button>
 
             <div className="flex items-center gap-2">
@@ -289,11 +281,11 @@ export function CaseStudiesCarousel() {
             <button
               type="button"
               onClick={next}
-              className="w-11 h-11 rounded-full glassmorphic border-white/15 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/30 transition-smooth"
+              className="w-11 h-11 rounded-full glassmorphic border-white/15 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/30 transition-smooth text-lg font-medium"
               aria-label="Next case study"
               data-ocid="case-carousel-next"
             >
-              <ChevronRight size={20} />
+              →
             </button>
           </div>
         </div>

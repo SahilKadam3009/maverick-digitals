@@ -1,10 +1,8 @@
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRevealOnScroll } from "@/hooks/useIntersectionObserver";
 import { useGetBlogArticles, useSearchBlogArticles } from "@/hooks/useQueries";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Calendar, Search, Tag, User } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const CATEGORIES = [
@@ -91,6 +89,15 @@ const fallbackArticles = [
   },
 ];
 
+const CATEGORY_GRADIENTS: Record<string, string> = {
+  Performance: "from-primary/25 via-accent/15 to-secondary/15",
+  Strategy: "from-secondary/25 via-primary/15 to-accent/15",
+  Content: "from-accent/25 via-secondary/15 to-primary/15",
+  SEO: "from-primary/20 via-secondary/20 to-accent/10",
+  Design: "from-accent/20 via-primary/15 to-secondary/15",
+  default: "from-primary/15 via-accent/10 to-secondary/10",
+};
+
 function formatDate(ts: bigint): string {
   return new Date(Number(ts)).toLocaleDateString("en-US", {
     month: "short",
@@ -104,50 +111,91 @@ function ArticleCard({
   index,
 }: { article: (typeof fallbackArticles)[0]; index: number }) {
   const { ref, style } = useRevealOnScroll(index * 70);
+  const grad =
+    CATEGORY_GRADIENTS[article.category] ?? CATEGORY_GRADIENTS.default;
+  const readMins = Math.max(3, Math.floor(article.title.length / 8));
+
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       style={style}
-      className="group glassmorphic border-white/10 hover:border-primary/25 overflow-hidden transition-smooth card-hover"
-      data-ocid={`blog-card-${article.id}`}
+      className="group glass-card border-border/60 hover:border-primary/25 overflow-hidden transition-smooth card-hover flex flex-col"
+      data-ocid={`blog.item.${index + 1}`}
     >
       {/* Visual header */}
-      <div className="h-40 bg-gradient-to-br from-primary/20 via-accent/15 to-secondary/20 relative flex items-end p-4">
-        <div className="absolute inset-0 grid-glow-bg opacity-30" />
-        <Badge className="relative bg-black/50 text-foreground border-white/20 text-xs">
+      <div
+        className={`h-44 bg-gradient-to-br ${grad} relative flex flex-col justify-between p-5 overflow-hidden`}
+      >
+        <div className="absolute inset-0 grid-glow-bg opacity-25" />
+        {/* Category tag */}
+        <span className="relative tag-label self-start">
           {article.category}
-        </Badge>
+        </span>
+        {/* Abstract editorial mark — lines only, no icon component */}
+        <div className="absolute bottom-4 right-5 opacity-15">
+          <svg
+            width="48"
+            height="36"
+            viewBox="0 0 48 36"
+            fill="none"
+            aria-hidden="true"
+          >
+            <line
+              x1="2"
+              y1="8"
+              x2="46"
+              y2="8"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            <line
+              x1="2"
+              y1="18"
+              x2="32"
+              y2="18"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            <line
+              x1="2"
+              y1="28"
+              x2="20"
+              y2="28"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
       </div>
 
-      <div className="p-6">
-        <h3 className="font-display font-bold text-lg text-foreground leading-tight mb-3 group-hover:text-primary transition-smooth">
+      <div className="p-6 flex flex-col flex-1">
+        <h3 className="font-display font-bold text-lg text-foreground leading-tight mb-3 group-hover:text-primary transition-smooth line-clamp-2">
           {article.title}
         </h3>
-        <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2">
+        <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2 flex-1">
           {article.excerpt}
         </p>
 
-        <div className="flex flex-wrap gap-1.5 mb-4">
+        <div className="flex flex-wrap gap-1.5 mb-5">
           {article.tags.slice(0, 2).map((tag) => (
             <span
               key={tag}
-              className="text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-muted-foreground flex items-center gap-1"
+              className="text-xs px-2 py-0.5 rounded-full bg-primary/8 border border-primary/15 text-primary"
             >
-              <Tag size={9} />
               {tag}
             </span>
           ))}
         </div>
 
+        <div className="divider-premium mb-4" />
+
         <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <span className="flex items-center gap-1.5">
-            <User size={11} />
-            {article.author}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Calendar size={11} />
-            {formatDate(article.publishedAt)}
-          </span>
+          <span>{article.author}</span>
+          <span>{formatDate(article.publishedAt)}</span>
+          <span>{readMins}m read</span>
         </div>
       </div>
     </div>
@@ -177,22 +225,23 @@ export function Blog() {
       : liveArticles?.length
         ? liveArticles
         : fallbackArticles;
+
   const { ref: titleRef, style: titleStyle } = useRevealOnScroll(0);
 
   return (
     <div className="relative pt-20 sm:pt-24 pb-20">
       <div className="absolute inset-0 grid-glow-bg opacity-40" />
+      <div className="absolute top-0 left-1/3 w-[500px] h-[300px] bg-primary/6 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Header */}
         <div
           ref={titleRef as React.RefObject<HTMLDivElement>}
           style={titleStyle}
-          className="mb-12 max-w-3xl"
+          className="mb-14 max-w-3xl"
         >
-          <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-4">
-            Insights
-          </p>
-          <h1 className="font-display font-bold text-3xl sm:text-5xl md:text-6xl text-foreground leading-tight mb-6">
+          <span className="tag-label inline-flex mb-5">Insights</span>
+          <h1 className="font-display font-bold text-3xl sm:text-5xl md:text-6xl text-foreground leading-tight mb-6 mt-3">
             Marketing Intelligence{" "}
             <span className="gradient-text-purple">Hub</span>
           </h1>
@@ -202,33 +251,31 @@ export function Blog() {
           </p>
         </div>
 
-        {/* Filters */}
-        <div className="flex flex-col gap-3 sm:gap-4 mb-8 sm:mb-10">
-          <div className="relative w-full">
-            <Search
-              size={15}
-              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground"
-            />
+        {/* Search + Filters */}
+        <div className="flex flex-col gap-4 mb-10">
+          <div className="relative w-full max-w-lg">
+            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none text-sm">
+              ⌕
+            </span>
             <Input
               placeholder="Search articles..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 w-full bg-card/50 border-white/15 focus:border-primary/40"
-              data-ocid="blog-search"
+              className="premium-input pl-10"
+              data-ocid="blog.search_input"
             />
           </div>
           <div className="flex gap-2 flex-wrap">
-            {" "}
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 type="button"
                 onClick={() => setActiveCategory(cat)}
-                data-ocid={`blog-filter-${cat.toLowerCase()}`}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-smooth ${
+                data-ocid={`blog.filter.${cat.toLowerCase()}`}
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-smooth ${
                   activeCategory === cat
-                    ? "gradient-neon-purple text-background glow-neon"
-                    : "glassmorphic text-muted-foreground hover:text-foreground hover:border-primary/30"
+                    ? "btn-primary"
+                    : "glass-card border-border/60 text-muted-foreground hover:text-foreground hover:border-primary/30"
                 }`}
               >
                 {cat}
@@ -237,11 +284,15 @@ export function Blog() {
           </div>
         </div>
 
-        {/* Articles grid */}
+        {/* Articles */}
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {["s1", "s2", "s3", "s4", "s5", "s6"].map((id) => (
-              <Skeleton key={id} className="h-72 rounded-lg bg-card/50" />
+              <Skeleton
+                key={id}
+                className="h-80 rounded-xl bg-card/50"
+                data-ocid="blog.loading_state"
+              />
             ))}
           </div>
         ) : articles.length > 0 ? (
@@ -255,9 +306,9 @@ export function Blog() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-20" data-ocid="blog-empty">
-            <div className="w-16 h-16 rounded-2xl glassmorphic flex items-center justify-center mx-auto mb-5">
-              <Search size={24} className="text-muted-foreground" />
+          <div className="text-center py-20" data-ocid="blog.empty_state">
+            <div className="w-16 h-16 rounded-2xl glass-card flex items-center justify-center mx-auto mb-5">
+              <span className="text-2xl text-muted-foreground">⌕</span>
             </div>
             <h3 className="font-display font-semibold text-xl text-foreground mb-2">
               No articles found
@@ -271,24 +322,21 @@ export function Blog() {
                 setSearchQuery("");
                 setActiveCategory("All");
               }}
-              className="text-primary hover:underline text-sm"
+              className="text-primary hover:underline text-sm font-medium"
             >
               Clear filters
             </button>
           </div>
         )}
 
-        <div className="text-center mt-14">
+        {/* Footer CTA */}
+        <div className="text-center mt-16 pt-10 border-t border-border/50">
           <Link to="/contact">
             <button
               type="button"
               className="flex items-center gap-2 text-primary hover:text-primary/80 transition-smooth mx-auto text-sm font-medium group"
             >
-              Want us to write about a specific topic?
-              <ArrowRight
-                size={14}
-                className="group-hover:translate-x-1 transition-smooth"
-              />
+              Want us to write about a specific topic? →
             </button>
           </Link>
         </div>

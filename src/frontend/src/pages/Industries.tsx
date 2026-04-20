@@ -1,31 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { useRevealOnScroll } from "@/hooks/useIntersectionObserver";
 import { Link } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  BookOpen,
-  Building2,
-  Cpu,
-  CreditCard,
-  GraduationCap,
-  Heart,
-  Shirt,
-  ShoppingBag,
-  Star,
-  TrendingUp,
-  Utensils,
-  Zap,
-} from "lucide-react";
 import { motion, useAnimation, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
-// ──────────────────────────────────────────────────────────────────────────────
-// DATA
-// ──────────────────────────────────────────────────────────────────────────────
+// ── Data ───────────────────────────────────────────────────────────────────
+
+const ORBIT_SATELLITES = [
+  { label: "E-Com", angle: 30, orbitR: 110, color: "oklch(0.68 0.24 308)" },
+  { label: "SaaS", angle: 150, orbitR: 155, color: "oklch(0.72 0.19 200)" },
+  { label: "Health", angle: 270, orbitR: 110, color: "oklch(0.65 0.22 260)" },
+  { label: "RE", angle: 60, orbitR: 200, color: "oklch(0.68 0.24 308)" },
+  { label: "Fashion", angle: 200, orbitR: 200, color: "oklch(0.72 0.19 200)" },
+];
 
 const industries = [
   {
-    icon: ShoppingBag,
     title: "E-Commerce",
     description:
       "We engineer conversion machines for online brands — ROAS-optimised ad funnels, abandoned cart automation, and loyalty loops that turn buyers into brand advocates.",
@@ -44,7 +34,6 @@ const industries = [
     },
   },
   {
-    icon: Cpu,
     title: "SaaS & Tech",
     description:
       "Product-led growth, PLG motion, developer community building and conversion-optimised onboarding funnels that reduce time-to-value and slash churn.",
@@ -63,7 +52,6 @@ const industries = [
     },
   },
   {
-    icon: Heart,
     title: "Healthcare",
     description:
       "HIPAA-aware content strategies, doctor-reputation marketing, and trust-first campaigns that grow patient volumes without compromising compliance.",
@@ -83,7 +71,6 @@ const industries = [
     },
   },
   {
-    icon: Building2,
     title: "Real Estate",
     description:
       "Hyper-targeted lead gen for developers and agencies — virtual tour campaigns, retargeting ladders, and visual storytelling that converts browsers to buyers.",
@@ -95,7 +82,6 @@ const industries = [
     caseStudy: null,
   },
   {
-    icon: GraduationCap,
     title: "Education",
     description:
       "Enrollment funnels, student-retention playbooks, and video marketing that help institutions fill seats and EdTech platforms grow active learners.",
@@ -107,11 +93,10 @@ const industries = [
     caseStudy: null,
   },
   {
-    icon: CreditCard,
-    title: "Finance & FinTech",
+    title: "Travel & Hospitality",
     description:
-      "Regulated-space expertise: trust-building content, compliant paid campaigns, and conversion funnels for challenger banks, lenders, and wealth platforms.",
-    tags: ["Compliance Content", "Paid Search", "Funnels", "Trust Building"],
+      "Craveable content, reputation management, and local-discovery campaigns that fill tables, hotel rooms, and booking calendars all year round.",
+    tags: ["Local SEO", "Reputation", "Influencer", "Seasonal Campaigns"],
     gradient: "from-accent/20 via-secondary/10 to-transparent",
     glowColor: "oklch(0.65 0.22 260 / 0.25)",
     borderGlow: "hover:border-accent/30",
@@ -119,7 +104,6 @@ const industries = [
     caseStudy: null,
   },
   {
-    icon: Shirt,
     title: "Fashion & Lifestyle",
     description:
       "Culturally sharp brand storytelling, influencer programmes, and editorial content strategies that make lifestyle brands impossible to scroll past.",
@@ -131,11 +115,10 @@ const industries = [
     caseStudy: null,
   },
   {
-    icon: Utensils,
-    title: "Hospitality",
+    title: "Coaching & Consulting",
     description:
-      "Craveable content, reputation management, and local-discovery campaigns that fill tables, hotel rooms, and booking calendars all year round.",
-    tags: ["Local SEO", "Reputation", "Influencer", "Seasonal Campaigns"],
+      "Personal brand elevation, thought leadership campaigns, and client acquisition funnels for experts who are ready to scale their influence and income.",
+    tags: ["Personal Brand", "Lead Gen", "Content", "Funnels"],
     gradient: "from-secondary/20 via-accent/10 to-transparent",
     glowColor: "oklch(0.72 0.19 200 / 0.25)",
     borderGlow: "hover:border-secondary/30",
@@ -145,21 +128,13 @@ const industries = [
 ];
 
 const statsData = [
-  { value: 50, suffix: "+", label: "Brands Served", icon: Star },
-  { value: 12, suffix: "", label: "Industries", icon: BookOpen },
-  {
-    value: 10,
-    suffix: "M+",
-    label: "Revenue Driven",
-    prefix: "$",
-    icon: TrendingUp,
-  },
-  { value: 340, suffix: "%", label: "Avg Traffic Lift", icon: Zap },
+  { value: 50, suffix: "+", label: "Brands Served" },
+  { value: 12, suffix: "", label: "Industries" },
+  { value: 10, suffix: "M+", label: "Revenue Driven", prefix: "$" },
+  { value: 340, suffix: "%", label: "Avg Traffic Lift" },
 ];
 
-// ──────────────────────────────────────────────────────────────────────────────
-// ORBIT PARTICLE COMPONENT
-// ──────────────────────────────────────────────────────────────────────────────
+// ── Orbit Hero Visual ──────────────────────────────────────────────────────
 
 function OrbitRing({
   radius,
@@ -189,7 +164,6 @@ function OrbitRing({
         opacity,
       }}
     >
-      {/* Ring glow */}
       <div
         className="absolute inset-0 rounded-full"
         style={{
@@ -197,7 +171,6 @@ function OrbitRing({
           opacity: 0.08,
         }}
       />
-      {/* Orbiting dot */}
       <motion.div
         className="absolute rounded-full"
         style={{
@@ -222,24 +195,17 @@ function OrbitRing({
   );
 }
 
-// ──────────────────────────────────────────────────────────────────────────────
-// HERO ORBIT VISUAL
-// ──────────────────────────────────────────────────────────────────────────────
-
 function HeroOrbitVisual() {
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      {/* Central glow */}
       <div className="absolute w-20 h-20 rounded-full bg-primary/30 blur-xl" />
       <div className="absolute w-12 h-12 rounded-full bg-secondary/40 blur-lg" />
       <div className="absolute w-6 h-6 rounded-full bg-accent/60 blur-md" />
-
-      {/* Core icon */}
       <div className="relative z-10 w-16 h-16 rounded-2xl glassmorphic flex items-center justify-center border-primary/30 glow-neon">
-        <TrendingUp size={28} className="text-primary" />
+        <span className="font-display font-black text-2xl gradient-text-purple">
+          M
+        </span>
       </div>
-
-      {/* Orbit rings */}
       <OrbitRing
         radius={70}
         duration={6}
@@ -276,45 +242,7 @@ function HeroOrbitVisual() {
         opacity={0.35}
         clockwise={false}
       />
-
-      {/* Industry icon satellites */}
-      {[
-        {
-          icon: ShoppingBag,
-          angle: 30,
-          orbitR: 110,
-          label: "E-Com",
-          color: "oklch(0.68 0.24 308)",
-        },
-        {
-          icon: Cpu,
-          angle: 150,
-          orbitR: 155,
-          label: "SaaS",
-          color: "oklch(0.72 0.19 200)",
-        },
-        {
-          icon: Heart,
-          angle: 270,
-          orbitR: 110,
-          label: "Health",
-          color: "oklch(0.65 0.22 260)",
-        },
-        {
-          icon: Building2,
-          angle: 60,
-          orbitR: 200,
-          label: "RE",
-          color: "oklch(0.68 0.24 308)",
-        },
-        {
-          icon: Shirt,
-          angle: 200,
-          orbitR: 200,
-          label: "Fashion",
-          color: "oklch(0.72 0.19 200)",
-        },
-      ].map(({ icon: Icon, angle, orbitR, color, label }, i) => {
+      {ORBIT_SATELLITES.map(({ label, angle, orbitR, color }, i) => {
         const rad = (angle * Math.PI) / 180;
         const x = Math.cos(rad) * orbitR;
         const y = Math.sin(rad) * orbitR;
@@ -328,10 +256,7 @@ function HeroOrbitVisual() {
               marginLeft: x - 14,
               marginTop: y - 14,
             }}
-            animate={{
-              scale: [1, 1.15, 1],
-              opacity: [0.7, 1, 0.7],
-            }}
+            animate={{ scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }}
             transition={{
               duration: 3 + i * 0.7,
               repeat: Number.POSITIVE_INFINITY,
@@ -340,14 +265,19 @@ function HeroOrbitVisual() {
             }}
           >
             <div
-              className="w-7 h-7 rounded-lg flex items-center justify-center glassmorphic-dark"
+              className="w-8 h-7 rounded-lg flex items-center justify-center glassmorphic-dark"
               style={{
                 borderColor: color,
                 boxShadow: `0 0 10px ${color}`,
                 border: `1px solid ${color}`,
               }}
             >
-              <Icon size={14} style={{ color }} />
+              <span
+                className="font-mono font-bold text-[9px] uppercase tracking-wider leading-none"
+                style={{ color }}
+              >
+                {label}
+              </span>
             </div>
           </motion.div>
         );
@@ -356,23 +286,16 @@ function HeroOrbitVisual() {
   );
 }
 
-// ──────────────────────────────────────────────────────────────────────────────
-// ANIMATED COUNTER
-// ──────────────────────────────────────────────────────────────────────────────
+// ── Animated counter ───────────────────────────────────────────────────────
 
 function AnimatedCounter({
   value,
   suffix = "",
   prefix = "",
-}: {
-  value: number;
-  suffix?: string;
-  prefix?: string;
-}) {
+}: { value: number; suffix?: string; prefix?: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-
   useEffect(() => {
     if (!inView) return;
     let start = 0;
@@ -383,13 +306,10 @@ function AnimatedCounter({
       if (start >= value) {
         setCount(value);
         clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
+      } else setCount(Math.floor(start));
     }, 16);
     return () => clearInterval(timer);
   }, [inView, value]);
-
   return (
     <span ref={ref}>
       {prefix}
@@ -399,64 +319,76 @@ function AnimatedCounter({
   );
 }
 
-// ──────────────────────────────────────────────────────────────────────────────
-// INDUSTRY CARD
-// ──────────────────────────────────────────────────────────────────────────────
+// ── Stats bar ──────────────────────────────────────────────────────────────
+
+function StatsBar() {
+  const { ref, style } = useRevealOnScroll(0);
+  return (
+    <div
+      ref={ref as React.RefObject<HTMLDivElement>}
+      style={style}
+      className="relative glass-card rounded-2xl p-8 overflow-hidden"
+      data-ocid="stats-bar"
+    >
+      <div className="absolute -left-12 top-0 w-48 h-full bg-primary/10 blur-3xl pointer-events-none" />
+      <div className="absolute -right-12 top-0 w-48 h-full bg-secondary/10 blur-3xl pointer-events-none" />
+      <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-8">
+        {statsData.map(({ value, suffix, label, prefix }, i) => (
+          <motion.div
+            key={label}
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.12, duration: 0.5 }}
+          >
+            <div className="font-display font-bold text-3xl md:text-4xl gradient-text-purple mb-1">
+              <AnimatedCounter
+                value={value}
+                suffix={suffix}
+                prefix={prefix ?? ""}
+              />
+            </div>
+            <div className="text-sm text-muted-foreground">{label}</div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Industry Card ──────────────────────────────────────────────────────────
 
 function IndustryCard({
   industry,
   index,
-}: {
-  industry: (typeof industries)[0];
-  index: number;
-}) {
+}: { industry: (typeof industries)[0]; index: number }) {
   const { ref, style } = useRevealOnScroll(index * 70);
-  const Icon = industry.icon;
 
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       style={style}
-      data-ocid={`industry-card-${industry.title.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}
-      className={`group relative glassmorphic border-white/10 ${industry.borderGlow} p-6 transition-smooth card-hover overflow-hidden`}
+      data-ocid={`industry.item.${index + 1}`}
+      className={`group relative glass-card ${industry.borderGlow} p-6 transition-smooth card-hover overflow-hidden`}
     >
-      {/* Background gradient on hover */}
       <div
         className={`absolute inset-0 bg-gradient-to-br ${industry.gradient} opacity-0 group-hover:opacity-100 transition-smooth rounded-lg`}
       />
-
-      {/* Glow on hover */}
       <div
         className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-smooth pointer-events-none"
         style={{ boxShadow: `inset 0 0 40px ${industry.glowColor}` }}
       />
-
       <div className="relative z-10">
-        {/* Icon */}
-        <div
-          className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 transition-smooth group-hover:scale-110"
-          style={{
-            background: `radial-gradient(circle, ${industry.glowColor} 0%, transparent 70%)`,
-            border: `1px solid ${industry.glowColor}`,
-          }}
-        >
-          <Icon size={20} className="text-foreground" />
-        </div>
-
         <h3 className="font-display font-bold text-lg text-foreground mb-2">
           {industry.title}
         </h3>
         <p className="text-muted-foreground text-sm leading-relaxed mb-4">
           {industry.description}
         </p>
-
-        {/* Tags */}
         <div className="flex flex-wrap gap-1.5">
           {industry.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-muted-foreground"
-            >
+            <span key={tag} className="tag-label text-[10px]">
               {tag}
             </span>
           ))}
@@ -466,51 +398,31 @@ function IndustryCard({
   );
 }
 
-// ──────────────────────────────────────────────────────────────────────────────
-// FEATURED CASE STUDY CARD
-// ──────────────────────────────────────────────────────────────────────────────
+// ── Featured Card ──────────────────────────────────────────────────────────
 
 function FeaturedCard({
   industry,
   index,
-}: {
-  industry: (typeof industries)[0];
-  index: number;
-}) {
+}: { industry: (typeof industries)[0]; index: number }) {
   const { ref, style } = useRevealOnScroll(index * 90);
-  const Icon = industry.icon;
   const cs = industry.caseStudy!;
 
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       style={style}
-      data-ocid={`featured-industry-${industry.title.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}
-      className={`group relative glassmorphic border-white/10 ${industry.borderGlow} overflow-hidden transition-smooth card-hover`}
+      data-ocid={`featured-industry.item.${index + 1}`}
+      className={`group relative glass-card ${industry.borderGlow} overflow-hidden transition-smooth card-hover`}
     >
-      {/* Gradient background */}
       <div
         className={`absolute inset-0 bg-gradient-to-br ${industry.gradient} opacity-60`}
       />
-
-      {/* Glow */}
       <div
         className="absolute -top-12 -right-12 w-40 h-40 rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-smooth"
         style={{ background: industry.glowColor }}
       />
-
       <div className="relative z-10 p-7">
-        {/* Header */}
         <div className="flex items-center gap-3 mb-5">
-          <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center"
-            style={{
-              background: `radial-gradient(circle, ${industry.glowColor} 0%, transparent 70%)`,
-              border: `1px solid ${industry.glowColor}`,
-            }}
-          >
-            <Icon size={22} className="text-foreground" />
-          </div>
           <div>
             <h3 className="font-display font-bold text-xl text-foreground">
               {industry.title}
@@ -518,24 +430,22 @@ function FeaturedCard({
             <p className="text-xs text-muted-foreground">{cs.client}</p>
           </div>
           <span
-            className="ml-auto text-xs font-semibold px-3 py-1 rounded-full"
-            style={{ background: `${industry.glowColor}`, color: "white" }}
+            className="ml-auto tag-label"
+            style={{
+              background: `${industry.glowColor}`,
+              borderColor: "transparent",
+              color: "white",
+            }}
           >
             Featured
           </span>
         </div>
-
         <p className="text-muted-foreground text-sm leading-relaxed mb-5">
           {industry.description}
         </p>
-
-        {/* Case study snippet */}
         <div
-          className="rounded-xl p-4 mb-5"
-          style={{
-            background: "rgba(0,0,0,0.3)",
-            border: `1px solid ${industry.glowColor}`,
-          }}
+          className="rounded-xl p-4 mb-5 bg-card/80 dark:bg-black/30 border"
+          style={{ borderColor: industry.glowColor }}
         >
           <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">
             Case Study
@@ -545,9 +455,7 @@ function FeaturedCard({
           </p>
           <p className="text-sm text-muted-foreground">{cs.detail}</p>
         </div>
-
-        {/* Metrics */}
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-3 mb-5">
           {[cs.metric1, cs.metric2, cs.metric3].map((m) => (
             <div key={m.label} className="text-center">
               <div className="font-display font-bold text-xl gradient-text-purple">
@@ -557,14 +465,9 @@ function FeaturedCard({
             </div>
           ))}
         </div>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mt-5">
+        <div className="flex flex-wrap gap-1.5">
           {industry.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-muted-foreground"
-            >
+            <span key={tag} className="tag-label text-[10px]">
               {tag}
             </span>
           ))}
@@ -574,59 +477,7 @@ function FeaturedCard({
   );
 }
 
-// ──────────────────────────────────────────────────────────────────────────────
-// STATS BAR
-// ──────────────────────────────────────────────────────────────────────────────
-
-function StatsBar() {
-  const { ref, style } = useRevealOnScroll(0);
-
-  return (
-    <div
-      ref={ref as React.RefObject<HTMLDivElement>}
-      style={style}
-      className="relative glassmorphic border-white/10 rounded-2xl p-8 overflow-hidden"
-      data-ocid="stats-bar"
-    >
-      {/* Glow accents */}
-      <div className="absolute -left-12 top-0 w-48 h-full bg-primary/10 blur-3xl pointer-events-none" />
-      <div className="absolute -right-12 top-0 w-48 h-full bg-secondary/10 blur-3xl pointer-events-none" />
-
-      <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-8">
-        {statsData.map(
-          ({ value, suffix, label, icon: StatIcon, prefix }, i) => (
-            <motion.div
-              key={label}
-              className="text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.12, duration: 0.5 }}
-            >
-              <div className="flex justify-center mb-2">
-                <div className="w-9 h-9 rounded-lg bg-primary/15 flex items-center justify-center border border-primary/20">
-                  <StatIcon size={16} className="text-primary" />
-                </div>
-              </div>
-              <div className="font-display font-bold text-3xl md:text-4xl gradient-text-purple mb-1">
-                <AnimatedCounter
-                  value={value}
-                  suffix={suffix}
-                  prefix={prefix ?? ""}
-                />
-              </div>
-              <div className="text-sm text-muted-foreground">{label}</div>
-            </motion.div>
-          ),
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ──────────────────────────────────────────────────────────────────────────────
-// MAIN PAGE
-// ──────────────────────────────────────────────────────────────────────────────
+// ── Page ───────────────────────────────────────────────────────────────────
 
 export function Industries() {
   const { ref: titleRef, style: titleStyle } = useRevealOnScroll(0);
@@ -643,19 +494,17 @@ export function Industries() {
 
   return (
     <div className="relative pt-20 sm:pt-24 pb-20">
-      {/* Background layers */}
       <div className="absolute inset-0 grid-glow-bg opacity-40" />
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/6 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute top-0 right-1/4 w-80 h-80 bg-secondary/6 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-40 left-10 w-64 h-64 bg-accent/5 rounded-full blur-[80px] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        {/* ── HERO ── */}
+        {/* HERO */}
         <div
           ref={heroRef}
           className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-16 items-center mb-16 sm:mb-24"
         >
-          {/* Left: text */}
           <motion.div
             ref={titleRef as React.RefObject<HTMLDivElement>}
             style={titleStyle}
@@ -667,10 +516,10 @@ export function Industries() {
             animate={controls}
             transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <p className="text-secondary text-sm font-semibold uppercase tracking-widest mb-4">
+            <span className="tag-label mb-4 inline-flex">
               Industries We Serve
-            </p>
-            <h1 className="font-display font-bold text-5xl md:text-6xl text-foreground leading-[1.1] mb-6">
+            </span>
+            <h1 className="font-display font-bold text-5xl md:text-6xl text-foreground leading-[1.1] mb-6 mt-3">
               Built for Every{" "}
               <span className="gradient-text-cyan">Vertical</span>
               {", "}
@@ -685,18 +534,17 @@ export function Industries() {
               <Link to="/contact">
                 <Button
                   size="lg"
-                  className="gradient-neon-purple text-background font-semibold glow-neon hover:scale-105 transition-smooth border-0 px-8"
+                  className="btn-primary border-0"
                   data-ocid="hero-cta-contact"
                 >
                   Start with Your Industry
-                  <ArrowRight size={16} className="ml-2" />
                 </Button>
               </Link>
               <Link to="/case-studies">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/20 bg-white/5 text-foreground hover:bg-white/10 transition-smooth px-8"
+                  className="border-border/60 bg-card text-foreground hover:bg-muted hover:border-primary/30 transition-smooth px-8"
                   data-ocid="hero-cta-cases"
                 >
                   View Case Studies
@@ -705,7 +553,6 @@ export function Industries() {
             </div>
           </motion.div>
 
-          {/* Right: orbit visual */}
           <motion.div
             className="relative h-[280px] sm:h-[420px] flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.85 }}
@@ -720,12 +567,12 @@ export function Industries() {
           </motion.div>
         </div>
 
-        {/* ── STATS BAR ── */}
+        {/* STATS */}
         <div className="mb-16 sm:mb-24">
           <StatsBar />
         </div>
 
-        {/* ── FEATURED: 3 KEY INDUSTRIES WITH CASE STUDIES ── */}
+        {/* FEATURED */}
         <div className="mb-20">
           <motion.div
             className="mb-10"
@@ -734,10 +581,17 @@ export function Industries() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-3">
+            <span
+              className="tag-label mb-4 inline-flex"
+              style={{
+                background: "oklch(var(--secondary)/0.1)",
+                color: "oklch(var(--secondary))",
+                borderColor: "oklch(var(--secondary)/0.25)",
+              }}
+            >
               Proven Results
-            </p>
-            <h2 className="font-display font-bold text-3xl md:text-4xl text-foreground">
+            </span>
+            <h2 className="font-display font-bold text-3xl md:text-4xl text-foreground mt-3 mb-2">
               Deep-Dive Industries
             </h2>
             <p className="text-muted-foreground mt-2 max-w-xl">
@@ -745,7 +599,6 @@ export function Industries() {
               real numbers.
             </p>
           </motion.div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
             {featuredIndustries.map((industry, i) => (
               <FeaturedCard
@@ -757,7 +610,10 @@ export function Industries() {
           </div>
         </div>
 
-        {/* ── ALL OTHER INDUSTRIES ── */}
+        {/* SECTION DIVIDER */}
+        <div className="divider-premium mb-16" />
+
+        {/* ALL INDUSTRIES */}
         <div className="mb-24">
           <motion.div
             className="mb-10"
@@ -766,14 +622,11 @@ export function Industries() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-secondary text-sm font-semibold uppercase tracking-widest mb-3">
-              All Verticals
-            </p>
-            <h2 className="font-display font-bold text-3xl md:text-4xl text-foreground">
+            <span className="tag-label mb-4 inline-flex">All Verticals</span>
+            <h2 className="font-display font-bold text-3xl md:text-4xl text-foreground mt-3">
               Every Industry, One Agency
             </h2>
           </motion.div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {standardIndustries.map((industry, i) => (
               <IndustryCard
@@ -785,25 +638,21 @@ export function Industries() {
           </div>
         </div>
 
-        {/* ── CTA ── */}
+        {/* CTA */}
         <motion.div
-          className="relative glassmorphic border-white/10 rounded-3xl overflow-hidden p-6 sm:p-12 text-center"
+          className="relative glass-card rounded-3xl overflow-hidden p-6 sm:p-12 text-center"
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
           data-ocid="industries-cta"
         >
-          {/* Glow background */}
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10" />
           <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-80 h-40 bg-primary/15 rounded-full blur-3xl" />
           <div className="absolute -bottom-10 left-1/3 w-60 h-32 bg-secondary/10 rounded-full blur-3xl" />
-
           <div className="relative z-10">
-            <p className="text-secondary text-sm font-semibold uppercase tracking-widest mb-4">
-              Your Industry
-            </p>
-            <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground mb-4">
+            <span className="tag-label mb-4 inline-flex">Your Industry</span>
+            <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground mb-4 mt-3">
               Is your industry here?{" "}
               <span className="gradient-text-purple">Let's talk.</span>
             </h2>
@@ -815,11 +664,10 @@ export function Industries() {
               <Link to="/contact">
                 <Button
                   size="lg"
-                  className="gradient-neon-purple text-background font-semibold glow-neon hover:scale-105 transition-smooth border-0 px-10 h-13"
+                  className="btn-primary border-0 px-10"
                   data-ocid="cta-contact-button"
                 >
                   Book a Strategy Call
-                  <ArrowRight size={16} className="ml-2" />
                 </Button>
               </Link>
               <Link to="/case-studies">

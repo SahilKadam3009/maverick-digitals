@@ -526,7 +526,7 @@ const stats = [
   { value: "40+", label: "Brands Scaled" },
   { value: "15M+", label: "Organic Views" },
   { value: "200%+", label: "Average ROI" },
-  { value: "2X+", label: "Average Revenue Growth" },
+  { value: "2X+", label: "Revenue Growth" },
   { value: "5", label: "Countries" },
 ];
 
@@ -579,17 +579,37 @@ function StatBadge({
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       style={style}
-      className="flex flex-col items-center glassmorphic border-primary/20 px-4 sm:px-8 py-5 sm:py-6 hover:border-primary/40 transition-smooth"
+      className="flex flex-col items-center rounded-2xl border border-primary/15 bg-card/80 dark:bg-card/60 backdrop-blur-sm px-5 sm:px-8 py-6 sm:py-8 hover:border-primary/35 hover:shadow-[0_0_24px_oklch(var(--primary)/0.12)] transition-all duration-300 group"
     >
-      <span className="font-display font-bold text-2xl sm:text-4xl gradient-text-purple mb-1">
+      <span className="font-display font-black text-3xl sm:text-4xl gradient-text-purple mb-1.5 group-hover:scale-105 transition-transform duration-300">
         {stat.value}
       </span>
-      <span className="text-muted-foreground text-sm text-center">
+      <span className="text-muted-foreground text-xs sm:text-sm text-center font-medium uppercase tracking-wide">
         {stat.label}
       </span>
     </div>
   );
 }
+
+// --- Values data ---
+const values = [
+  {
+    title: "No templates",
+    desc: "Every strategy is built from scratch for your business, your audience, and your goals — nothing copy-pasted.",
+  },
+  {
+    title: "Founder-direct",
+    desc: "You work directly with Muskan and Dhaval, not handed off to a junior team after the first meeting.",
+  },
+  {
+    title: "Measurable always",
+    desc: "Every campaign is tied to real business metrics. We don't run work that can't be attributed to growth.",
+  },
+  {
+    title: "Long-term thinking",
+    desc: "Short wins matter, but we build for compounding. SEO, brand equity, content — assets that pay back over time.",
+  },
+];
 
 // --- Main Component ---
 export function About() {
@@ -620,21 +640,30 @@ export function About() {
 
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
-          className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto"
+          className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto"
         >
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="text-primary text-xs font-semibold uppercase tracking-[0.3em] mb-6"
+            className="flex justify-center mb-7"
           >
-            The Maverick Story
-          </motion.p>
+            <span className="tag-label">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              The Maverick Story
+            </span>
+          </motion.div>
+
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-bold text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-foreground leading-[0.95] tracking-tight mb-8"
+            className="text-h1 font-display font-extrabold text-foreground mb-7"
+            style={{
+              fontSize: "clamp(2.8rem, 6vw, 6rem)",
+              lineHeight: "var(--line-height-heading)",
+              letterSpacing: "var(--tracking-tight)",
+            }}
           >
             The Mind
             <br />
@@ -642,21 +671,47 @@ export function About() {
             <br />
             Brand
           </motion.h1>
+
           <motion.p
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.6 }}
-            className="text-muted-foreground text-lg md:text-xl leading-relaxed max-w-2xl mx-auto"
+            className="text-body-lg text-muted-foreground max-w-2xl mx-auto"
+            style={{
+              fontSize: "var(--font-size-body-lg)",
+              lineHeight: "var(--line-height-body)",
+            }}
           >
             A Mumbai-based digital marketing agency helping ambitious brands
             grow through strategy that connects, content that converts, and
             execution that actually delivers.
           </motion.p>
+
+          {/* Pull-quote brand statement */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.95, duration: 0.6 }}
+            className="mt-10 mx-auto max-w-xl"
+          >
+            <div className="relative px-6 py-5 rounded-2xl border border-primary/20 bg-primary/5 dark:bg-primary/8 backdrop-blur-sm">
+              <div className="absolute -top-3 left-6">
+                <span className="text-primary/50 text-4xl font-serif leading-none select-none">
+                  &ldquo;
+                </span>
+              </div>
+              <p className="text-foreground font-display font-semibold text-base sm:text-lg leading-snug text-center">
+                We don't just run campaigns. We build brands that people
+                actually remember.
+              </p>
+            </div>
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 1.1, duration: 0.8 }}
-            className="mt-12 w-16 h-px gradient-neon-purple mx-auto"
+            className="mt-10 w-16 h-px gradient-neon-purple mx-auto"
           />
           {/* LLM / AEO brand definition — machine-readable, visually subtle */}
           <p className="sr-only">
@@ -690,6 +745,20 @@ export function About() {
         </motion.div>
       </section>
 
+      {/* ── STATS STRIP ── */}
+      <section
+        className="py-14 section-gradient-border bg-card/30 dark:bg-card/20"
+        data-ocid="about-stats"
+      >
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
+            {stats.map((stat, i) => (
+              <StatBadge key={stat.label} stat={stat} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── FOUNDERS / TEAM ── */}
       <section
         className="relative py-28 overflow-hidden"
@@ -705,7 +774,7 @@ export function About() {
           <GalaxyCanvas isDark={isDark} />
         </div>
 
-        {/* Vignette overlay — darker edge in dark mode, barely-there in light mode */}
+        {/* Vignette overlay */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -736,23 +805,39 @@ export function About() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <p className="text-primary text-xs font-semibold uppercase tracking-[0.3em] mb-4">
-              The Visionaries
-            </p>
-            <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground leading-tight mb-4">
+            <div className="flex justify-center mb-5">
+              <span className="tag-label">The Visionaries</span>
+            </div>
+            <h2
+              className="font-display font-extrabold text-foreground mb-5"
+              style={{
+                fontSize: "var(--font-size-h1)",
+                lineHeight: "var(--line-height-heading)",
+                letterSpacing: "var(--tracking-tight)",
+              }}
+            >
               Meet the{" "}
               <span className="gradient-text-purple">Minds Behind</span>
               <br />
               the Maverick
             </h2>
-            <p className="text-muted-foreground text-base max-w-xl mx-auto">
+            <p
+              className="text-muted-foreground max-w-lg mx-auto"
+              style={{
+                fontSize: "var(--font-size-body-lg)",
+                lineHeight: "var(--line-height-body)",
+              }}
+            >
               Two people building one focused team — with a single goal of
               helping good brands grow in ways that last.
             </p>
           </motion.div>
 
+          {/* Subtle divider */}
+          <div className="divider-premium mb-16 mx-auto max-w-xs" />
+
           {/* ProfileCard grid */}
-          <div className="flex flex-col md:flex-row gap-8 sm:gap-12 justify-center items-center md:items-start w-full">
+          <div className="flex flex-col md:flex-row gap-10 sm:gap-14 justify-center items-center md:items-start w-full">
             {/* Muskan Rathod - Founder */}
             <motion.div
               initial={{ opacity: 0, y: 50, scale: 0.96 }}
@@ -777,13 +862,22 @@ export function About() {
                 innerGradient="linear-gradient(145deg,#60496e8c 0%,#7c3aed44 100%)"
               />
               <div className="text-center max-w-xs">
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Founder &amp; Brand Strategist — she's obsessed with
-                  storytelling that moves people and positioning that sticks.
-                  Muskan has built personal brands and growth strategies for
-                  founders and businesses across India and global markets.
+                <h3 className="font-display font-bold text-foreground text-lg mb-1">
+                  Muskan Rathod
+                </h3>
+                <p className="text-primary text-xs font-semibold uppercase tracking-widest mb-3">
+                  Founder &amp; Brand Strategist
                 </p>
-                <div className="flex flex-wrap gap-2 justify-center mt-3">
+                <p
+                  className="text-muted-foreground leading-relaxed text-sm"
+                  style={{ lineHeight: "var(--line-height-body)" }}
+                >
+                  Obsessed with storytelling that moves people and positioning
+                  that sticks. Muskan has built personal brands and growth
+                  strategies for founders and businesses across India and global
+                  markets.
+                </p>
+                <div className="flex flex-wrap gap-2 justify-center mt-4">
                   {[
                     "Brand Strategy",
                     "Growth Marketing",
@@ -792,13 +886,13 @@ export function About() {
                   ].map((skill) => (
                     <span
                       key={skill}
-                      className="text-xs px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-700 dark:text-purple-300"
+                      className="text-xs px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-700 dark:text-purple-300 font-medium"
                     >
                       {skill}
                     </span>
                   ))}
                 </div>
-                <div className="flex items-center justify-center gap-3 mt-4">
+                <div className="flex items-center justify-center gap-3 mt-5">
                   {teamMembers[0].socials.map(
                     ({ icon: Icon, href, label, color }) => (
                       <a
@@ -807,7 +901,7 @@ export function About() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={label}
-                        className={`w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground ${color} hover:scale-110 transition-all duration-200 bg-purple-500/6 border border-purple-500/18`}
+                        className={`w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground ${color} hover:scale-110 transition-all duration-200 bg-purple-500/8 border border-purple-500/20`}
                         data-ocid={`mr-social-${label.toLowerCase()}`}
                       >
                         <Icon size={14} />
@@ -846,13 +940,21 @@ export function About() {
                 innerGradient="linear-gradient(145deg,#0e7490aa 0%,#22d3ee44 100%)"
               />
               <div className="text-center max-w-xs">
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Co-Founder &amp; Tech Lead — Dhaval builds the platforms that
-                  make everything else possible. 5+ years in the MERN stack,
-                  focused on sites and apps that are fast, clean, and built to
-                  convert.
+                <h3 className="font-display font-bold text-foreground text-lg mb-1">
+                  Dhaval Shah
+                </h3>
+                <p className="text-primary text-xs font-semibold uppercase tracking-widest mb-3">
+                  Co-Founder &amp; Tech Lead
                 </p>
-                <div className="flex flex-wrap gap-2 justify-center mt-3">
+                <p
+                  className="text-muted-foreground leading-relaxed text-sm"
+                  style={{ lineHeight: "var(--line-height-body)" }}
+                >
+                  Builds the platforms that make everything else possible. 5+
+                  years in the MERN stack, focused on sites and apps that are
+                  fast, clean, and built to convert.
+                </p>
+                <div className="flex flex-wrap gap-2 justify-center mt-4">
                   {[
                     "Web Development",
                     "App Development",
@@ -861,13 +963,13 @@ export function About() {
                   ].map((skill) => (
                     <span
                       key={skill}
-                      className="text-xs px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-700 dark:text-cyan-300"
+                      className="text-xs px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 font-medium"
                     >
                       {skill}
                     </span>
                   ))}
                 </div>
-                <div className="flex items-center justify-center gap-3 mt-4">
+                <div className="flex items-center justify-center gap-3 mt-5">
                   {teamMembers[1].socials.map(
                     ({ icon: Icon, href, label, color }) => (
                       <a
@@ -876,7 +978,7 @@ export function About() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={label}
-                        className={`w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground ${color} hover:scale-110 transition-all duration-200 bg-cyan-500/6 border border-cyan-500/18`}
+                        className={`w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground ${color} hover:scale-110 transition-all duration-200 bg-cyan-500/8 border border-cyan-500/20`}
                         data-ocid={`ds-social-${label.toLowerCase()}`}
                       >
                         <Icon size={14} />
@@ -890,9 +992,69 @@ export function About() {
         </div>
       </section>
 
+      {/* ── VALUES ── */}
+      <section
+        className="relative py-20 section-gradient-border bg-muted/20 dark:bg-card/10 overflow-hidden"
+        data-ocid="about-values"
+      >
+        <div className="absolute inset-0 grid-glow-bg opacity-10 pointer-events-none" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <div className="flex justify-center mb-4">
+              <span className="tag-label">How We Work</span>
+            </div>
+            <h2
+              className="font-display font-extrabold text-foreground mb-4"
+              style={{
+                fontSize: "var(--font-size-h2)",
+                lineHeight: "var(--line-height-heading)",
+                letterSpacing: "var(--tracking-tight)",
+              }}
+            >
+              Four rules we never break
+            </h2>
+            <p
+              className="text-muted-foreground max-w-lg mx-auto"
+              style={{ lineHeight: "var(--line-height-body)" }}
+            >
+              These aren't company values from a deck — they're just how we
+              actually show up to work.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {values.map((v, i) => (
+              <motion.div
+                key={v.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.55 }}
+                className="glass-card p-6 group"
+              >
+                <div className="w-8 h-8 rounded-xl gradient-neon-purple flex items-center justify-center mb-4 text-white font-display font-black text-sm group-hover:scale-110 transition-transform duration-300">
+                  {String(i + 1).padStart(2, "0")}
+                </div>
+                <h4 className="font-display font-bold text-foreground text-base mb-2">
+                  {v.title}
+                </h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {v.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── STORY ── */}
       <section
-        className="relative py-24 bg-card/40 overflow-hidden"
+        className="relative py-24 overflow-hidden"
         data-ocid="about-story"
       >
         <div className="absolute inset-0 grid-glow-bg opacity-20 pointer-events-none" />
@@ -902,17 +1064,32 @@ export function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
+            className="text-center mb-10"
           >
-            <p className="text-primary text-xs font-semibold uppercase tracking-[0.2em] mb-4 text-center">
-              The Journey
-            </p>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-foreground text-center mb-10 leading-tight">
+            <div className="flex justify-center mb-4">
+              <span className="tag-label">The Journey</span>
+            </div>
+            <h2
+              className="font-display font-extrabold text-foreground"
+              style={{
+                fontSize: "var(--font-size-h2)",
+                lineHeight: "var(--line-height-heading)",
+                letterSpacing: "var(--tracking-tight)",
+              }}
+            >
               How a rebel marketer
               <br />
               <span className="gradient-text-cyan">changed the game</span>
             </h2>
           </motion.div>
-          <div className="space-y-6 text-[16px] text-muted-foreground leading-[1.85]">
+
+          <div
+            className="space-y-6 text-muted-foreground"
+            style={{
+              fontSize: "var(--font-size-body-lg)",
+              lineHeight: "var(--line-height-body)",
+            }}
+          >
             {storyParagraphs.map((para, i) => (
               <motion.p
                 key={para.slice(0, 20)}
@@ -930,7 +1107,7 @@ export function About() {
 
       {/* ── MISSION STATEMENT ── */}
       <section
-        className="relative py-28 overflow-hidden"
+        className="relative py-28 section-gradient-border overflow-hidden bg-card/20 dark:bg-card/10"
         data-ocid="about-mission"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/4 to-transparent pointer-events-none" />
@@ -939,35 +1116,34 @@ export function About() {
           style={missionStyle}
           className="max-w-5xl mx-auto px-4 sm:px-6 text-center"
         >
-          <p className="text-primary text-xs font-semibold uppercase tracking-[0.3em] mb-6">
-            Our Mission
-          </p>
-          <blockquote className="font-display font-bold text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-tight">
+          <div className="flex justify-center mb-7">
+            <span className="tag-label">Our Mission</span>
+          </div>
+          <blockquote
+            className="font-display font-extrabold leading-tight mb-8"
+            style={{
+              fontSize: "clamp(2rem, 4.5vw, 4.5rem)",
+              lineHeight: "var(--line-height-heading)",
+              letterSpacing: "var(--tracking-tight)",
+            }}
+          >
             <span className="text-foreground">
               We don't just run campaigns.
             </span>
             <br />
             <span className="gradient-text-purple">We build real brands.</span>
           </blockquote>
-          <p className="text-muted-foreground text-lg mt-8 max-w-2xl mx-auto leading-relaxed">
+          <p
+            className="text-muted-foreground max-w-2xl mx-auto"
+            style={{
+              fontSize: "var(--font-size-body-lg)",
+              lineHeight: "var(--line-height-body)",
+            }}
+          >
             Creativity, strategy, and technical execution — brought together for
             brands that want to grow properly. We're active across India, UAE,
             USA, UK, and Australia.
           </p>
-        </div>
-      </section>
-
-      {/* ── STATS ── */}
-      <section
-        className="py-16 border-y border-border/40"
-        data-ocid="about-stats"
-      >
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
-            {stats.map((stat, i) => (
-              <StatBadge key={stat.label} stat={stat} index={i} />
-            ))}
-          </div>
         </div>
       </section>
 
@@ -986,15 +1162,25 @@ export function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.7 }}
               >
-                <p className="text-primary text-xs font-semibold uppercase tracking-[0.2em] mb-4">
-                  Our History
-                </p>
-                <h2 className="font-display font-bold text-4xl md:text-5xl text-foreground leading-tight mb-6">
+                <div className="flex mb-5">
+                  <span className="tag-label">Our History</span>
+                </div>
+                <h2
+                  className="font-display font-extrabold text-foreground mb-6"
+                  style={{
+                    fontSize: "var(--font-size-h1)",
+                    lineHeight: "var(--line-height-heading)",
+                    letterSpacing: "var(--tracking-tight)",
+                  }}
+                >
                   Five years of
                   <br />
                   <span className="gradient-text-cyan">bold moves</span>
                 </h2>
-                <p className="text-muted-foreground text-base leading-relaxed max-w-sm">
+                <p
+                  className="text-muted-foreground max-w-sm"
+                  style={{ lineHeight: "var(--line-height-body)" }}
+                >
                   Every milestone happened because the team kept showing up and
                   doing the work — no shortcuts, no overpromising, just
                   consistent effort and honest results.
@@ -1024,15 +1210,28 @@ export function About() {
           style={ctaStyle}
           className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center"
         >
-          <p className="text-primary text-xs font-semibold uppercase tracking-[0.3em] mb-4">
-            Ready to Start?
-          </p>
-          <h2 className="font-display font-bold text-4xl md:text-6xl text-foreground leading-tight mb-6">
+          <div className="flex justify-center mb-5">
+            <span className="tag-label">Ready to Start?</span>
+          </div>
+          <h2
+            className="font-display font-extrabold text-foreground mb-6"
+            style={{
+              fontSize: "var(--font-size-h1)",
+              lineHeight: "var(--line-height-heading)",
+              letterSpacing: "var(--tracking-tight)",
+            }}
+          >
             Let's Build Something
             <br />
             <span className="gradient-text-purple">Together</span>
           </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed mb-10 max-w-xl mx-auto">
+          <p
+            className="text-muted-foreground mb-10 max-w-xl mx-auto"
+            style={{
+              fontSize: "var(--font-size-body-lg)",
+              lineHeight: "var(--line-height-body)",
+            }}
+          >
             Your brand has a story worth telling. Let's make sure the right
             people actually hear it.
           </p>
@@ -1040,7 +1239,7 @@ export function About() {
             <Link to="/contact">
               <Button
                 size="lg"
-                className="gradient-neon-purple text-background font-semibold glow-neon hover:scale-105 transition-smooth border-0 px-10 h-12"
+                className="gradient-neon-purple text-white font-semibold glow-neon hover:scale-105 transition-smooth border-0 px-10 h-12"
                 data-ocid="about-cta-primary"
               >
                 Start the Conversation
