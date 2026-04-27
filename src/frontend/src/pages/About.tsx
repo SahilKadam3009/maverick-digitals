@@ -431,7 +431,7 @@ const teamMembers: TeamMember[] = [
     socials: [
       {
         icon: Linkedin,
-        href: "https://linkedin.com",
+        href: "https://www.linkedin.com/in/muskan-rathod-9097a0202",
         label: "LinkedIn",
         color: "hover:text-blue-400",
       },
@@ -443,7 +443,7 @@ const teamMembers: TeamMember[] = [
       },
       {
         icon: Instagram,
-        href: "https://instagram.com",
+        href: "https://www.instagram.com/_muskanrathodd_/",
         label: "Instagram",
         color: "hover:text-pink-400",
       },
@@ -860,6 +860,13 @@ export function About() {
                 behindGlowColor="rgba(139, 92, 246, 0.67)"
                 behindGlowEnabled={true}
                 innerGradient="linear-gradient(145deg,#60496e8c 0%,#7c3aed44 100%)"
+                onContactClick={() =>
+                  window.open(
+                    "https://www.linkedin.com/in/muskan-rathod-9097a0202",
+                    "_blank",
+                    "noopener,noreferrer",
+                  )
+                }
               />
               <div className="text-center max-w-xs">
                 <h3 className="font-display font-bold text-foreground text-lg mb-1">

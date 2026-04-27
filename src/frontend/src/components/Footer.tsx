@@ -21,13 +21,13 @@ const companyLinks = [
 const socials = [
   {
     label: "Instagram",
-    href: "https://instagram.com",
+    href: "https://www.instagram.com/maverickdigitalsagency/#/",
     hoverClass:
       "hover:text-pink-500 hover:border-pink-400/40 hover:bg-pink-500/8 hover:shadow-[0_0_14px_rgba(236,72,153,0.25)]",
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com",
+    href: "https://www.linkedin.com/company/maverick-digitals/?viewAsMember=true",
     hoverClass:
       "hover:text-blue-500 hover:border-blue-400/40 hover:bg-blue-500/8 hover:shadow-[0_0_14px_rgba(59,130,246,0.25)]",
   },
